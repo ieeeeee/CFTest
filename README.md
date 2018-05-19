@@ -1,0 +1,2 @@
+# CFTest
+EF  CodeFirst+MVC
