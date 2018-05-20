@@ -1,0 +1,2 @@
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Interface\obj\Debug\OA.Interface.csprojResolveAssemblyReference.cache
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Interface\obj\Debug\OA.Interface.csproj.CoreCompileInputs.cache

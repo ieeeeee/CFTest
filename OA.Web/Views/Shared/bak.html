@@ -1,0 +1,224 @@
+﻿<div id="wrapper">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+            @Html.ActionLink("CFTESTOA", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <a href="#" class="sider-open-button">
+                <i class="fade fa-bars"></i>
+            </a>
+            <a href="#" class="sider-open-button-mobile">
+                <i class="fade fa-bars"></i>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-left">
+                <li>@Html.ActionLink("工作中心", "Index", "Home")</li>
+                <li>@Html.ActionLink("客户管理", "About", "Home")</li>
+                <li>@Html.ActionLink("综合管理", "Contact", "Home")</li>
+                <li>@Html.ActionLink("个人中心", "Contact", "Home")</li>
+            </ul>
+            <form class="searchform">
+                <input type="text" class="searchbox" id="searchbox" placehoder="Search" />
+                <span class="searchbutton">
+                    <i class="fa fa-search"></i>
+                </span>
+            </form>
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown note dra-down">
+                    <div class="wrapper-dropdown-3" tabindex="1"><span>企业名称</span></div>
+                    @*<ul class="dropdown">
+                        <li><a class="deutsch">企业1</a></li>
+                        <li><a class="deutsch">企业2</a></li>
+                        <li><a class="deutsch">企业3</a></li>
+                    </ul>*@
+                </li>
+                <li class="dropdown note">
+                    <a href="#" data-toggle="dropdown">
+                        <i class="fa fa-tasks"></i>
+                    </a>
+                    <ul class="dropdown-menu two">
+                        <li>
+                            <div class="notification_header">
+                                <h3>You have9 pending task</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="task-info">
+                                    <span class="task-desc">task 1</span>
+                                    <span class="percentage">40%</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="progress progress-striped active">
+                                    <div class="fa-bars yellow" style="width:40%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="notification_bottom">
+                                <a href="#">See all pengding tasks</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown note">
+                    <a href="#" data-toggle="dropdown">
+                        <i class="fa fa-tasks"></i>
+                    </a>
+                    <ul class="dropdown-menu two">
+                        <li>
+                            <div class="notification_header">
+                                <h3>You have9 pending task</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="task-info">
+                                    <span class="task-desc">task 1</span>
+                                    <span class="percentage">40%</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="progress progress-striped active">
+                                    <div class="fa-bars yellow" style="width:40%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="notification_bottom">
+                                <a href="#">See all pengding tasks</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown note">
+                    <a href="#" data-toggle="dropdown">
+                        <i class="fa fa-tasks"></i>
+                    </a>
+                    <ul class="dropdown-menu two">
+                        <li>
+                            <div class="notification_header">
+                                <h3>You have9 pending task</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="task-info">
+                                    <span class="task-desc">task 1</span>
+                                    <span class="percentage">40%</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="progress progress-striped active">
+                                    <div class="fa-bars yellow" style="width:40%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="notification_bottom">
+                                <a href="#">See all pengding tasks</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown note">
+                    <a href="#" data-toggle="dropdown">
+                        <i class="fa fa-tasks"></i>
+                    </a>
+                    <ul class="dropdown-menu two">
+                        <li>
+                            <div class="notification_header">
+                                <h3>You have9 pending task</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="task-info">
+                                    <span class="task-desc">task 1</span>
+                                    <span class="percentage">40%</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="progress progress-striped active">
+                                    <div class="fa-bars yellow" style="width:40%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="notification_bottom">
+                                <a href="#">See all pengding tasks</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar-menu">
+        <div class="menu">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <i class="fa-fa-tachometer"></i>
+                        <span>计划单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="fa-fa-tachometer"></i>
+                        <span>任务单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="fa-fa-tachometer"></i>
+                        <span>工作记录</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="fa-fa-tachometer"></i>
+                        <span>文档中心</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="fa-fa-tachometer"></i>
+                        <span>报表统计</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
+        </footer>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>

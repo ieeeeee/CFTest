@@ -1,0 +1,15 @@
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csprojResolveAssemblyReference.cache
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.cache
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\bin\Debug\OA.Models.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\bin\Debug\OA.Models.pdb
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.pdb
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\bin\Debug\OA.Models.dll
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\bin\Debug\OA.Models.pdb
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\bin\Debug\Newtonsoft.Json.dll
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\bin\Debug\Newtonsoft.Json.xml
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csprojResolveAssemblyReference.cache
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.cache
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.dll
+F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.pdb

@@ -1,0 +1,29 @@
+﻿@using StackExchange.Profiling
+@{
+    Layout = null;
+}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<body class="gray-bg">
+    @RenderBody()
+    @MiniProfiler.RenderIncludes()
+
+    <script src="/Content/js2/bootstrap.min.js"></script>
+
+
+    <script src="/Content/js2/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="/Content/js2/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
+    <script src="/Content/js2/json2.js"></script>
+    <script src="/Content/js2/jqgrid-list.js"></script>
+    <script src="/Content/js2/base.js"></script>
+
+    <script src="/Content/js2/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Content/js2/plugins/suggest/bootstrap-suggest.min.js"></script>
+    <script src="~/Content/js2/page/ZF.action.js"></script>
+    @RenderSection("scripts", false)
+</body>

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{68A67E15-3AFF-4AB4-B67A-D577366B14E9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OA.Data</RootNamespace>
+    <AssemblyName>OA.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Entity.Design.Extensibility, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CFTestOA.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CFTestOA.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CFTestOA.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CFTestOA.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Config\B_BaseClassConfig.cs" />
+    <Compile Include="Config\B_BaseInfoConfig.cs" />
+    <Compile Include="Config\B_DepartmentConfig.cs" />
+    <Compile Include="Config\B_EnterpriseConfig.cs" />
+    <Compile Include="Config\B_LogConfig.cs" />
+    <Compile Include="Config\B_LoginLogConfig.cs" />
+    <Compile Include="Config\B_MenuConfig.cs" />
+    <Compile Include="Config\B_RoleConfig.cs" />
+    <Compile Include="Config\B_UserConfig.cs" />
+    <Compile Include="Config\C_ContactsConfig.cs" />
+    <Compile Include="Config\C_CustomerConfig.cs" />
+    <Compile Include="Config\P_ApplyOperatorConfig.cs" />
+    <Compile Include="Config\P_FeeApplyConfig.cs" />
+    <Compile Include="Config\P_LeaveApplyConfig.cs" />
+    <Compile Include="Config\S_SystemConfig.cs" />
+    <Compile Include="Config\W_CompanyNewsConfig.cs" />
+    <Compile Include="Config\W_DocumentConfig.cs" />
+    <Compile Include="Config\W_MeetingReportConfig.cs" />
+    <Compile Include="Config\W_PlanListConfig.cs" />
+    <Compile Include="Config\W_TaskListConfig.cs" />
+    <Compile Include="Config\W_TaskOperatorConfig.cs" />
+    <Compile Include="DbConfiguration.cs" />
+    <Compile Include="Entity\BaseEntity.cs" />
+    <Compile Include="Entity\B_BaseClassEntity.cs" />
+    <Compile Include="Entity\B_BaseInfoEntity.cs" />
+    <Compile Include="Entity\B_DepartmentEntity.cs" />
+    <Compile Include="Entity\B_EnterpriseEntity.cs" />
+    <Compile Include="Entity\B_LogEntity.cs" />
+    <Compile Include="Entity\B_MenuEntity.cs" />
+    <Compile Include="Entity\B_RoleEntity.cs" />
+    <Compile Include="Entity\B_UserEntity.cs" />
+    <Compile Include="Entity\C_ContactsEntity.cs" />
+    <Compile Include="Entity\C_CustomerEntity.cs" />
+    <Compile Include="Entity\B_LoginLogEntity.cs" />
+    <Compile Include="Entity\P_ApplyOperatorEntity.cs" />
+    <Compile Include="Entity\P_FeeApplyEntity.cs" />
+    <Compile Include="Entity\P_LeaveApplyEntity.cs" />
+    <Compile Include="Entity\S_SystemConfigEntity.cs" />
+    <Compile Include="Entity\W_CompanyNewsEntity.cs" />
+    <Compile Include="Entity\W_DocumentEntity.cs" />
+    <Compile Include="Entity\W_MeetingReportEntity.cs" />
+    <Compile Include="Entity\W_PlanListEntity.cs" />
+    <Compile Include="Entity\W_TaskListEntity.cs" />
+    <Compile Include="Entity\W_TaskOperatorEntity.cs" />
+    <Compile Include="InitData.cs" />
+    <Compile Include="OAContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CFTestOA.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CFTestOA.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="CFTestOA.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CFTestOA.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OA.Basis\OA.Basis.csproj">
+      <Project>{D84E61F5-9CD4-47CC-8750-BD0EA3F22E3A}</Project>
+      <Name>OA.Basis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OA.Models\OA.Models.csproj">
+      <Project>{276AF90A-0CCB-4B93-9C70-65490A79599F}</Project>
+      <Name>OA.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
