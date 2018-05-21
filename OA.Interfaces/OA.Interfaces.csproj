@@ -41,10 +41,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDatabaseInitService.cs" />
+    <Compile Include="IEntService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OA.Basis\OA.Basis.csproj">
+      <Project>{D84E61F5-9CD4-47CC-8750-BD0EA3F22E3A}</Project>
+      <Name>OA.Basis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OA.Models\OA.Models.csproj">
       <Project>{276AF90A-0CCB-4B93-9C70-65490A79599F}</Project>
       <Name>OA.Models</Name>

@@ -16,6 +16,10 @@ namespace OA.Data.Entity
             B_Users = new HashSet<B_UserEntity>();
         }
         public int EntID { get; set; }
+
+        //分组ID 同一个分组多个企业 即一个公司多个机构的效果
+        public int GroupID { get; set; }
+
         public string EntName { get; set; }
         public string Tel { get; set; }
 

@@ -30,5 +30,11 @@ namespace OA.Basis.Extentions
             int k;
             return int.TryParse(val, out k) ? k : defaultValue;
         }
+
+        //如果为空，返回默认值
+        public static string WithDefaultValueIfEmpty(this string value,string defaultValue)
+        {
+            return value.IsBlank() ? defaultValue : value;
+        }
     }
 }

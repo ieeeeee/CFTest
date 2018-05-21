@@ -1,0 +1,26 @@
+﻿/*body {font-size:12px;}*/
+/*#pager{ margin-top:12px;width:auto;line-height:25px;text-align:right;float: left;}*/
+#pager{ margin-top:12px;width:auto;line-height:25px;text-align:right;}
+.pager{width:auto;line-height:25px;text-align:right;float: left;}
+.preNextPager{ line-height:25px;cursor:pointer;float: left;font-size: 12px;text-align: center;padding:0 2px; display:inline-block;}
+.preNextPager a{ text-decoration:none;}
+.preNextPager a:hover{
+	color:red;
+}
+.pageNum{line-height:25px;float: left; cursor:pointer}
+.pageNum a{ text-decoration: none;font-size:12px; padding:0 2px;}
+.currPage{float: left;padding:0 2px; display:inline-block;color: Red;font-weight: bold;font-size:12px}
+.currPage a{ text-decoration:none;}
+.isMore{text-align:center; font-weight:bold;width:25px;float:left;margin-left:3px;margin-right:3px;padding-top:6px}
+.isMore a{ text-decoration: none;}
+.isSelect{width:40px;border: 1px solid gray;height: 25px;float: right; }
+.pager{width:auto;height:30px; text-align:right;float: left;padding-top:10px;}
+
+.numCurrPage{width:10px;height:20px;float: left;text-align: center;color: Red;font-weight: bold;padding-top: 5px;font-size:12px}
+.numCurrPage a{ text-decoration:none;}
+
+.numPage{width:8px;height:20px;float: left;text-align: center;padding-top: 5px; cursor:pointer}
+.numPage a{ text-decoration: none;font-size:12px;}
+
+.numPreNextPager{ cursor:pointer;width:20px;height:18px;float: left;font-size: 12px;text-align: center;padding-top:7px}
+.numPreNextPager a{ text-decoration:none;}
