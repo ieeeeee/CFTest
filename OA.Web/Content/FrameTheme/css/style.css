@@ -1025,7 +1025,7 @@ a.deutsch img,a.ukrainian img,a.english img,a.espana img,a.russian img {
 
 .wrapper-dropdown-3 {
     position: relative;
-    width:90px;
+    width:180px;
     margin: 0 auto;
     padding: 20px 10px;
     background: #00A748;
@@ -1168,8 +1168,8 @@ ul.dropdown {
 /*--//top_header--*/
 /*--/inner-content-start--*/
 .outter-wp {
-    padding: 1.5em 1.5em;
-	    margin-bottom: 2em;
+    padding: 0.5em 1.5em;
+	margin-bottom: 2em;
 }
 .widget {
        width: 23.5%;
@@ -3142,7 +3142,7 @@ h3.inner-tittle.t-inner {
 /*--/tabs--*/
 .tabs {
 	position: relative;
-	width: 100%;
+	width: 70%;
 	overflow: hidden;
 	margin: 1em 0 2em;
 	font-weight: 300;

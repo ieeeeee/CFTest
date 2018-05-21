@@ -13,3 +13,12 @@ F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CoreCompile
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.dll
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.pdb
+F:\GitDepo\CFTest\OA.Models\bin\Debug\OA.Models.dll
+F:\GitDepo\CFTest\OA.Models\bin\Debug\OA.Models.pdb
+F:\GitDepo\CFTest\OA.Models\bin\Debug\Newtonsoft.Json.dll
+F:\GitDepo\CFTest\OA.Models\bin\Debug\Newtonsoft.Json.xml
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csprojResolveAssemblyReference.cache
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.cache
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.dll
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.pdb

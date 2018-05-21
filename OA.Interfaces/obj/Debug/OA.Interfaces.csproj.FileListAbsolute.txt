@@ -20,3 +20,14 @@ F:\Learn\CFTest\CFTest\CFTestOA\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.Cor
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CopyComplete
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Interfaces\obj\Debug\OA.Interfaces.dll
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Interfaces\obj\Debug\OA.Interfaces.pdb
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\OA.Interfaces.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\OA.Interfaces.pdb
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\OA.Models.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\OA.Models.pdb
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.xml
+F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csprojResolveAssemblyReference.cache
+F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CoreCompileInputs.cache
+F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CopyComplete
+F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.dll
+F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.pdb

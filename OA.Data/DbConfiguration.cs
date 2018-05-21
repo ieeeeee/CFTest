@@ -41,6 +41,7 @@ namespace OA.Data
                 var baseStruct = new B_MenuEntity
                 {
                     MenuName = "基础结构",
+                    Icon="fa fa-gears",
                     Url = "#",
                     MenuType = 1,
                     ParentID = system.MenuID,
@@ -50,6 +51,7 @@ namespace OA.Data
                 var entMgr = new B_MenuEntity
                 {
                     MenuName = "企业管理",
+                    Icon = "lnr lnr-apartment",
                     Url = "/BaseStruct/EntInfo",
                     MenuType = 2,
                     ParentID = baseStruct.MenuID,
@@ -59,6 +61,7 @@ namespace OA.Data
                 var departmentMgr = new B_MenuEntity
                 {
                     MenuName = "部门管理",
+                    Icon = "fa fa-sitemap",
                     Url = "/BaseStruct/DepartMentInfo",
                     MenuType = 2,
                     ParentID = baseStruct.MenuID,
@@ -68,6 +71,7 @@ namespace OA.Data
                 var userMgr = new B_MenuEntity
                 {
                     MenuName = "用户管理",
+                    Icon = "fa fa-users",
                     Url = "/BaseStruct/UserInfo",
                     MenuType = 2,
                     ParentID = baseStruct.MenuID,
@@ -77,6 +81,7 @@ namespace OA.Data
                 var roleMenuMgr = new B_MenuEntity
                 {
                     MenuName = "角色授权",
+                    Icon = "fa fa-usersecret",
                     Url = "/BaseStruct/RoleMenuMgr",
                     MenuType = 3,
                     ParentID = baseStruct.MenuID,
@@ -86,6 +91,7 @@ namespace OA.Data
                 var userRoleMgr = new B_MenuEntity
                 {
                     MenuName = "用户授权",
+                    Icon = "fa fa-user-md",
                     Url = "/BaseStruct/UserRoleMgr",
                     MenuType = 3,
                     ParentID = baseStruct.MenuID,
@@ -95,6 +101,7 @@ namespace OA.Data
                 var workCenter = new B_MenuEntity
                 {
                     MenuName = "工作中心",
+                    Icon = "fa fa-laptop",
                     Url = "#",
                     MenuType = 1,
                     ParentID = system.MenuID,
@@ -104,6 +111,7 @@ namespace OA.Data
                 var planMgr = new B_MenuEntity
                 {
                     MenuName = "计划单",
+                    Icon = "fa fa-text-o",
                     Url = "/WorkerCenter/PlanList/Index",
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
@@ -112,7 +120,8 @@ namespace OA.Data
                 };
                 var taskMgr = new B_MenuEntity
                 {
-                    MenuName = "计划单",
+                    MenuName = "任务单",
+                    Icon = "fa fa-word-o",
                     Url = "/WorkerCenter/TaskList/Index",
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
@@ -131,6 +140,7 @@ namespace OA.Data
                 var newsMgr = new B_MenuEntity
                 {
                     MenuName = "公司公告",
+                    Icon = "fa fa-bullhorn",
                     Url = "/WorkerCenter/CompanyNews/Index",
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
@@ -140,6 +150,7 @@ namespace OA.Data
                 var docMgr = new B_MenuEntity
                 {
                     MenuName = "文档中心",
+                    Icon = "fa-folder",
                     Url = "/WorkerCenter/Documents/Index",
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
@@ -167,6 +178,7 @@ namespace OA.Data
                 var contactsMgr = new B_MenuEntity
                 {
                     MenuName = "联系人",
+                    Icon = "fa fa-users",
                     Url = "/CustomerMgr/Cantacts/Index",
                     MenuType = 2,
                     ParentID = customerMgr.MenuID,
@@ -176,6 +188,7 @@ namespace OA.Data
                 var selfCenter = new B_MenuEntity
                 {
                     MenuName = "个人中心",
+                    Icon = "fa fa-heartbeat",
                     Url = "#",
                     MenuType = 1,
                     ParentID = system.MenuID,
@@ -185,6 +198,7 @@ namespace OA.Data
                 var feeMgr = new B_MenuEntity
                 {
                     MenuName = "费用申请",
+                    Icon = "fa fa-money",
                     Url = "/selfCenter/FeeMgr/Index",
                     MenuType = 2,
                     ParentID = selfCenter.MenuID,
@@ -194,6 +208,7 @@ namespace OA.Data
                 var leaveMgr = new B_MenuEntity
                 {
                     MenuName = "请假申请",
+                    Icon = "fa fa-send-o",
                     Url = "/selfCenter/LeaveMgr/Index",
                     MenuType = 2,
                     ParentID = selfCenter.MenuID,

@@ -9,3 +9,14 @@ F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\AutoMapper.xml
 F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\obj\Debug\OA.Basis.csproj.CopyComplete
 F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\SimpleInjector.dll
 F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\SimpleInjector.xml
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\OA.Basis.dll
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\OA.Basis.pdb
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\AutoMapper.dll
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\SimpleInjector.dll
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\AutoMapper.xml
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\SimpleInjector.xml
+F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.csprojResolveAssemblyReference.cache
+F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.csproj.CoreCompileInputs.cache
+F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.csproj.CopyComplete
+F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.dll
+F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.pdb
