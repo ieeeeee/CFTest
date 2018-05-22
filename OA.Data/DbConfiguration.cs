@@ -35,7 +35,7 @@ namespace OA.Data
                     Url = "#",
                     MenuType = 1,
                     OrderID = 1,
-                    CreateDataTime = _now,
+                    CreateDateTime = _now,
                     ParentID = -1
                 };
                 var baseStruct = new B_MenuEntity
@@ -46,7 +46,7 @@ namespace OA.Data
                     MenuType = 1,
                     ParentID = system.MenuID,
                     OrderID = 1,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var entMgr = new B_MenuEntity
                 {
@@ -56,7 +56,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = baseStruct.MenuID,
                     OrderID = 2,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var departmentMgr = new B_MenuEntity
                 {
@@ -66,7 +66,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = baseStruct.MenuID,
                     OrderID = 3,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var userMgr = new B_MenuEntity
                 {
@@ -76,7 +76,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = baseStruct.MenuID,
                     OrderID = 4,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var roleMenuMgr = new B_MenuEntity
                 {
@@ -86,7 +86,7 @@ namespace OA.Data
                     MenuType = 3,
                     ParentID = baseStruct.MenuID,
                     OrderID = 5,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var userRoleMgr = new B_MenuEntity
                 {
@@ -96,7 +96,7 @@ namespace OA.Data
                     MenuType = 3,
                     ParentID = baseStruct.MenuID,
                     OrderID = 6,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var workCenter = new B_MenuEntity
                 {
@@ -106,7 +106,7 @@ namespace OA.Data
                     MenuType = 1,
                     ParentID = system.MenuID,
                     OrderID = 7,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var planMgr = new B_MenuEntity
                 {
@@ -116,7 +116,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
                     OrderID = 8,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var taskMgr = new B_MenuEntity
                 {
@@ -126,7 +126,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
                     OrderID = 9,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var meetingMgr = new B_MenuEntity
                 {
@@ -135,7 +135,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
                     OrderID = 10,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var newsMgr = new B_MenuEntity
                 {
@@ -145,7 +145,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
                     OrderID = 11,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var docMgr = new B_MenuEntity
                 {
@@ -155,7 +155,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = workCenter.MenuID,
                     OrderID = 12,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var customerMgr = new B_MenuEntity
                 {
@@ -164,7 +164,7 @@ namespace OA.Data
                     MenuType = 1,
                     ParentID = system.MenuID,
                     OrderID = 13,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var customerInfo = new B_MenuEntity
                 {
@@ -173,7 +173,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = customerMgr.MenuID,
                     OrderID = 14,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var contactsMgr = new B_MenuEntity
                 {
@@ -183,7 +183,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = customerMgr.MenuID,
                     OrderID = 15,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var selfCenter = new B_MenuEntity
                 {
@@ -193,7 +193,7 @@ namespace OA.Data
                     MenuType = 1,
                     ParentID = system.MenuID,
                     OrderID = 16,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var feeMgr = new B_MenuEntity
                 {
@@ -203,7 +203,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = selfCenter.MenuID,
                     OrderID = 17,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 var leaveMgr = new B_MenuEntity
                 {
@@ -213,7 +213,7 @@ namespace OA.Data
                     MenuType = 2,
                     ParentID = selfCenter.MenuID,
                     OrderID = 18,
-                    CreateDataTime = _now
+                    CreateDateTime = _now
                 };
                 //报表中心
 
@@ -278,7 +278,7 @@ namespace OA.Data
                     Password = EnDecryption.MD5Encrypt("qazwsx"), //using OA.Basis.Extentions;
                     PlainCode="qazwsx",
                     Email = "",
-                    CreateDataTime = _now,
+                    CreateDateTime = _now,
                     B_Roles = new List<B_RoleEntity> { superAdminRole }
                 };
                 var guest = new B_UserEntity {
@@ -287,7 +287,7 @@ namespace OA.Data
                     Password = EnDecryption.MD5Encrypt("123456"), //using OA.Basis.Extentions;
                     PlainCode="123456",
                     Email = "",
-                    CreateDataTime = _now,
+                    CreateDateTime = _now,
                     B_Roles = new List<B_RoleEntity> { guestRole }
                 };
                 var user = new List<B_UserEntity> {
@@ -304,7 +304,7 @@ namespace OA.Data
                         SystemName="CFTestOA",
                         IsDataInited=true,
                         DataInitedDate=_now,
-                        CreateDataTime=_now,
+                        CreateDateTime=_now,
                         IsDeleted=0
                     }
                 };

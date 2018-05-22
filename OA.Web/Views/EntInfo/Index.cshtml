@@ -7,29 +7,43 @@
 @section headerJS{
         <link href="~/Content/Plugin/pagination/Pager.css" rel="stylesheet"/>
         <script src="~/Content/Plugin/pagination/Pager.js"></script>
+
+        <link href="~/Content/Plugin/layer/theme/default/layer.css" rel="stylesheet"/>
+        <script src="~/Content/Plugin/layer/layer.js"></script>
     }
-<div class="graph-visual tables-main" id="entControl">
-    <h3 class="inner-tittle two">企业信息 </h3>
-    <div class="graph">
-        <div class="tables" id="entInfoList">
-            <table class="table table-hover">
-                <thead> <tr> <th>#</th> <th>企业名称</th> <th>企业地址</th> <th>联系方式</th><th>使用状态</th></tr> </thead>
-                <tbody v-for="(item,index) in entInfoList">
-                    <tr> <th scope="row">{{index+1}}</th> <td>{{item.EntName}}</td><td>{{item.Address}}</td> <td>{{item.Tel}}</td> <td>{{item.isDeleted}}</td></tr>
-                </tbody>
-            </table>
+        <div class="graph-visual tables-main" id="entControl">
+            <h3 class="inner-tittle two">企业信息 </h3>
+            <div class="graph">
+                <div class="buttons-ui">
+                    <a id="btnAdd" class="btn green" onclick="addModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+                    <a id="btnDel" class="btn red" onclick="delData()"><i class="fa fa-close"></i>&nbsp;删除</a>
+                </div>
+            </div>
+            <div class="graph">
+                <div class="tables" id="entInfoList">
+                    <table class="table table-hover">
+                        <thead> <tr><th>#</th> <th>企业名称</th> <th>企业地址</th> <th>联系方式</th><th>使用状态</th><th>操作</th><</tr> </thead>
+                        <tbody v-for="(item,index) in entInfoList">
+                            <tr> <th scope="row"></th> <td>{{item.EntName}}</td><td>{{item.Address}}</td> <td>{{item.Tel}}</td> <td>{{item.isDeleted}}</td>
+                                 <td>
+                                    <a id="btnAdd" class="btn blue" v-onclick="EditModel(index,item.EntID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
+                                    <a id="btnDel" class="btn red" v-onclick="DelData(index,item.EntID)"><i class="fa fa-close" title="删除"></i>&nbsp;&nbsp;</a>
+                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-12 text-center" v-if="entInfoList.length<=0 ">
+                    {{message}}
+                </div>
+            </div>
+            <div class="row" id="pageDiv">
+                <div class="col-xs-12">
+                    <hr style="margin:10px auto;" />
+                    <div id="pager" style="margin-top:4px;"></div>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-12 text-center" v-if="entInfoList.length<=0 ">
-            @Html.Display("没有数据")!
-        </div>
-    </div>
-    <div class="row" id="pageDiv">
-        <div class="col-xs-12">
-            <hr style="margin:10px auto;"/>
-            <div id="pager" style="margin-top:4px;"></div>
-        </div>
-    </div>
-</div>
 
 @section pageJS{
     <script src="~/Content/Plugin/vue.js"></script>
@@ -40,13 +54,22 @@
                 pageSize: 6,
                 pageIndex: 1,
                 entID:0,
-                entInfoList:[]
+                entInfoList: [],
+                message:"没有数据"
+            },
+            methods: {
+                EditModel: function (index, EntID) {
+                    return GetEditModel(index, EntID);
+                },
+                DelData:function (index, EntID) {
+                    return GetDelData(index, EntID);
+                }
             }
         })
 
         //获取企业信息
         function GetEntInfo(pageSize, pageIndex) {
-            $.post("/EntInfo/GetEntInfo", { "pageSize": pageSiez, "pageIndex": pageGlobalParam.currPage }, function (result) {
+            $.post("/EntInfo/GetEntInfo", { }, function (result) {
                 if (result) {
                     vList.entInfoList = result.Data;
                     if (result.Data.length > 0) {
@@ -78,6 +101,42 @@
                 }
             },"json");
 
+        }
+
+        function addModel() {
+            $("#btnAdd").button("loading");
+            window.location.href = "@Url.Action("Add")";
+        }
+        
+        @*function editModel() {//编辑
+            var row = ZFGrid.GetData();
+            if (row != null) {
+                $("#btnEdit").button("loading");
+                window.location.href = "@Url.Action("Edit")/" + row.Id;
+            } else {
+                parent.layer.alert("请选择要编辑的数据");
+            }
+        }*@
+
+        //删除
+        function GetDelData(index,EntID) {
+            //layer询问框
+            layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
+                //确定
+                $.post("/EntInfo/Del", { "EntID": EntID }, function (result) {
+                    if (result) {
+                        if (result == true) {
+                            layer.msg("删除成功!");
+                            SensorDataSel(param.pageSize, param.currPage);
+                        }
+                        else {
+                            layer.msg("删除失败!");
+                        }
+                    }
+                })
+                //关闭询问框
+                layer.close(index);
+            });
         }
 
     </script>

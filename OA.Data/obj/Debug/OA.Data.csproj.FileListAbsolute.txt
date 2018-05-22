@@ -100,3 +100,5 @@ F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.csproj.CoreCompileInputs.cache
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.dll
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.pdb
+F:\GitDepo\CFTest\OA.Data\bin\Debug\System.Linq.Dynamic.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\OA.Basis.dll.config

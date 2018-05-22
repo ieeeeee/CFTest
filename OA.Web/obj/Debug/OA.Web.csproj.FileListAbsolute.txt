@@ -733,3 +733,7 @@ F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.csproj.CoreCompileInputs.cache
 F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.dll
 F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.pdb
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Web\bin\System.Linq.Dynamic.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Web\bin\OA.Basis.dll.config
+F:\GitDepo\CFTest\OA.Web\bin\System.Linq.Dynamic.dll
+F:\GitDepo\CFTest\OA.Web\bin\OA.Basis.dll.config

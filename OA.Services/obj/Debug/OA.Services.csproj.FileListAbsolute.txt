@@ -82,3 +82,5 @@ F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.csproj.CoreCompileInputs.cac
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.dll
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.pdb
+F:\GitDepo\CFTest\OA.Services\bin\Debug\System.Linq.Dynamic.dll
+F:\GitDepo\CFTest\OA.Services\bin\Debug\OA.Basis.dll.config

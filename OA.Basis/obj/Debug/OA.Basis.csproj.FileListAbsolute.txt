@@ -20,3 +20,15 @@ F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.csproj.CoreCompileInputs.cache
 F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.dll
 F:\GitDepo\CFTest\OA.Basis\obj\Debug\OA.Basis.pdb
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\OA.Basis.dll.config
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\EntityFramework.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\EntityFramework.SqlServer.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\System.Linq.Dynamic.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\EntityFramework.xml
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Basis\bin\Debug\EntityFramework.SqlServer.xml
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\OA.Basis.dll.config
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\EntityFramework.dll
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\EntityFramework.SqlServer.dll
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\System.Linq.Dynamic.dll
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\EntityFramework.xml
+F:\GitDepo\CFTest\OA.Basis\bin\Debug\EntityFramework.SqlServer.xml

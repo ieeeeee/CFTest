@@ -1,0 +1,104 @@
+﻿@model OA.Models.EntDto
+
+@{
+    ViewBag.Title = "添加企业";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerJS{
+    <style>
+        .graph-2.general{
+            width:50%;
+        }
+        .col-md-8{
+            width:48%;
+        }
+        .col-sm-offset-2{
+            margin-left:36%
+        }
+    </style>
+    }
+<div class="wrapper wrapper-content">
+    @using (Html.BeginForm("Add", "EntInfo", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="set-3">
+            <div class="graph-2 general">
+                <h3 class="inner-tittle two">新增企业  </h3>
+                <div class="grid-1">
+                    <div class="form-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">企业名称</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.EntName, new { @class = "form-control1 icon", placeholder = "请输入企业名称" })
+                                        @*<input id="entName" class="form-control1 icon" type="text" placeholder="请输入企业名称">*@
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block">With tooltip</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">联系电话</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-key"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.Tel, new { @class = "form-control1 icon", placeholder = "请输入联系电话" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block">With tooltip</p>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-2 control-label">企业地址</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control1 icon", placeholder = "请输入企业地址" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-2 control-label">备注</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group input-icon right">
+                                        @Html.TextAreaFor(m => m.Remark, new { @class = "form-control1", placeholder = "",cols="50",rows="4"})
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkbox" class="col-sm-2 control-label">使用状态</label>
+                                <div class="col-sm-8">
+                                    <div class="checkbox-inline"><label><input type="checkbox" checked=""> 启用</label></div>
+                                    <div class="checkbox-inline"><label><input type="checkbox"> 禁用</label></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-2">
+                                <button type="submit" class="btn btn-default ">保存</button>
+                                <button type="button" class="btn btn-warning " onclick="Clear()">清空</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+
+}

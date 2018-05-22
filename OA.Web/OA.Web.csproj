@@ -230,6 +230,7 @@
     <Content Include="Content\FrameTheme\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\FrameTheme\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\FrameTheme\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Content\FrameTheme\js\Base.js" />
     <Content Include="Content\Login\css\login.css" />
     <Content Include="Content\Login\images\green_light.jpeg" />
     <Content Include="Content\Login\images\green_sky.jpg" />
@@ -237,6 +238,13 @@
     <Content Include="Content\Login\images\green_tree.jpeg" />
     <Content Include="Content\Login\images\Login_bg.jpg" />
     <Content Include="Content\Login\images\Star.jpg" />
+    <Content Include="Content\Plugin\layer\layer.js" />
+    <Content Include="Content\Plugin\layer\theme\default\icon-ext.png" />
+    <Content Include="Content\Plugin\layer\theme\default\icon.png" />
+    <Content Include="Content\Plugin\layer\theme\default\layer.css" />
+    <Content Include="Content\Plugin\layer\theme\default\loading-0.gif" />
+    <Content Include="Content\Plugin\layer\theme\default\loading-1.gif" />
+    <Content Include="Content\Plugin\layer\theme\default\loading-2.gif" />
     <Content Include="Content\Plugin\pagination\bgPager.css" />
     <Content Include="Content\Plugin\pagination\Pager.css" />
     <Content Include="Content\Plugin\pagination\Pager.js" />
@@ -270,6 +278,7 @@
     <Content Include="Content\FrameTheme\fonts\weathericons-regular-webfont.eot" />
     <Content Include="Content\FrameTheme\fonts\weathericons-regular-webfont.ttf" />
     <Content Include="Content\FrameTheme\fonts\weathericons-regular-webfont.woff" />
+    <Content Include="Content\FrameTheme\fonts\fontawesome-webfont.woff2" />
     <None Include="Content\FrameTheme\js\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\FrameTheme\js\jquery-1.10.2.min.js" />
     <Content Include="Content\FrameTheme\js\jquery.validate.min.js" />
@@ -294,6 +303,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_Content.cshtml" />
     <Content Include="Views\EntInfo\Index.cshtml" />
+    <Content Include="Views\EntInfo\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

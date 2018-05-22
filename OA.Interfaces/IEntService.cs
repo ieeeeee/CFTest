@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace OA.Interfaces
 {
-    public interface IEntService
+   public  interface IEntService
     {
-        public Task<PagedResult<EntDto>> Search(EntFilter entFilter);
+         Task<string> AddAsync(EntDto dto);
+         Task<PagedResult<EntDto>> SearchAsync(EntFilter entFilter);
     }
 }

@@ -1,7 +1,9 @@
-﻿using Mehdime.Entity;
+﻿using AutoMapper;
+using Mehdime.Entity;
 using OA.Basis;
 using OA.Basis.Extentions;
 using OA.Data;
+using OA.Interfaces;
 using OA.Models;
 using OA.Models.Filters;
 using System;
@@ -9,19 +11,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OA.Data.Entity;
+using OA.Basis.Utilities;
 
 namespace OA.Services.AppServices
 {
-    public class EntService
+    public class EntService:IEntService
     {
         private readonly IDbContextScopeFactory _dbContextScopeFactory;
-        public EntService(IDbContextScopeFactory dbContextScopeFactory)
+        private readonly IMapper _mapper;
+        public EntService(IDbContextScopeFactory dbContextScopeFactory,IMapper mapper)
         {
             _dbContextScopeFactory = dbContextScopeFactory;
+            _mapper = mapper;
         }
-
+        //添加企业
+        public async Task<string> AddAsync(EntDto dto)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var entity = _mapper.Map<EntDto, B_EnterpriseEntity>(dto);
+                entity.Create();
+                entity.GroupID= BaseIdGenerator.Instance.GetNo();
+                var db = scope.DbContexts.Get<OAContext>();
+                db.B_Enterprises.Add(entity);
+                return await scope.SaveChangesAsync()>0 ? entity.EntID.ToString() : string.Empty;
+            }
+        }
         //查询企业信息
-        public async Task<PagedResult<EntDto>> Search(EntFilter entFilter)
+        public async Task<PagedResult<EntDto>> SearchAsync(EntFilter entFilter)
         {
             if (entFilter == null)
                 return new PagedResult<EntDto>(1, 0);

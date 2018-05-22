@@ -11,7 +11,7 @@ namespace OA.Data.Config
             ToTable("B_Enterprise");
             HasKey(item => item.EntID);
             Property(item => item.EntID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(item => item.GroupID).IsRequired();
+            Property(item => item.GroupID).HasColumnType("nvarchar").IsRequired().HasMaxLength(4);
             Property(item => item.EntName).HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
             Property(item => item.Tel).HasColumnType("nvarchar").HasMaxLength(20);
             Property(item => item.Address).HasColumnType("nvarchar").HasMaxLength(100);

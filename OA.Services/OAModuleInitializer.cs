@@ -34,6 +34,7 @@ namespace OA.Services
         public override void LoadAutoMapper(IMapperConfigurationExpression mapperConfig)
         {
             mapperConfig.CreateMap<B_UserEntity, UserDto>().ReverseMap();
+            mapperConfig.CreateMap<B_EnterpriseEntity, EntDto>().ReverseMap();
         }
     }
 }

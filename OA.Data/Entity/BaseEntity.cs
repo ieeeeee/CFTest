@@ -13,14 +13,14 @@ namespace OA.Data.Entity
         public BaseEntity()
         {
             IsDeleted = 0;
-            CreateDataTime = DateTime.Now;
+            CreateDateTime = DateTime.Now;
         }
 
         //public string  Id { get; set; }
         /// <summary>
         /// 创建日期
         /// </summary>
-        public DateTime CreateDataTime { get; set; }
+        public DateTime CreateDateTime { get; set; }
         /// <summary>
         /// 备注
         /// </summary>
@@ -36,5 +36,13 @@ namespace OA.Data.Entity
         /// </summary>
         public int IsDeleted { get; set; }
 
+    }
+
+    public static class BaseEntityExtension
+    {
+        public static void Create(this BaseEntity entity)
+        {
+            entity.CreateDateTime = DateTime.Now;
+        }
     }
 }
