@@ -17,6 +17,10 @@ namespace OA.Data
         public DbSet<B_LogEntity> B_Logs{ get; set; }
         public DbSet<B_MenuEntity> B_Menus { get; set; }
         public DbSet<B_RoleEntity> B_Roles { get; set; }
+
+        public DbSet<B_TableStructEntity> B_TableStructEntities { get; set; }
+
+
         public DbSet<B_UserEntity> B_Users { get; set; }
         public DbSet<C_ContactsEntity> C_Contacts { get; set; }
         public DbSet<C_CustomerEntity> C_Customers { get; set; }
@@ -32,6 +36,8 @@ namespace OA.Data
         public DbSet<W_TaskOperatorEntity> W_TaskOperators { get; set; }
 
         public DbSet<S_SystemConfigEntity> S_SystemConfigs { get; set; }
+
+
         #endregion
 
 

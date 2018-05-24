@@ -84,3 +84,5 @@ F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.dll
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.pdb
 F:\GitDepo\CFTest\OA.Services\bin\Debug\System.Linq.Dynamic.dll
 F:\GitDepo\CFTest\OA.Services\bin\Debug\OA.Basis.dll.config
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Services\bin\Debug\System.Linq.Dynamic.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Services\bin\Debug\OA.Basis.dll.config

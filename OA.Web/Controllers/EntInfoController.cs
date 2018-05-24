@@ -30,6 +30,13 @@ namespace OA.Web.Controllers
             return View(new EntDto());
         }
 
+        public async Task<ActionResult> Edit(int entID)
+        {
+            var model = await _entService.FindAsync(entID);
+            return View(new EntDto());
+        }
+
+
         //获取企业信息
         public async Task<JsonResult> GetEntInfo(EntFilter entFilter)
         {

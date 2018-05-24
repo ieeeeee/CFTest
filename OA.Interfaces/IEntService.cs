@@ -12,6 +12,8 @@ namespace OA.Interfaces
    public  interface IEntService
     {
          Task<string> AddAsync(EntDto dto);
+
+         Task<EntDto> FindAsync(int entID);
          Task<PagedResult<EntDto>> SearchAsync(EntFilter entFilter);
     }
 }

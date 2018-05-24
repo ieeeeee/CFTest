@@ -66,6 +66,7 @@
     <Compile Include="Config\B_LoginLogConfig.cs" />
     <Compile Include="Config\B_MenuConfig.cs" />
     <Compile Include="Config\B_RoleConfig.cs" />
+    <Compile Include="Config\B_TableStructConfig.cs" />
     <Compile Include="Config\B_UserConfig.cs" />
     <Compile Include="Config\C_ContactsConfig.cs" />
     <Compile Include="Config\C_CustomerConfig.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Entity\B_LogEntity.cs" />
     <Compile Include="Entity\B_MenuEntity.cs" />
     <Compile Include="Entity\B_RoleEntity.cs" />
+    <Compile Include="Entity\B_TableStructEntity.cs" />
     <Compile Include="Entity\B_UserEntity.cs" />
     <Compile Include="Entity\C_ContactsEntity.cs" />
     <Compile Include="Entity\C_CustomerEntity.cs" />

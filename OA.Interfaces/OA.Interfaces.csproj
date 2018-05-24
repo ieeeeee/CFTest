@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="IDatabaseInitService.cs" />
     <Compile Include="IEntService.cs" />
+    <Compile Include="IMenuService.cs" />
+    <Compile Include="ITableStructService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

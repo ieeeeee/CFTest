@@ -22,3 +22,6 @@ F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.cache
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.dll
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.pdb
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\bin\Debug\Newtonsoft.Json.dll
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\bin\Debug\Newtonsoft.Json.xml
+F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete

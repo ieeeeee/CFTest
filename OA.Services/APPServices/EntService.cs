@@ -38,11 +38,24 @@ namespace OA.Services.AppServices
                 return await scope.SaveChangesAsync()>0 ? entity.EntID.ToString() : string.Empty;
             }
         }
+
+        //根据主键获得DTO
+        public async Task<EntDto> FindAsync(int EntID)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entity = await db.B_Enterprises.FindAsync(EntID);
+                var dto = _mapper.Map<B_EnterpriseEntity,EntDto>(entity);
+                return dto;
+            }
+               
+        }
         //查询企业信息
         public async Task<PagedResult<EntDto>> SearchAsync(EntFilter entFilter)
         {
             if (entFilter == null)
-                return new PagedResult<EntDto>(1, 0);
+                return new PagedResult<EntDto>(1, 6);
             using (var scope = _dbContextScopeFactory.CreateReadOnly())
             {
                 var db = scope.DbContexts.Get<OAContext>();

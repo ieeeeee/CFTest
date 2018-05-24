@@ -29,6 +29,9 @@ namespace OA.Web
             IocConfig.Register();
             ModelBinderConfig.RegisterModelBinders(ModelBinders.Binders);
 
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new ViewEngineConfig());
+
             //初始化数据库
             var dbInitService = DependencyResolver.Current.GetService<IDatabaseInitService>();
             dbInitService.Init();

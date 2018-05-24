@@ -1,0 +1,177 @@
+﻿@model OA.Models.MenuDto
+
+@{
+    ViewBag.Title = "添加菜单";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerJS{
+    <style>
+        .graph-2.general {
+            width: 50%;
+        }
+
+        .col-md-8 {
+            width: 48%;
+        }
+
+        .col-sm-offset-2 {
+            margin-left: 36%
+        }
+    </style>
+}
+<div class="wrapper wrapper-content">
+    @using (Html.BeginForm("Add", "MenuInfo", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="set-3">
+            <div class="graph-2 general">
+                <h3 class="inner-tittle two">新增菜单</h3>
+                <div class="grid-1" id="menuAddControl">
+                    <div class="form-body">
+                        <form class="form-horizontal">
+                            <div class="form-group" v-for="(item,index) in menuStructList">
+                                <label class="col-md-2 control-label">{{item.FieldName}}</label>
+                                @*<div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        <input type="text" class="form-control1 icon" v-bind:placeholder="item.placeholder"/>
+                                       
+
+                                    </div>
+                                </div>*@
+                            </div>
+                            @*<div class="form-group" >
+        <label class="col-md-2 control-label">菜单名称</label>
+        <div class="col-md-8">
+            <div class="input-group input-icon right">
+                <span class="input-group-addon">
+                    <i class="fa fa-envelope-o"></i>
+                </span>
+                @Html.TextBoxFor(m => m.MenuName, new { @class = "form-control1 icon", placeholder = "请输入菜单名称" })
+</div>
+                                </div>
+                            </div>*@
+                            @*<div class="form-group">
+                                <label class="col-md-2 control-label">菜单网址</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-key"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.Url, new { @class = "form-control1 icon", placeholder = "请输入菜单网址" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block">如：controllerName/ActionName</p>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-2 control-label">Icon图标</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.Icon, new { @class = "form-control1 icon", placeholder = "请输入Icon符号" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block">如 fa fa-key</p>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-2 control-label">菜单类型</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.MenuType, new { @class = "form-control1 icon", placeholder = "请输入菜单类型" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-2 control-label">主菜单名称</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.ParentID, new { @class = "form-control1 icon", placeholder = "请输入父菜单ID" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-2 control-label">排序号</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-icon right">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.OrderID, new { @class = "form-control1 icon", placeholder = "请输入排序号" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-2 control-label">备注</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group input-icon right">
+                                        @Html.TextAreaFor(m => m.Remark, new { @class = "form-control1", placeholder = "", cols = "50", rows = "4" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkbox" class="col-sm-2 control-label">使用状态</label>
+                                <div class="col-sm-8">
+                                    <div class="checkbox-inline"><label><input type="checkbox" checked=""> 启用</label></div>
+                                    <div class="checkbox-inline"><label><input type="checkbox"> 禁用</label></div>
+                                </div>
+                            </div>*@
+                            <div class="col-sm-offset-2">
+                                <button type="submit" class="btn btn-default ">保存</button>
+                                <button type="button" class="btn btn-warning " onclick="Clear()">清空</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var vList = new Vue({
+                el: "#menuAddControl",
+                data: {
+                    menuStructList:[]
+                }
+
+            });
+            GetMenuStruct();
+            function GetMenuStruct() {
+                $.post("/Base/GetAddTableStruct", { "TableID": 1 }, function (result) {
+                    if (result) {
+                        console.log(result);
+                        vList.menuStructList = result;
+                    }
+                },'Json');
+            }
+        })
+    </script>
+
+}

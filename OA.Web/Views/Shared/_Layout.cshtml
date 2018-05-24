@@ -22,14 +22,15 @@
     <div id="page-container">
         <div class="left-content">
             <div class="inner-content">
-                <div class="header-section">
+                <div class="header-section" id="head-menu">
                     <div class="top-menu">
                         <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav pull-left">
-                                <li>@Html.ActionLink("工作中心", "Index", "Home")</li>
+                            <ul class="nav navbar-nav pull-left" >
+                                <li v-for="(item,index)  in menuList" ><a v-bind:href="item.Url" v-bind:data-id="item.MenuID" v-on:click="GetSubMenu($event)">{{item.MenuName}}</a></li>
+                                @*<li>@Html.ActionLink("工作中心", "Index", "Home")</li>
                                 <li>@Html.ActionLink("客户管理", "About", "Home")</li>
-                                <li>@Html.ActionLink("综合管理", "Index", "EntInfo")</li>
-                                <li>@Html.ActionLink("个人中心", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("综合管理", "Index", "BaseStruct/EntInfo")</li>
+                                <li>@Html.ActionLink("个人中心", "Contact", "Home")</li>*@
                             </ul>
                             <form class="searchform">
                                 <input type="text" class="searchbox" id="searchbox" placehoder="Search" />
@@ -38,12 +39,12 @@
                                 </span>
                             </form>
                             <ul class="nav navbar-nav pull-right">
-                                <li class="dropdown note dra-down">
+                                <li class="dropdown note dra-down" id="LockEnt">
                                     <div class="wrapper-dropdown-3" tabindex="1"><span>企业名称</span></div>
                                     @*<ul class="dropdown">
-                                            <li><a class="deutsch">企业1</a></li>
-                                            <li><a class="deutsch">企业2</a></li>
-                                            <li><a class="deutsch">企业3</a></li>
+                                             <li><a class="deutsch">企业1</a></li>
+                                             <li><a class="deutsch">企业2</a></li>
+                                             <li><a class="deutsch">企业3</a></li>
                                         </ul>*@
                                 </li>
                                 <li class="dropdown note">
@@ -135,7 +136,7 @@
                                 </li>
                                 <li class="dropdown note">
                                     <a href="#" data-toggle="dropdown">
-                                        <i class="fa fa-user"></i>
+                                        <i class="fa fa-user"><span id="username"></span></i>
                                     </a>
                                     <ul class="dropdown-menu two">
                                         <li>
@@ -176,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-menu">
+        <div class="sidebar-menu" id="sub-menu">
             <header class="logo">
                 <a href="#" class="sidebar-icon">
                     <span class="fa fa-bars"></span>
@@ -192,7 +193,13 @@
             <div style="border-top:1px solid rgba(69,74,84,0.7)"></div>
             <div class="menu">
                 <ul id="menu">
-                    <li>
+                    <li  v-for="(item,index) in subMenuList">
+                        <a v-bind:href="item.Url">
+                            <i v-bind:class="item.Icon" style="color:#0FBA5A;"></i>
+                            <span>{{item.MenuName}}</span>
+                        </a>
+                    </li>
+                    @*<li>
                         <a href="index.html">
                             <i class="fa fa-tachometer" style="color:#0FBA5A;"></i>
                             <span>计划单</span>
@@ -221,7 +228,7 @@
                             <i class="lnr lnr-chart-bars" style="color:#0FBA5A;"></i>
                             <span>报表统计</span>
                         </a>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
         </div>
@@ -233,4 +240,68 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+<script src="~/Content/Plugin/vue.js"></script>
+<script>
+    //获取当前登录用户信息
+    var UserInfo = {}, SpecialMark = "", circ = 0;
+    //function GetUserInfo(func) {
+    //    $.post("/Base/GetUserInfo", {}, function (result) {
+    //        UserInfo = eval('(' + result + ')');
+
+    //    })
+    //}
+
+    $(function () {
+        var LockMenuID = 0;
+        var vMenu = new Vue({
+            el: "#head-menu",
+            data: {
+                menuList:[]
+            },
+            methods: {
+                GetSubMenu: function (event) {
+                    //console.log(event.target);
+                    //console.log(event.target.getAttribute("data-id"));
+                    GetSubMenuList(event.target.getAttribute("data-id"));
+                }
+            }
+        });
+        var vSubMenu = new Vue({
+            el: "#sub-menu",
+            data: {
+                subMenuList:[]
+            }
+        });
+        GetMenuList();
+        function GetMenuList() {
+            $.post("/Base/GetMenuInfo", {}, function (result) {
+                if (result) {
+                    vMenu.menuList = result;
+                }
+            },'Json');
+        }
+        function GetSubMenuList(MenuID) {
+            LockMenuID = MenuID;
+            $.post("/Base/GetSubMenuInfo", {"MenuID":MenuID}, function (result) {
+                if (result) {
+                    vSubMenu.subMenuList = result;
+                }
+            }, 'Json');
+        }
+        //function GetMenu() {
+        //    console.log("111");
+        //    var menuID = $(this).attr("data-id");
+        //    console.log(menuID);
+        //    GetSubMenuList(menuID);
+        //}
+        //$(".menuLink").on("click", function () {
+        //    console.log("111");
+        //    var menuID = $(this).attr("data-id");
+        //    console.log(menuID);
+        //    GetSubMenuList(menuID);
+        //});
+
+    })
+
+</script>
 @this.RenderSection("pageJs", false)

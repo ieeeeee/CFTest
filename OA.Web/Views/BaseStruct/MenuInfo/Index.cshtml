@@ -1,0 +1,184 @@
+﻿@using OA.Models.Filters
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerJS{
+    @*<link href="~/Content/Plugin/pagination/Pager.css" rel="stylesheet" />
+        <script src="~/Content/Plugin/pagination/Pager.js"></script>*@
+
+    <link href="~/Content/Plugin/layer/theme/default/layer.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/layer/layer.js"></script>
+    <style>
+        .buttons-ui {
+            text-align: left;
+        }
+
+        .graph {
+            padding: 1em 1em;
+        }
+    </style>
+}
+<div class="graph-visual tables-main" id="menuControl">
+    <h3 class="inner-tittle two">菜单信息 </h3>
+    <div class="graph">
+        <div class="buttons-ui">
+            <a id="btnAdd" class="btn green" onclick="addModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+            <a id="btnDel" class="btn red" onclick="delData()"><i class="fa fa-close"></i>&nbsp;删除</a>
+        </div>
+    </div>
+    <div class="graph">
+        <div class="tables" id="menuInfoList">
+            <table class="table table-hover">
+                <thead><tr><th><input class="Allcb" type="checkbox" />全选</th><th>菜单ID</th><th>菜单名称</th> <th>菜单URL</th> <th>菜单类型</th><th>图标</th><th>父ID</th><th>排序号</th><th>使用状态</th><th>操作</th></tr> </thead>
+                <tbody v-for="(item,index) in menuInfoList">
+                    <tr>
+                        <td><input class="Subcb" id="item.MenuID" type="checkbox" /></td>
+                        <td>{{item.MenuID}}</td>
+                        <td>{{item.MenuName}}</td>
+                        <td>{{item.Url}}</td>
+                        <td>{{item.MenuType}}</td>
+                        <td>{{item.Icon}}</td>
+                        <td>{{item.ParentID}}</td>
+                        <td>{{item.OrderID}}</td>
+                        <td>{{item.isDeleted}}</td>
+                        <td>
+                            <a id="btnAdd" style="color:#55acee;" v-on:click="EditModel(index,item.MenuID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
+                            <a id="btnDel" style="color:#e74c3c;" v-on:click="DelData(index,item.MenuID)"><i class="fa fa-close" title="删除"></i>&nbsp;&nbsp;</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 text-center" v-if="menuInfoList.length<=0 ">
+            {{message}}
+        </div>
+        <div class="row" id="pageDiv">
+            <div class="col-xs-12">
+                <hr style="margin:10px auto;" />
+                <div id="pager" style="margin-top:4px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section pageJS{
+    @*<link href="~/Content/Plugin/pagination/Pager.css" rel="stylesheet" />
+        <script src="~/Content/Plugin/pagination/Pager.js"></script>*@
+    <link href="~/Content/Plugin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/layui/layui.all.js"></script>
+    <script src="~/Content/Plugin/vue.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            var vList = new Vue({
+                el: "#menuControl",
+                data: {
+                    pageSize: 6,
+                    pageIndex: 1,
+                    menuInfoList: [],
+                    message: "没有数据"
+                },
+                methods: {
+                    EditModel: function (index, MenuID) {
+                        return GetEditModel(index, MenuID);
+                    },
+                    DelData: function (index, MenuID) {
+                        return GetDelData(index, MenuID);
+                    }
+                }
+            })
+            GetMenuInfo(10, 1);
+
+        //获取企业信息
+         function GetMenuInfo(pageSize, pageIndex) {
+            var menuFilter = {
+                rows: pageSize,
+                page: pageIndex
+            };
+            //console.log(menuFilter);
+            $.post("/MenuInfo/GetAllMenuInfo", menuFilter, function (result) {
+                console.log(result);
+                if (result) {
+                    vList.menuInfoList = result.rows;
+                    if (result.rows.length > 0) {
+                        $("#pageDiv").show();
+                        layui.use('laypage', function () {
+                            var laypage = layui.laypage;
+                            laypage.render({
+                                elem: 'pager'
+                                , count: result.records
+                                ,curr:result.page
+                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                , groups: 1
+                                , first: false
+                                ,last:false
+                                , jump: function (obj, first) {
+                                    if (!first) {
+                                        GetMenuInfo(obj.limit, obj.curr);
+                                    }
+                                }
+                            });
+                        });
+                        } else {
+                        $("#pageDiv").hide()
+                        }
+                }
+            },"json");
+
+            }
+
+            $(".Allcb").click(function () {
+                $(this).closest("table").find("td [type=checkbox]").prop('checked', $(this).prop('checked'));
+            })
+        })
+
+
+        function addModel() {
+            $("#btnAdd").button("loading");
+            window.location.href = "@Url.Action("Add")";
+        }
+        function GetEditModel(index, MenuID) {
+            window.location.href = "@Url.Action("Edit")" + "?menuID=" + MenuID;
+           //$.post("EntInfo/Edit", { "EntID": EntID }, function (result) {
+
+           //});
+        }
+
+        @*function editModel() {//编辑
+            var row = ZFGrid.GetData();
+            if (row != null) {
+                $("#btnEdit").button("loading");
+                window.location.href = "@Url.Action("Edit")/" + row.Id;
+            } else {
+                parent.layer.alert("请选择要编辑的数据");
+            }
+        }*@
+
+        //删除
+        function GetDelData(index,MenuID) {
+            //layer询问框
+            layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
+                //确定
+                $.post("/MenuInfo/Del", { "MenuID": MenuID }, function (result) {
+                    if (result) {
+                        if (result == true) {
+                            layer.msg("删除成功!");
+                            GetMenuInfo(10, 1);
+                        }
+                        else {
+                            layer.msg("删除失败!");
+                        }
+                    }
+                })
+                //关闭询问框
+                layer.close(index);
+            });
+        }
+
+    </script>
+}
+
+

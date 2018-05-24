@@ -70,7 +70,7 @@ namespace OA.Web.Controllers
                 //生成cookie
                 authenticationManager.SignIn(pro, identity);
                 if (model.ReturnUrl.IsBlank())
-                    return RedirectToAction("../EntInfo/Index");
+                    return RedirectToAction("../Home/Index");
                 return Redirect(model.ReturnUrl);
             }
             ModelState.AddModelError(loginDto.Result == Models.Enum.LoginResult.AccountNotExists ? "LoginName" : "Password", loginDto.Message);

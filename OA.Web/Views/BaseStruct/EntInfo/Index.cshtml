@@ -1,0 +1,202 @@
+﻿@using OA.Models.Filters
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerJS{
+    @*<link href="~/Content/Plugin/pagination/Pager.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/pagination/Pager.js"></script>*@
+
+    <link href="~/Content/Plugin/layer/theme/default/layer.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/layer/layer.js"></script>
+    <style>
+        .buttons-ui {
+            text-align: left;
+        }
+
+        .graph {
+            padding: 1em 1em;
+        }
+    </style>
+}
+<div class="graph-visual tables-main" id="entControl">
+    <h3 class="inner-tittle two">企业信息 </h3>
+    <div class="graph">
+        <div class="buttons-ui">
+            <a id="btnAdd" class="btn green" onclick="addModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+            <a id="btnDel" class="btn red" onclick="delData()"><i class="fa fa-close"></i>&nbsp;删除</a>
+        </div>
+    </div>
+    <div class="graph">
+        <div class="tables" id="entInfoList">
+            <table class="table table-hover">
+                <thead><tr><th><input class="Allcb"  type="checkbox"/>全选</th><th>#</th> <th>企业名称</th> <th>企业地址</th> <th>联系方式</th><th>使用状态</th><th>操作</th></tr> </thead>
+                <tbody v-for="(item,index) in entInfoList">
+                    <tr>
+                        <td><input class="Subcb" id="item.EntID" type="checkbox" /></td>
+                        <td scope="row">{{index+1}}</td>
+                        <td>{{item.EntName}}</td>
+                        <td>{{item.Address}}</td>
+                        <td>{{item.Tel}}</td>
+                        <td>{{item.isDeleted}}</td>
+                        <td>
+                            <a id="btnAdd" style="color:#55acee;" v-on:click="EditModel(index,item.EntID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
+                            <a id="btnDel" style="color:#e74c3c;" v-on:click="DelData(index,item.EntID)"><i class="fa fa-close" title="删除"></i>&nbsp;&nbsp;</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 text-center" v-if="entInfoList.length<=0 ">
+            {{message}}
+        </div>
+        <div class="row" id="pageDiv">
+            <div class="col-xs-12">
+                <hr style="margin:10px auto;" />
+                <div id="pager" style="margin-top:4px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section pageJS{
+    @*<link href="~/Content/Plugin/pagination/Pager.css" rel="stylesheet" />
+        <script src="~/Content/Plugin/pagination/Pager.js"></script>*@
+    <link href="~/Content/Plugin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/layui/layui.all.js"></script>
+    @*<script src="~/Content/Plugin/vue.js"></script>*@
+    <script type="text/javascript">
+
+        $(function () {
+            var vList = new Vue({
+                el: "#entControl",
+                data: {
+                    pageSize: 6,
+                    pageIndex: 1,
+                    entID: 0,
+                    entInfoList: [],
+                    message: "没有数据"
+                },
+                methods: {
+                    EditModel: function (index, EntID) {
+                        return GetEditModel(index, EntID);
+                    },
+                    DelData: function (index, EntID) {
+                        return GetDelData(index, EntID);
+                    }
+                }
+            })
+            GetEntInfo(6, 1);
+           
+        //获取企业信息
+        function GetEntInfo(pageSize, pageIndex) {
+            var entFilter = {
+                rows: pageSize,
+                page: pageIndex
+            };
+            console.log(entFilter);
+            $.post("/EntInfo/GetEntInfo", entFilter, function (result) {
+                console.log(result);
+                if (result) {
+                    vList.entInfoList = result.rows;
+                    if (result.rows.length > 0) {
+                        $("#pageDiv").show();
+                        layui.use('laypage', function () {
+                            var laypage = layui.laypage;
+                            laypage.render({
+                                elem: 'pager'
+                                , count: result.records
+                                , curr: result.page
+                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                , groups: 1
+                                , first: false
+                                , last: false
+                                , jump: function (obj, first) {
+                                    if (!first) {
+                                        GetMenuInfo(obj.limit, obj.curr);
+                                    }
+                                }
+                            });
+                        });
+                         //   //===page
+                         //   var ctPage = "<div style='width:auto;float:left;line-height:25px;'>The current page  <font color='green'><b>" + pagerGlobalParam.currPage
+                         //+ "</b></font> &nbsp;&nbsp;&nbsp;&nbsp;Each page shows &nbsp;<font color='blue'><b>" + vList.pageSize
+                         //       + "</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total of &nbsp;<font color='red'><b>" + (parseInt(result.total / vList.pageSize) + ((result.total % vList.pageSize) > 0 ? 1 : 0)) + "</b></font>&nbsp;page &nbsp;&nbsp;&nbsp;&nbsp;</div>";
+                         //   pager = $("body").pager({
+                         //       funContent: GetEntInfo,
+                         //       container: "#pager",
+                         //       ismorecss: "isMore",
+                         //       isselectcss: "isSelect",
+                         //       currpagecss: "currPage",
+                         //       numpagecss: "pageNum",
+                         //       nextcss: "preNextPager",
+                         //       precss: "preNextPager",
+                         //       pagesize: vList.pageSize,
+                         //       pagecount: result.total,
+                         //       pretxt: "上一页",
+                         //       nexttxt: "下一页",
+                         //       firstpage: "第一页",
+                         //       lastpage: "最后一页"//undefined
+                         //       //isHaveTxt: $('#myCultureVar').val() == "en-US" ? ctPage : ""
+                         //   });
+                        } else {
+                        $("#pageDiv").hide()
+                        }
+                }
+            },"json");
+
+            }
+
+        $(".Allcb").click(function () {
+            $(this).closest("table").find("td [type=checkbox]").prop('checked', $(this).prop('checked'));
+        })
+        })
+
+        
+        function addModel() {
+            $("#btnAdd").button("loading");
+            window.location.href = "@Url.Action("Add")";
+        }
+        function GetEditModel(index, EntID) {
+            window.location.href = "@Url.Action("Edit")" + "?entID=" + EntID;
+           //$.post("EntInfo/Edit", { "EntID": EntID }, function (result) {
+
+           //});
+        }
+
+        @*function editModel() {//编辑
+            var row = ZFGrid.GetData();
+            if (row != null) {
+                $("#btnEdit").button("loading");
+                window.location.href = "@Url.Action("Edit")/" + row.Id;
+            } else {
+                parent.layer.alert("请选择要编辑的数据");
+            }
+        }*@
+
+        //删除
+        function GetDelData(index,EntID) {
+            //layer询问框
+            layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
+                //确定
+                $.post("/EntInfo/Del", { "EntID": EntID }, function (result) {
+                    if (result) {
+                        if (result == true) {
+                            layer.msg("删除成功!");
+                            GetMenuInfo(10, 1);
+                        }
+                        else {
+                            layer.msg("删除失败!");
+                        }
+                    }
+                })
+                //关闭询问框
+                layer.close(index);
+            });
+        }
+
+    </script>
+}
+

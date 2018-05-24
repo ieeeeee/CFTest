@@ -15,7 +15,7 @@ namespace OA.Basis.Extentions
         {
             var fields = fieldName.WithDefaultValueIfEmpty("CreateDateTime");
             sord = sord.IsBlank() ? "DESC" : "ASC";
-            var sorts = string.Format("{0}{1}", fields, sord);
+            var sorts = string.Format("{0} {1}", fields, sord);
             return query.OrderBy(sorts); //using System.Linq.Dynamic;
         }
 

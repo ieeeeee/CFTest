@@ -59,9 +59,11 @@
   <ItemGroup>
     <Compile Include="AppServices\DatabaseInitService.cs" />
     <Compile Include="AppServices\EntService.cs" />
+    <Compile Include="AppServices\MenuService.cs" />
     <Compile Include="AppServices\UserService.cs" />
     <Compile Include="OAModuleInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AppServices\TableStructService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OA.Basis\OA.Basis.csproj">
