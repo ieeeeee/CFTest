@@ -12,7 +12,7 @@ using OA.Models.Filters;
 
 namespace OA.Web.Controllers.BaseStruct
 {
-    public class MenuInfoController : Controller
+    public class MenuInfoController : BaseMsgController
     {
         private readonly IMenuService _menuService;
         public MenuInfoController(IMenuService menuservice)
@@ -56,6 +56,31 @@ namespace OA.Web.Controllers.BaseStruct
                 }
             }
             return View(dto);
+        }
+
+        public async Task<JsonResult> Save(MenuDto dto)
+        {
+            var result = string.Empty;
+            var success = false;
+            if(ModelState.IsValid)
+            {
+                if(dto.MenuID==0)
+                {
+                    result = await _menuService.AddAsync(dto);
+                    if (result.IsNotBlank())
+                    {
+                        return OkOperate(result);
+                    }
+                    else
+                        return FailOperate("添加失败");
+                }
+                else
+                {
+                    success = await _menuService.UpdateAsync(dto);
+                    return Json(success);
+                }
+            }
+            return FailOperate("验证失败");
         }
     }
 }

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extentions\DbContextExtension.cs" />
     <Compile Include="Extentions\EnDecryption.cs" />
     <Compile Include="Extentions\EnumerableExtensions.cs" />
     <Compile Include="Extentions\Int32Extensions.cs" />

@@ -222,3 +222,17 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+
+<div class="form-group" v-for="(item,index) in menuStructList">
+    <label class="col-md-2 control-label">{{item.FieldName}}</label>
+    <div class="col-md-8">
+        <div class="input-group input-icon right">
+            <span class="input-group-addon">
+                <i class="fa fa-envelope-o"></i>
+            </span>
+            <vadd-text v-bind:msItem="item"></vadd-text>
+            <input type="text" v-model="item.ShowID" class="form-control1 icon" v-bind:placeholder="item.placeholder" />
+            <span>{{item.ShowID}}</span>
+        </div>
+    </div>
+</div>

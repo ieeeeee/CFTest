@@ -1,0 +1,134 @@
+﻿@model OA.Models.MenuDto
+
+@{
+    ViewBag.Title = "添加菜单";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerJS{
+    <style>
+        .graph-2.general {
+            width: 50%;
+        }
+
+        .col-md-8 {
+            width: 48%;
+        }
+
+        .col-sm-offset-2 {
+            margin-left: 36%
+        }
+        .IsHide{
+            display:none;
+        }
+    </style>
+}
+<div class="wrapper wrapper-content">
+    @using (Html.BeginForm("Add", "MenuInfo", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="set-3">
+            <div class="graph-2 general">
+                <h3 class="inner-tittle two">新增菜单</h3>
+                <div class="grid-1" id="menuAddControl">
+                    <div class="form-body">
+                        <form class="form-horizontal" v-on:submit.prevent="onSubmit">
+
+                            <div class="form-group" v-for="(item,index) in menuStructList">
+                                <label class="col-md-2 control-label">{{item.FieldName}}</label>
+                                <div class="col-md-8">
+                                    <div v-if="item.VueTemplate==='vadd-text'">
+                                        <vadd-text :class="{IsHide:item.IsHide}" :txt_item="item" :txt_index="index"></vadd-text>
+                                    </div>
+                                    <div v-else-if="item.VueTemplate==='vadd-checkbox'">
+                                        <vadd-checkbox :class="{IsHide:item.IsHide}" :ck_item="item" :ck_index="index"></vadd-checkbox>
+                                    </div>
+                                    <div v-else-if="item.VueTemplate==='vadd-textarea'">
+                                        <vadd-textarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-textarea>
+                                    </div>
+                                    <span>{{item.ShowID}}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-offset-2">
+                                <button type="button" class="btn btn-default" v-on:click="Save()">保存</button>
+                                <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            //Vue组件
+            Vue.component('vadd-text', {
+                props: ['txt_index','txt_item'],
+                template: `
+                        <div class="input-group input-icon right">
+                            <span class= "input-group-addon">
+                                <i :class="txt_item.Icon"></i>
+                            </span>
+                            <input type="text" v-model="txt_item.ShowID" :placeholder="txt_item.Placeholder" class="form-control1 icon"/> 
+                        </div>
+                        `
+            });
+            Vue.component('vadd-checkbox', {
+                props: ['ck_index', 'ck_item'],
+                template: `
+                         <div>
+                             <div class="checkbox-inline"><label><input type="radio"  v-model="ck_item.ShowID" value="0">启用</label></div>
+                             <div class="checkbox-inline"><label><input type="radio"  v-model="ck_item.ShowID" value="2"> 禁用</label></div>
+                         </div>
+                        `
+            });
+            Vue.component('vadd-textarea', {
+                props: ['txtarea_index', 'txtarea_item'],
+                template: `
+                         <div>
+                             <textarea class="form-control1" cols="50" rows="4" style="height:70px;" v-model="txtarea_item.ShowID"></textarea>
+                         </div>
+                          `
+            });
+            var vList = new Vue({
+                el: "#menuAddControl",
+                data: {
+                    menuStructList: []
+                },
+                methods: {
+                    Save: function () {
+                        GetSave();
+                    }
+                }
+
+            });
+            GetMenuStruct();
+            function GetMenuStruct() {
+                $.post("/Base/GetAddTableStruct", { "TableID": 1 }, function (result) {
+                    if (result) {
+                        //console.log(result);
+                        vList.menuStructList = result;
+                    }
+                },'Json');
+            }
+            function GetSave() {
+                var data = {};
+                for (var i = 0; i < vList.menuStructList.length; i++) {
+                    data[vList.menuStructList[i].Field] = vList.menuStructList[i].ShowID;//$("#" + vList.menuStructList[i].Field + "").val();
+                }
+               // console.log(data);
+                $.post('/MenuInfo/Save', data, function (result) {
+                    if (result != -1) {
+                        layer.msg("保存成功！");
+                    } else {
+                        layer.msg("保存失败！");
+                    }
+                },'Json');
+            }
+            
+        })
+    </script>
+
+}

@@ -118,5 +118,25 @@ namespace OA.Services.AppServices
                 return await scope.SaveChangesAsync() > 0 ? entity.MenuID.ToString() : string.Empty;
             }
         }
+
+        public async Task<bool> UpdateAsync(MenuDto dto)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entity = await db.B_Menus.LoadAsync(dto.MenuID.ToString());//using DbContextExtension
+                entity.MenuName = dto.MenuName;
+                entity.MenuType = dto.MenuType;
+                entity.Url = dto.Url;
+                entity.Icon = dto.Icon;
+                entity.ParentID = dto.ParentID;
+                entity.OrderID = dto.OrderID;
+                entity.Remark = dto.Remark;
+                entity.IsDeleted = dto.IsDeleted;
+                entity.CreateDateTime = DateTime.Now;
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }

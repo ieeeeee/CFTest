@@ -23,5 +23,8 @@ namespace OA.Interfaces
 
         //添加一个菜单
         Task<string> AddAsync(MenuDto dto);
+
+        //编辑一个菜单
+        Task<bool> UpdateAsync(MenuDto dto);
     }
 }
