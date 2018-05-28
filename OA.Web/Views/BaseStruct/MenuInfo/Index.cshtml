@@ -138,10 +138,10 @@
 
         function addModel() {
             $("#btnAdd").button("loading");
-            window.location.href = "@Url.Action("Add")";
+            window.location.href = "@Url.Action("Add")" + "?menuID=0";
         }
         function GetEditModel(index, MenuID) {
-            window.location.href = "@Url.Action("Edit")" + "?menuID=" + MenuID;
+            window.location.href = "@Url.Action("Add")" + "?menuID=" + MenuID;
            //$.post("EntInfo/Edit", { "EntID": EntID }, function (result) {
 
            //});

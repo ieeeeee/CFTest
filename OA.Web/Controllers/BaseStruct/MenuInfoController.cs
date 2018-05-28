@@ -27,9 +27,10 @@ namespace OA.Web.Controllers.BaseStruct
         }
 
         //Add
-        public ActionResult Add()
+        public async Task<ActionResult> Add(int menuID)
         {
-            return View();
+            var model = await _menuService.FindAsync(menuID);
+            return View(model);
         }
         //Edit
         public async Task<ActionResult> Edit(int menuID)
@@ -37,6 +38,7 @@ namespace OA.Web.Controllers.BaseStruct
             var model = await _menuService.FindAsync(menuID);
             return View(model);
         }
+        
         //index加载获取 分页menuList
         public async Task<JsonResult> GetAllMenuInfo(MenuFilter menuFilter)
         {
@@ -58,6 +60,7 @@ namespace OA.Web.Controllers.BaseStruct
             return View(dto);
         }
 
+        //Add页面保存
         public async Task<JsonResult> Save(MenuDto dto)
         {
             var result = string.Empty;
@@ -82,5 +85,11 @@ namespace OA.Web.Controllers.BaseStruct
             }
             return FailOperate("验证失败");
         }
+
+        //Edit 根据菜单ID获取菜单
+        //public async Task<JsonResult> GetMenuInfo(int menuID)
+        //{
+        //    var 
+        //}
     }
 }

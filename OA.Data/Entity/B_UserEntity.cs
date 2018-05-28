@@ -40,6 +40,16 @@ namespace OA.Data.Entity
 
         public string Address { get; set; }
 
+        //当前用户锁定企业
+        public int LockEntID { get; set; }
+
+        //当前用户锁定主菜单
+        public int LockMenuID { get; set; }
+
+        //当前用户锁定子菜单
+        public int LockSubMenuID { get; set; }
+
+
         //对应一个企业
         public Nullable<int> EntID { get; set; }
         public virtual B_EnterpriseEntity B_Enterprise { get; set; }
@@ -51,5 +61,7 @@ namespace OA.Data.Entity
         public virtual ICollection<B_RoleEntity> B_Roles { get; set; }
 
         public virtual ICollection<W_PlanListEntity> W_PlanLists { get; set; }
+        
+
     }
 }

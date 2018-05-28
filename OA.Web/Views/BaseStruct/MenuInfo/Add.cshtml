@@ -1,4 +1,5 @@
-﻿@model OA.Models.MenuDto
+﻿@using OA.Models
+@model MenuDto
 
 @{
     ViewBag.Title = "添加菜单";
@@ -24,8 +25,8 @@
     </style>
 }
 <div class="wrapper wrapper-content">
-    @using (Html.BeginForm("Add", "MenuInfo", FormMethod.Post, new { @class = "form-horizontal" }))
-    {
+    @*@using (Html.BeginForm("Add", "MenuInfo", FormMethod.Post, new { @class = "form-horizontal" }))
+    {*@
         <div class="set-3">
             <div class="graph-2 general">
                 <h3 class="inner-tittle two">新增菜单</h3>
@@ -45,7 +46,7 @@
                                     <div v-else-if="item.VueTemplate==='vadd-textarea'">
                                         <vadd-textarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-textarea>
                                     </div>
-                                    <span>{{item.ShowID}}</span>
+                                    <span></span>
                                 </div>
                             </div>
 
@@ -58,14 +59,14 @@
                 </div>
             </div>
         </div>
-    }
+    @*}*@
 </div>
 @section scripts{
     <script>
         $(function () {
             //Vue组件
             Vue.component('vadd-text', {
-                props: ['txt_index','txt_item'],
+                props: ['txt_index', 'txt_item'],
                 template: `
                         <div class="input-group input-icon right">
                             <span class= "input-group-addon">
@@ -95,7 +96,9 @@
             var vList = new Vue({
                 el: "#menuAddControl",
                 data: {
-                    menuStructList: []
+                    menuStructList: [],
+                    menuInfoList: [],
+                    menuName: 23
                 },
                 methods: {
                     Save: function () {
@@ -104,7 +107,23 @@
                 }
 
             });
+
             GetMenuStruct();
+            if ("@Model.MenuID" != null || "@Model.MenuID" != "") {
+                vList.menuInfoList = '@Model';
+               console.log("@Model");
+                console.log(vList.menuInfoList);
+                function GetMenuInfo() {
+                var MenuID=@Model.MenuID;
+                $.post("/MenuInfo/GetMenuInfo", { "MenuID": MenuID }, function (result) {
+                    if (result) {
+                        vList.menuInfoList = result;
+                    }
+                },'Json');
+            }
+            }
+            
+        
             function GetMenuStruct() {
                 $.post("/Base/GetAddTableStruct", { "TableID": 1 }, function (result) {
                     if (result) {
@@ -113,12 +132,13 @@
                     }
                 },'Json');
             }
+            
             function GetSave() {
                 var data = {};
                 for (var i = 0; i < vList.menuStructList.length; i++) {
                     data[vList.menuStructList[i].Field] = vList.menuStructList[i].ShowID;//$("#" + vList.menuStructList[i].Field + "").val();
                 }
-               // console.log(data);
+                //console.log(data);
                 $.post('/MenuInfo/Save', data, function (result) {
                     if (result != -1) {
                         layer.msg("保存成功！");
