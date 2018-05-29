@@ -30,6 +30,10 @@ namespace OA.Web.Controllers.BaseStruct
         public async Task<ActionResult> Add(int menuID)
         {
             var model = await _menuService.FindAsync(menuID);
+            if(model==null)
+            {
+                return View(new MenuDto());
+            }
             return View(model);
         }
         //Edit
@@ -38,7 +42,11 @@ namespace OA.Web.Controllers.BaseStruct
             var model = await _menuService.FindAsync(menuID);
             return View(model);
         }
-        
+        public async Task<JsonResult> GetMenuInfo(int menuID)
+        {
+            var result = await _menuService.FindAsync(menuID);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         //index加载获取 分页menuList
         public async Task<JsonResult> GetAllMenuInfo(MenuFilter menuFilter)
         {

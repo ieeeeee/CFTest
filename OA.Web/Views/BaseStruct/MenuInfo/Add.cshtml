@@ -5,7 +5,6 @@
     ViewBag.Title = "添加菜单";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @section headerJS{
     <style>
         .graph-2.general {
@@ -46,7 +45,10 @@
                                     <div v-else-if="item.VueTemplate==='vadd-textarea'">
                                         <vadd-textarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-textarea>
                                     </div>
-                                    <span></span>
+                                    <div v-else-if="item.VueTemplate==='vadd-select'">
+                                        <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
+                                    </div>
+                                    @*<span>{{item.FieldValue}}</span>*@
                                 </div>
                             </div>
 
@@ -62,7 +64,7 @@
     @*}*@
 </div>
 @section scripts{
-    <script>
+<script>
         $(function () {
             //Vue组件
             Vue.component('vadd-text', {
@@ -72,7 +74,7 @@
                             <span class= "input-group-addon">
                                 <i :class="txt_item.Icon"></i>
                             </span>
-                            <input type="text" v-model="txt_item.ShowID" :placeholder="txt_item.Placeholder" class="form-control1 icon"/> 
+                            <input type="text" v-model="txt_item.FieldValue" :placeholder="txt_item.Placeholder" class="form-control1 icon"/>
                         </div>
                         `
             });
@@ -80,8 +82,8 @@
                 props: ['ck_index', 'ck_item'],
                 template: `
                          <div>
-                             <div class="checkbox-inline"><label><input type="radio"  v-model="ck_item.ShowID" value="0">启用</label></div>
-                             <div class="checkbox-inline"><label><input type="radio"  v-model="ck_item.ShowID" value="2"> 禁用</label></div>
+                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="0">启用</label></div>
+                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="2"> 禁用</label></div>
                          </div>
                         `
             });
@@ -89,16 +91,22 @@
                 props: ['txtarea_index', 'txtarea_item'],
                 template: `
                          <div>
-                             <textarea class="form-control1" cols="50" rows="4" style="height:70px;" v-model="txtarea_item.ShowID"></textarea>
+                             <textarea class="form-control1" cols="50" rows="4" style="height:70px;" v-model="txtarea_item.FieldValue"></textarea>
                          </div>
+                          `
+            });
+            Vue.component('vadd-select', {
+                props: ['select_index', 'select_item'],
+                template: `
+                         <select class="form-control1" v-model="select_item.FieldValue">
+                             <option v-for="option in select_item.FieldSelect" :value="option.value" >{{option.text}}</option>
+                         </select>
                           `
             });
             var vList = new Vue({
                 el: "#menuAddControl",
                 data: {
-                    menuStructList: [],
-                    menuInfoList: [],
-                    menuName: 23
+                    menuStructList: []
                 },
                 methods: {
                     Save: function () {
@@ -107,38 +115,61 @@
                 }
 
             });
-
+            var menuInfo = {};
+            GetMenuInfo();
+            var parentMenuInfo = [];
+            GetParentInfo();
             GetMenuStruct();
-            if ("@Model.MenuID" != null || "@Model.MenuID" != "") {
-                vList.menuInfoList = '@Model';
-               console.log("@Model");
-                console.log(vList.menuInfoList);
-                function GetMenuInfo() {
-                var MenuID=@Model.MenuID;
-                $.post("/MenuInfo/GetMenuInfo", { "MenuID": MenuID }, function (result) {
-                    if (result) {
-                        vList.menuInfoList = result;
-                    }
-                },'Json');
-            }
-            }
-            
-        
             function GetMenuStruct() {
                 $.post("/Base/GetAddTableStruct", { "TableID": 1 }, function (result) {
                     if (result) {
+                        console.log(menuInfo);
+                        for (var i = 0; i < result.length; i++) {
+                            for (var key in menuInfo) {
+                                if (result[i].Field == key) {
+                                    result[i].FieldValue = menuInfo[key];
+                                }
+                            }
+                            if (result[i].Field == "ParentID") {
+                                var options = [];
+                                for (var j = 0; j < parentMenuInfo.length;j++) {
+                                    options.push({ text: parentMenuInfo[j].MenuName, value: parentMenuInfo[j].MenuID});
+                                }
+                                result[i].FieldSelect = options;
+                                //console.log(result[i].FieldSelect);
+                            }
+
+                        }
+
                         //console.log(result);
                         vList.menuStructList = result;
                     }
+                }, 'Json');
+
+            }
+             function GetMenuInfo() {
+               var MenuID =@Model.MenuID;
+                $.post("/MenuInfo/GetMenuInfo", { "MenuID": MenuID }, function (result) {
+                    if (result) {
+                       // console.log(result);
+                        menuInfo = result;
+                    }
                 },'Json');
             }
-            
+            function GetParentInfo() {
+                $.post("/Base/GetMenuInfo", { }, function (result) {
+                    if (result) {
+                        // console.log(result);
+                        parentMenuInfo = result;
+                    }
+                }, 'Json');
+            }
             function GetSave() {
                 var data = {};
                 for (var i = 0; i < vList.menuStructList.length; i++) {
-                    data[vList.menuStructList[i].Field] = vList.menuStructList[i].ShowID;//$("#" + vList.menuStructList[i].Field + "").val();
+                    data[vList.menuStructList[i].Field] = vList.menuStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
                 }
-                //console.log(data);
+                console.log(data);
                 $.post('/MenuInfo/Save', data, function (result) {
                     if (result != -1) {
                         layer.msg("保存成功！");
@@ -147,8 +178,8 @@
                     }
                 },'Json');
             }
-            
+
         })
-    </script>
+</script>
 
 }

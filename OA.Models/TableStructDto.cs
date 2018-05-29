@@ -89,5 +89,11 @@ namespace OA.Models
         //字段在界面上是否隐藏 true是隐藏
         public bool IsHide { get; set; }
 
+        //字段的值
+        public string FieldValue { get; set; }
+
+        //select的值
+        public Object[] FieldSelect { get; set; }
+
     }
 }

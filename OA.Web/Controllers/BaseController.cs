@@ -24,6 +24,7 @@ namespace OA.Web.Controllers
             return View();
         }
 
+        //获取一级主菜单
         public async Task<JsonResult> GetMenuInfo()
         {
             var menuList = await _menuService.GetMenuInfo();
@@ -39,6 +40,10 @@ namespace OA.Web.Controllers
         public async Task<JsonResult> GetAddTableStruct(int TableID)
         {
             var result = await _tableStructService.GetAddTableStructAsync(TableID);
+            for (var i = 0; i < result.Count(); i++)
+            {
+
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
 
         }
