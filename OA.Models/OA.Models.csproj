@@ -55,6 +55,7 @@
     <Compile Include="Filters\BaseFiter.cs" />
     <Compile Include="Filters\EntFilter.cs" />
     <Compile Include="Filters\MenuFilter.cs" />
+    <Compile Include="Filters\TableStructFilter.cs" />
     <Compile Include="LoginDto.cs" />
     <Compile Include="MenuDto.cs" />
     <Compile Include="Message.cs" />

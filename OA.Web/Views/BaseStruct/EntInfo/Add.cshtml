@@ -7,27 +7,54 @@
 
 @section headerJS{
     <style>
-        .graph-2.general{
-            width:50%;
+        .graph-2.general {
+            width: 50%;
         }
-        .col-md-8{
-            width:48%;
+
+        .col-md-8 {
+            width: 48%;
         }
-        .col-sm-offset-2{
-            margin-left:36%
+
+        .col-sm-offset-2 {
+            margin-left: 36%
+        }
+
+        .IsHide {
+            display: none;
         }
     </style>
-    }
+}
 <div class="wrapper wrapper-content">
-    @using (Html.BeginForm("Add", "EntInfo", FormMethod.Post, new { @class = "form-horizontal" }))
+    @*@using (Html.BeginForm("Add", "EntInfo", FormMethod.Post, new { @class = "form-horizontal" }))*@
     {
-        <div class="set-3">
-            <div class="graph-2 general">
-                <h3 class="inner-tittle two">新增企业  </h3>
-                <div class="grid-1">
-                    <div class="form-body">
-                        <form class="form-horizontal">
-                            <div class="form-group">
+    <div class="set-3">
+        <div class="graph-2 general">
+            @if (Model.EntID > 0)
+            {<h3 class="inner-tittle two">新增企业  </h3> }
+            else
+            { <h3 class="inner-tittle two">新增企业  </h3>}
+            <div class="grid-1" id="entAddControl">
+                <div class="form-body">
+                    <form class="form-horizontal">
+
+                        <div class="form-group" v-for="(index,item) in tableStructControl">
+                            <label class="col-md-2 control-label">{{item.FieldName}}</label>
+                            <div class="col-md-8">
+                                <div v-if="item.VueTemplate=='vadd-txt'">
+                                    <vadd-txt :class="{IsHide:item.IsHide}" :txt_item="item" :txt_index="index"></vadd-txt>
+                                </div>
+                                <div v-else-if="item.VueTemplate=='vadd-txtarea'">
+                                    <vadd-txtarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-txtarea>
+                                </div>
+                                <div v-else-if="item.VueTemplate=='vadd-checkbox'">
+                                    <vadd-checkbox :class="{IsHide:item.IsHide}" :ck_item="item" :ck_index="index"></vadd-checkbox>
+                                </div>
+                                <div v-else-if="item.VueTemplate=='vadd-select'">
+                                    <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
                                 <label class="col-md-2 control-label">企业名称</label>
                                 <div class="col-md-8">
                                     <div class="input-group input-icon right">
@@ -35,7 +62,7 @@
                                             <i class="fa fa-envelope-o"></i>
                                         </span>
                                         @Html.TextBoxFor(m => m.EntName, new { @class = "form-control1 icon", placeholder = "请输入企业名称" })
-                                        @*<input id="entName" class="form-control1 icon" type="text" placeholder="请输入企业名称">*@
+
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
@@ -74,7 +101,7 @@
                                 <label class="col-md-2 control-label">备注</label>
                                 <div class="col-sm-8">
                                     <div class="input-group input-icon right">
-                                        @Html.TextAreaFor(m => m.Remark, new { @class = "form-control1", placeholder = "",cols="50",rows="4"})
+                                        @Html.TextAreaFor(m => m.Remark, new { @class = "form-control1", placeholder = "", cols = "50", rows = "4" })
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
@@ -87,18 +114,111 @@
                                     <div class="checkbox-inline"><label><input type="checkbox" checked=""> 启用</label></div>
                                     <div class="checkbox-inline"><label><input type="checkbox"> 禁用</label></div>
                                 </div>
-                            </div>
-                            <div class="col-sm-offset-2">
-                                <button type="submit" class="btn btn-default ">保存</button>
-                                <button type="button" class="btn btn-warning " onclick="Clear()">清空</button>
-                            </div>
-                        </form>
-                    </div>
+                            </div>*@
+                        <div class="col-sm-offset-2">
+                            <button type="button" class="btn btn-default" v-on:click="Save()">保存</button>
+                            <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    }
+    </div>
+    @*}*@
 </div>
 @section scripts{
+    <script src="~/Content/Plugin/vue.js"></script>
+    <script src="~/Content/Plugin/VueTemplate.js"></script>
+    <script>
+        $(function () {
+            //Vue组件
+            Vue.component('vadd-text', {
+                props: ['txt_index', 'txt_item'],
+                template: `
+                        <div class="input-group input-icon right">
+                            <span class= "input-group-addon">
+                                <i :class="txt_item.Icon"></i>
+                            </span>
+                            <input type="text" v-model="txt_item.FieldValue" :placeholder="txt_item.Placeholder" class="form-control1 icon"/>
+                        </div>
+                        `
+            });
+            Vue.component('vadd-checkbox', {
+                props: ['ck_index', 'ck_item'],
+                template: `
+                         <div>
+                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="0">启用</label></div>
+                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="2"> 禁用</label></div>
+                         </div>
+                        `
+            });
+            Vue.component('vadd-textarea', {
+                props: ['txtarea_index', 'txtarea_item'],
+                template: `
+                         <div>
+                             <textarea class="form-control1" cols="50" rows="4" style="height:70px;" v-model="txtarea_item.FieldValue"></textarea>
+                         </div>
+                          `
+            });
+            Vue.component('vadd-select', {
+                props: ['select_index', 'select_item'],
+                template: `
+                         <select class="form-control1" v-model="select_item.FieldValue">
+                             <option v-for="option in select_item.FieldSelect" :value="option.value" >{{option.text}}</option>
+                         </select>
+                          `
+            });
+            var vList = new Vue({
+                el: "#entAddControl",
+                data: {
+                    tableStructControl:[]
+                },
+                methods: {
+                    Save: function () {
+                        GetSave();
+                    }
+                }
+
+            })
+            var modelInfo = {};
+            //获取值
+            GetModelInfo(function () {
+                //获取结构
+                GetTableStruct();
+            });
+            //获取界面结构
+            function GetTableStruct() {
+                $.post("/Base/GetAddTableStruct", { "TableID": 3 }, function (result) {
+                    if (result) {
+                        console.log(modelInfo);
+                        for (var i = 0; i < result.length; i++) {
+                            //赋初值
+                            for (var key in modelInfo) {
+                                if (result[i].Field == key) {
+                                    result[i].FieldValue = modelInfo[key];
+                                }
+                            }
+                        }
+                        console.log(result);
+                        vList.tableStructList = result;
+                    }
+                }, 'Json');
+            }
+            //获取初始值
+             function GetModelInfo(func) {
+                 var EntID =@Model.EntID;
+                $.post("/EntInfo/GetEntInfo", { "entID": EntID }, function (result) {
+                    if (result) {
+                       // console.log(result);
+                        modelInfo = result;
+                    }
+                    func();
+                 }, 'Json');
+
+            }
+
+        })
+    </script>
+   
 
 }

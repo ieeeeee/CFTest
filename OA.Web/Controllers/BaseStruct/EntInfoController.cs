@@ -3,6 +3,7 @@ using OA.Basis.Extentions;
 using OA.Interfaces;
 using OA.Models;
 using OA.Models.Filters;
+using OA.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,21 @@ namespace OA.Web.Controllers
         {
             _entService = entService;
         }
+
+        #region View
         // GET: EntInfo
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult Add()
+        public async Task<ActionResult> Add(int entID)
         {
-            return View(new EntDto());
+            var model = await _entService.FindAsync(entID);
+            if (model == null)
+            {
+                return View(new EntDto());
+            }
+            return View(model);
         }
 
         public async Task<ActionResult> Edit(int entID)
@@ -35,15 +43,18 @@ namespace OA.Web.Controllers
             var model = await _entService.FindAsync(entID);
             return View(model);
         }
+        #endregion
 
-
+        #region GetInfo
         //获取企业信息
         public async Task<JsonResult> GetEntInfo(EntFilter entFilter)
         {
             var result = await _entService.SearchAsync(entFilter);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region OperateResult
         //添加企业信息
         [HttpPost]
         public async Task<ActionResult> Add(EntDto dto)
@@ -59,5 +70,17 @@ namespace OA.Web.Controllers
             }
             return View(dto);
         }
+
+        //删除
+        public async Task<JsonResult> Del(IList<int> ids)
+        {
+            var result = new JsonResultModel<bool>();
+            if (ids.AnyOne())
+            {
+                result.flag = await _entService.DeleteAsync(ids);
+            }
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

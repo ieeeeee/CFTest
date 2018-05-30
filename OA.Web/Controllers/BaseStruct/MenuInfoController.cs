@@ -9,24 +9,27 @@ using OA.Basis.Extentions;
 using OA.Interfaces;
 using OA.Models;
 using OA.Models.Filters;
+using OA.Web.Models;
 
 namespace OA.Web.Controllers.BaseStruct
 {
     public class MenuInfoController : BaseMsgController
     {
+
         private readonly IMenuService _menuService;
         public MenuInfoController(IMenuService menuservice)
         {
             _menuService = menuservice;
         }
-        
+
+        #region View
         // GET: MenuInfo
         public ActionResult Index()
         {
             return View();
         }
 
-        //Add
+        //详情页面 用于Add Edit
         public async Task<ActionResult> Add(int menuID)
         {
             var model = await _menuService.FindAsync(menuID);
@@ -36,12 +39,10 @@ namespace OA.Web.Controllers.BaseStruct
             }
             return View(model);
         }
-        //Edit
-        public async Task<ActionResult> Edit(int menuID)
-        {
-            var model = await _menuService.FindAsync(menuID);
-            return View(model);
-        }
+        #endregion
+
+        #region GetInfo
+        //根据主键获取这条信息
         public async Task<JsonResult> GetMenuInfo(int menuID)
         {
             var result = await _menuService.FindAsync(menuID);
@@ -53,6 +54,9 @@ namespace OA.Web.Controllers.BaseStruct
             var result = await _menuService.SearchAsync(menuFilter);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region OpreateResult
         // Add页面提交 新增一个菜单
         [HttpPost]
         public async Task<ActionResult> Add(MenuDto dto)
@@ -69,13 +73,13 @@ namespace OA.Web.Controllers.BaseStruct
         }
 
         //Add页面保存
-        public async Task<JsonResult> Save(MenuDto dto)
+        public async  Task<JsonResult> Save(MenuDto dto)
         {
             var result = string.Empty;
             var success = false;
             if(ModelState.IsValid)
             {
-                if(dto.MenuID==0)
+                if (dto.MenuID == 0)
                 {
                     result = await _menuService.AddAsync(dto);
                     if (result.IsNotBlank())
@@ -94,10 +98,18 @@ namespace OA.Web.Controllers.BaseStruct
             return FailOperate("验证失败");
         }
 
-        //Edit 根据菜单ID获取菜单
-        //public async Task<JsonResult> GetMenuInfo(int menuID)
-        //{
-        //    var 
-        //}
+        //Edit
+        public async Task<JsonResult> Del(IList<int> ids)
+        {
+            var result = new JsonResultModel<bool>();//通用Json结果对象
+            if (ids.AnyOne())
+            {
+                result.flag = await _menuService.DeleteAsync(ids);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }

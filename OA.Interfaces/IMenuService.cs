@@ -26,5 +26,8 @@ namespace OA.Interfaces
 
         //编辑一个菜单
         Task<bool> UpdateAsync(MenuDto dto);
+
+        //批量删除
+        Task<bool> DeleteAsync(IEnumerable<int> ids);
     }
 }

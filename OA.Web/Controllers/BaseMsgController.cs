@@ -11,7 +11,7 @@ namespace OA.Web.Controllers
         //操作成功
         public JsonResult OkOperate(object data=null)
         {
-            return Json(new { flag = true, data }, JsonRequestBehavior.AllowGet);
+            return Json(new { flag = true, data,msg="操作成功" }, JsonRequestBehavior.AllowGet);
         }
         //操作成功 原样返回data的值
         public JsonResult JsonOKOperate(object data)

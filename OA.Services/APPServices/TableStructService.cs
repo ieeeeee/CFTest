@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using OA.Basis;
+using OA.Models.Filters;
+using OA.Basis.Extentions;
 
 namespace OA.Services.AppServices
 {
@@ -39,6 +42,33 @@ namespace OA.Services.AppServices
                 }).ToListAsync();//using System.Data.Entity;
 
 
+            }
+        }
+
+        public async Task<PagedResult<TableStructDto>> SearchAsync(TableStructFilter filters)
+        {
+            using (var scope = _dbContextScopeFactory.CreateReadOnly())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var query = db.B_TableStructEntities.Where(item => item.IsDeleted != 1)
+                    .WhereIf(filters.keywords.IsNotBlank(), x => (x.TableName.Contains(filters.keywords) || x.Field.Contains(filters.keywords)));
+                filters.sidx = "TableID,OrderID";
+                return await query.OrderByCustom(filters.sidx, filters.sord)
+                    .Select(item => new TableStructDto
+                    {
+                        TStructID = item.TStructID,
+                        TableID=item.TableID,
+                        TableName=item.TableName,
+                        Field = item.Field,
+                        FieldName = item.FieldName,
+                        Placeholder = item.Placeholder,
+                        HelpBlock = item.HelpBlock,
+                        IsDeleted = item.IsDeleted,
+                        VueTemplate = item.VueTemplate,
+                        IsQuery=item.IsQuery,
+                        IsHide = item.IsHide,
+                        Icon = item.Icon
+                    }).PagingAsync(filters.page, filters.rows);
             }
         }
     }

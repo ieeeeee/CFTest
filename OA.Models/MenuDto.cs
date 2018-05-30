@@ -22,7 +22,6 @@ namespace OA.Models
         public int MenuType { get; set; }
 
         [Display(Name = "菜单网址")]
-        [Required(ErrorMessage = Message.Required)]
         [MaxLength(100, ErrorMessage = Message.MaxLength)]
         public string Url { get; set; }
 

@@ -1,4 +1,6 @@
-﻿using OA.Models;
+﻿using OA.Basis;
+using OA.Models;
+using OA.Models.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +13,6 @@ namespace OA.Interfaces
     {
 
         Task<List<TableStructDto>> GetAddTableStructAsync(int TableID);
+        Task<PagedResult<TableStructDto>> SearchAsync(TableStructFilter filters);
     }
 }

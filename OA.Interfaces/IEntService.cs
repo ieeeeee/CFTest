@@ -15,5 +15,7 @@ namespace OA.Interfaces
 
          Task<EntDto> FindAsync(int entID);
          Task<PagedResult<EntDto>> SearchAsync(EntFilter entFilter);
+
+        Task<bool> DeleteAsync(IEnumerable<int> ids);
     }
 }

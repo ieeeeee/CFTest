@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OA.Data.Entity;
 using OA.Basis.Utilities;
+using System.Data.Entity;
 
 namespace OA.Services.AppServices
 {
@@ -75,6 +76,22 @@ namespace OA.Services.AppServices
                     }).PagingAsync(entFilter.page,entFilter.rows);              
             }
 
+        }
+
+        //删除企业
+        public async Task<bool> DeleteAsync(IEnumerable<int> ids)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entities = await db.B_Enterprises.Where(item => ids.Contains(item.EntID)).ToListAsync();
+                foreach(var entEntity in entities)
+                {
+                    entEntity.IsDeleted = 1;
+                }
+                await scope.SaveChangesAsync();
+                return true;
+            }
         }
     }
 }

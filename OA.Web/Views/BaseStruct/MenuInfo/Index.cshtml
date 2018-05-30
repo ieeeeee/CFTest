@@ -5,16 +5,12 @@
 }
 
 @section headerJS{
-    @*<link href="~/Content/Plugin/pagination/Pager.css" rel="stylesheet" />
-        <script src="~/Content/Plugin/pagination/Pager.js"></script>*@
-
     <link href="~/Content/Plugin/layer/theme/default/layer.css" rel="stylesheet" />
     <script src="~/Content/Plugin/layer/layer.js"></script>
     <style>
         .buttons-ui {
             text-align: left;
         }
-
         .graph {
             padding: 1em 1em;
         }
@@ -24,8 +20,8 @@
     <h3 class="inner-tittle two">菜单信息 </h3>
     <div class="graph">
         <div class="buttons-ui">
-            <a id="btnAdd" class="btn green" onclick="addModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
-            <a id="btnDel" class="btn red" onclick="delData()"><i class="fa fa-close"></i>&nbsp;删除</a>
+            <a id="btnAdd" class="btn green" v-on:click="AddModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+            <a id="btnDel" class="btn red" v-on:click="DelData(-1,0)"><i class="fa fa-close"></i>&nbsp;删除</a>
         </div>
     </div>
     <div class="graph">
@@ -34,7 +30,7 @@
                 <thead><tr><th><input class="Allcb" type="checkbox" />全选</th><th>菜单ID</th><th>菜单名称</th> <th>菜单URL</th> <th>菜单类型</th><th>图标</th><th>父ID</th><th>排序号</th><th>使用状态</th><th>操作</th></tr> </thead>
                 <tbody v-for="(item,index) in menuInfoList">
                     <tr>
-                        <td><input class="Subcb" id="item.MenuID" type="checkbox" /></td>
+                        <td><input class="Subcb" :data-id="item.MenuID" type="checkbox" /></td>
                         <td>{{item.MenuID}}</td>
                         <td>{{item.MenuName}}</td>
                         <td>{{item.Url}}</td>
@@ -65,14 +61,11 @@
 </div>
 
 @section pageJS{
-    @*<link href="~/Content/Plugin/pagination/Pager.css" rel="stylesheet" />
-        <script src="~/Content/Plugin/pagination/Pager.js"></script>*@
     <link href="~/Content/Plugin/layui/css/layui.css" rel="stylesheet" />
     <script src="~/Content/Plugin/layui/layui.all.js"></script>
     <script src="~/Content/Plugin/vue.js"></script>
     <script type="text/javascript">
-
-        $(function () {
+ $(function () {
             var vList = new Vue({
                 el: "#menuControl",
                 data: {
@@ -82,6 +75,9 @@
                     message: "没有数据"
                 },
                 methods: {
+                    AddModel: function () {
+                        return GetAddModel();
+                    },
                     EditModel: function (index, MenuID) {
                         return GetEditModel(index, MenuID);
                     },
@@ -92,7 +88,7 @@
             })
             GetMenuInfo(10, 1);
 
-        //获取企业信息
+        //获取分页菜单信息
          function GetMenuInfo(pageSize, pageIndex) {
             var menuFilter = {
                 rows: pageSize,
@@ -128,44 +124,58 @@
                 }
             },"json");
 
-            }
+         }
 
-            $(".Allcb").click(function () {
+     $(".Allcb").click(function () {
                 $(this).closest("table").find("td [type=checkbox]").prop('checked', $(this).prop('checked'));
             })
-        })
+       
 
+    //添加 新开页面
+    function GetAddModel() {
+        $("#btnAdd").button("loading");
+        window.location.href = "@Url.Action("Add")" + "?menuID=0";
+    }
+        //编辑 layer
+     function GetEditModel(index, MenuID) {
+         //layer.open({
+         //    type: 2, //表示Frame层
+         //    title: '编辑',
+         //    shadeClose: false,
+         //    shade: 0.8,
+         //    area: ['60%', '50%'],
+         //    content: '/MenuInfo/Add?menuID=' + MenuID,
+         //    end: function () {
+         //        GetMenuInfo(10, 1);
+         //    }
+         //});
+           window.location.href = "@Url.Action("Add")" + "?menuID=" + MenuID;
+      }
 
-        function addModel() {
-            $("#btnAdd").button("loading");
-            window.location.href = "@Url.Action("Add")" + "?menuID=0";
-        }
-        function GetEditModel(index, MenuID) {
-            window.location.href = "@Url.Action("Add")" + "?menuID=" + MenuID;
-           //$.post("EntInfo/Edit", { "EntID": EntID }, function (result) {
-
-           //});
-        }
-
-        @*function editModel() {//编辑
-            var row = ZFGrid.GetData();
-            if (row != null) {
-                $("#btnEdit").button("loading");
-                window.location.href = "@Url.Action("Edit")/" + row.Id;
-            } else {
-                parent.layer.alert("请选择要编辑的数据");
-            }
-        }*@
 
         //删除
-        function GetDelData(index,MenuID) {
+        function GetDelData(index, MenuID) {
+            var ids = [];
+            if (index != -1) {
+                ids.push(MenuID);
+            }
+            else {
+                $("#menuInfoList table tbody tr td").find("input[type=checkbox]").each(function (i,item) {
+                    if ($(item).is(':checked')) {
+                        ids.push(item.getAttribute("data-id"));
+                    }
+                   
+                })
+            }
+            //console.log(ids);
             //layer询问框
             layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
                 //确定
-                $.post("/MenuInfo/Del", { "MenuID": MenuID }, function (result) {
+                $.post("/MenuInfo/Del", { "ids": ids }, function (result) {
                     if (result) {
-                        if (result == true) {
+                        if (result.flag) {
                             layer.msg("删除成功!");
+                            $("#menuInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
                             GetMenuInfo(10, 1);
                         }
                         else {
@@ -177,6 +187,7 @@
                 layer.close(index);
             });
         }
+ })
 
     </script>
 }

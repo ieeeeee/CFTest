@@ -1,9 +1,13 @@
 ﻿@using OA.Models
 @model MenuDto
-
+@*@{
+        if (Model.MenuID == 0) { ViewBag.Title = Model.MenuID; Layout = "~/Views/Shared/_Layout.cshtml"; }
+        else { ViewBag.Title = Model.MenuID; Layout = "~/Views/Shared/_Layout_Content.cshtml"; }
+    }*@
 @{
     ViewBag.Title = "添加菜单";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 @section headerJS{
     <style>
@@ -18,53 +22,59 @@
         .col-sm-offset-2 {
             margin-left: 36%
         }
-        .IsHide{
-            display:none;
+
+        .IsHide {
+            display: none;
         }
     </style>
 }
 <div class="wrapper wrapper-content">
     @*@using (Html.BeginForm("Add", "MenuInfo", FormMethod.Post, new { @class = "form-horizontal" }))
-    {*@
-        <div class="set-3">
-            <div class="graph-2 general">
-                <h3 class="inner-tittle two">新增菜单</h3>
-                <div class="grid-1" id="menuAddControl">
-                    <div class="form-body">
-                        <form class="form-horizontal" v-on:submit.prevent="onSubmit">
+        {*@
+    <div class="set-3">
+        <div class="graph-2 general">
+            @if (Model.MenuID > 0)
+            {<h3 class="inner-tittle two">编辑菜单</h3> }
+            else
+            { <h3 class="inner-tittle two">新增菜单</h3>}
+            <div class="grid-1" id="menuAddControl">
+                <div class="form-body">
+                    <form class="form-horizontal" v-on:submit.prevent="onSubmit">
 
-                            <div class="form-group" v-for="(item,index) in menuStructList">
-                                <label class="col-md-2 control-label">{{item.FieldName}}</label>
-                                <div class="col-md-8">
-                                    <div v-if="item.VueTemplate==='vadd-text'">
-                                        <vadd-text :class="{IsHide:item.IsHide}" :txt_item="item" :txt_index="index"></vadd-text>
-                                    </div>
-                                    <div v-else-if="item.VueTemplate==='vadd-checkbox'">
-                                        <vadd-checkbox :class="{IsHide:item.IsHide}" :ck_item="item" :ck_index="index"></vadd-checkbox>
-                                    </div>
-                                    <div v-else-if="item.VueTemplate==='vadd-textarea'">
-                                        <vadd-textarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-textarea>
-                                    </div>
-                                    <div v-else-if="item.VueTemplate==='vadd-select'">
-                                        <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
-                                    </div>
-                                    @*<span>{{item.FieldValue}}</span>*@
+                        <div class="form-group" v-for="(item,index) in tableStructList">
+                            <label class="col-md-2 control-label">{{item.FieldName}}</label>
+                            <div class="col-md-8">
+                                <div v-if="item.VueTemplate==='vadd-text'">
+                                    <vadd-text :class="{IsHide:item.IsHide}" :txt_item="item" :txt_index="index"></vadd-text>
                                 </div>
+                                <div v-else-if="item.VueTemplate==='vadd-checkbox'">
+                                    <vadd-checkbox :class="{IsHide:item.IsHide}" :ck_item="item" :ck_index="index"></vadd-checkbox>
+                                </div>
+                                <div v-else-if="item.VueTemplate==='vadd-textarea'">
+                                    <vadd-textarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-textarea>
+                                </div>
+                                <div v-else-if="item.VueTemplate==='vadd-select'">
+                                    <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
+                                </div>
+                                @*<span>{{item.FieldValue}}</span>*@
                             </div>
+                        </div>
 
-                            <div class="col-sm-offset-2">
-                                <button type="button" class="btn btn-default" v-on:click="Save()">保存</button>
-                                <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="col-sm-offset-2">
+                            <button type="button" class="btn btn-default" v-on:click="Save()">保存</button>
+                            <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     @*}*@
 </div>
 @section scripts{
-<script>
+    <script src="~/Content/Plugin/vue.js"></script>
+    <script src="~/Content/Plugin/VueTemplate.js"></script>
+    <script>
         $(function () {
             //Vue组件
             Vue.component('vadd-text', {
@@ -106,7 +116,7 @@
             var vList = new Vue({
                 el: "#menuAddControl",
                 data: {
-                    menuStructList: []
+                    tableStructList: []
                 },
                 methods: {
                     Save: function () {
@@ -115,71 +125,89 @@
                 }
 
             });
-            var menuInfo = {};
-            GetMenuInfo();
+            var modelInfo = {};
             var parentMenuInfo = [];
-            GetParentInfo();
-            GetMenuStruct();
-            function GetMenuStruct() {
+            //获取值
+            GetModelInfo(function () {
+                //获取select选项
+                GetParentInfo(function () {
+                    //获取结构
+                    GetTableStruct();
+                });
+            });
+
+            
+            //获取界面结构
+            function GetTableStruct() {
                 $.post("/Base/GetAddTableStruct", { "TableID": 1 }, function (result) {
                     if (result) {
-                        console.log(menuInfo);
+                        console.log(modelInfo);
                         for (var i = 0; i < result.length; i++) {
-                            for (var key in menuInfo) {
+                            //赋初值
+                            for (var key in modelInfo) {
                                 if (result[i].Field == key) {
-                                    result[i].FieldValue = menuInfo[key];
+                                    result[i].FieldValue = modelInfo[key];
                                 }
                             }
+                            //select 选项操作
                             if (result[i].Field == "ParentID") {
                                 var options = [];
                                 for (var j = 0; j < parentMenuInfo.length;j++) {
                                     options.push({ text: parentMenuInfo[j].MenuName, value: parentMenuInfo[j].MenuID});
                                 }
                                 result[i].FieldSelect = options;
-                                //console.log(result[i].FieldSelect);
+                                console.log(result[i].FieldSelect);
                             }
-
                         }
-
-                        //console.log(result);
-                        vList.menuStructList = result;
+                        console.log(result);
+                        vList.tableStructList = result;
                     }
                 }, 'Json');
-
             }
-             function GetMenuInfo() {
-               var MenuID =@Model.MenuID;
+            //获取初始值
+             function GetModelInfo(func) {
+                 var MenuID =@Model.MenuID;
+
                 $.post("/MenuInfo/GetMenuInfo", { "MenuID": MenuID }, function (result) {
                     if (result) {
                        // console.log(result);
-                        menuInfo = result;
+                        modelInfo = result;
                     }
-                },'Json');
+                    func();
+                 }, 'Json');
+
             }
-            function GetParentInfo() {
+            //select 选项操作
+            function GetParentInfo(func) {
                 $.post("/Base/GetMenuInfo", { }, function (result) {
                     if (result) {
                         // console.log(result);
                         parentMenuInfo = result;
                     }
+                    func();
                 }, 'Json');
             }
+            //提交
             function GetSave() {
                 var data = {};
                 for (var i = 0; i < vList.menuStructList.length; i++) {
+                    console.log(vList.menuStructList[i].Field);
+                    console.log(vList.menuStructList[i].FieldValue);
                     data[vList.menuStructList[i].Field] = vList.menuStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
                 }
+                data.MenuID=@Model.MenuID;
                 console.log(data);
                 $.post('/MenuInfo/Save', data, function (result) {
-                    if (result != -1) {
-                        layer.msg("保存成功！");
+                    if (result.flag) {
+                        layer.msg(result.msg);
+                        window.location.href = "/MenuInfo/Index";
                     } else {
-                        layer.msg("保存失败！");
+                        layer.msg(result.msg);
                     }
                 },'Json');
             }
 
         })
-</script>
+    </script>
 
 }

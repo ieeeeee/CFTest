@@ -33,6 +33,10 @@ namespace OA.Services.AppServices
                 var db = scope.DbContexts.Get<OAContext>();
                 var entity = await db.B_Menus.FindAsync(menuID);
                 var dto = _mapper.Map<B_MenuEntity, MenuDto>(entity);
+                if (dto == null)
+                {
+                    return new MenuDto();
+                }
                 return dto;
             }
         }
@@ -119,12 +123,12 @@ namespace OA.Services.AppServices
             }
         }
 
-        public async Task<bool> UpdateAsync(MenuDto dto)
+        public async  Task<bool> UpdateAsync(MenuDto dto)
         {
             using (var scope = _dbContextScopeFactory.Create())
             {
                 var db = scope.DbContexts.Get<OAContext>();
-                var entity = await db.B_Menus.LoadAsync(dto.MenuID.ToString());//using DbContextExtension
+                var entity =  await db.B_Menus.LoadAsync(dto.MenuID);//using DbContextExtension
                 entity.MenuName = dto.MenuName;
                 entity.MenuType = dto.MenuType;
                 entity.Url = dto.Url;
@@ -134,6 +138,21 @@ namespace OA.Services.AppServices
                 entity.Remark = dto.Remark;
                 entity.IsDeleted = dto.IsDeleted;
                 entity.CreateDateTime = DateTime.Now;
+                await  scope.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        public async Task<bool> DeleteAsync(IEnumerable<int> ids)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entities = await db.B_Menus.Where(item => ids.Contains(item.MenuID)).ToListAsync();
+                foreach (var menuEntity in entities)
+                {
+                    menuEntity.IsDeleted = 1;
+                }
                 await scope.SaveChangesAsync();
                 return true;
             }
