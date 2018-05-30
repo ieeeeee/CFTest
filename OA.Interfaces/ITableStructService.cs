@@ -14,5 +14,8 @@ namespace OA.Interfaces
 
         Task<List<TableStructDto>> GetAddTableStructAsync(int TableID);
         Task<PagedResult<TableStructDto>> SearchAsync(TableStructFilter filters);
+        Task<TableStructDto> FindAsync(int id);
+        Task<string> AddAsync(TableStructDto dto);
+        Task<bool> UpdateAsync(TableStructDto dto);
     }
 }

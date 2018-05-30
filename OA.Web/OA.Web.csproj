@@ -416,6 +416,7 @@
     <Content Include="Views\BaseStruct\MenuInfo\Index.cshtml" />
     <Content Include="Views\BaseStruct\MenuInfo\Add.cshtml" />
     <Content Include="Views\System\TableStruct\Index.cshtml" />
+    <Content Include="Views\System\TableStruct\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

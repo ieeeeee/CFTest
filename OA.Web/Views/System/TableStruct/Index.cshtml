@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-xs-12 text-center" v-if="tstructInfoList.length<=0 ">
+        <div class="col-xs-12 text-center" v-if="modelInfoList.length<=0 ">
             {{message}}
         </div>
         <div class="row" id="pageDiv">
@@ -71,27 +71,27 @@
                     AddModel: function () {
                         return GetAddModel();
                     },
-                    EditModel: function (index, MenuID) {
-                        return GetEditModel(index, MenuID);
+                    EditModel: function (index, ID) {
+                        return GetEditModel(index, ID);
                     },
-                    DelData: function (index, MenuID) {
-                        return GetDelData(index, MenuID);
+                    DelData: function (index, ID) {
+                        return GetDelData(index, ID);
                     }
                 }
             })
-            GetMenuInfo(10, 1);
+            GetModelInfo(10, 1);
 
         //获取分页菜单信息
          function GetModelInfo(pageSize, pageIndex) {
-            var menuFilter = {
+            var Filter = {
                 rows: pageSize,
                 page: pageIndex
             };
             //console.log(menuFilter);
-            $.post("/TableStruct/GetTableStructInfo", menuFilter, function (result) {
+            $.post("/TableStruct/GetTableStructInfo", Filter, function (result) {
                 console.log(result);
                 if (result) {
-                    vList.menuInfoList = result.rows;
+                    vList.modelInfoList = result.rows;
                     if (result.rows.length > 0) {
                         $("#pageDiv").show();
                         layui.use('laypage', function () {
@@ -106,7 +106,7 @@
                                 ,last:false
                                 , jump: function (obj, first) {
                                     if (!first) {
-                                        GetMenuInfo(obj.limit, obj.curr);
+                                        GetModelInfo(obj.limit, obj.curr);
                                     }
                                 }
                             });
@@ -127,10 +127,10 @@
     //添加 新开页面
     function GetAddModel() {
         $("#btnAdd").button("loading");
-        window.location.href = "@Url.Action("Add")" + "?menuID=0";
+        window.location.href = "@Url.Action("Add")" + "?id=0";
     }
         //编辑 layer
-     function GetEditModel(index, MenuID) {
+     function GetEditModel(index, ID) {
          //layer.open({
          //    type: 2, //表示Frame层
          //    title: '编辑',
@@ -142,15 +142,15 @@
          //        GetMenuInfo(10, 1);
          //    }
          //});
-           window.location.href = "@Url.Action("Add")" + "?menuID=" + MenuID;
+         window.location.href = "@Url.Action("Add")" + "?id=" + ID;
       }
 
 
         //删除
-        function GetDelData(index, MenuID) {
+     function GetDelData(index, ID) {
             var ids = [];
             if (index != -1) {
-                ids.push(MenuID);
+                ids.push(ID);
             }
             else {
                 $("#menuInfoList table tbody tr td").find("input[type=checkbox]").each(function (i,item) {
@@ -164,12 +164,12 @@
             //layer询问框
             layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
                 //确定
-                $.post("/MenuInfo/Del", { "ids": ids }, function (result) {
+                $.post("/TableStruct/Del", { "ids": ids }, function (result) {
                     if (result) {
                         if (result.flag) {
                             layer.msg("删除成功!");
-                            $("#menuInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
-                            GetMenuInfo(10, 1);
+                            $("#modelInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
+                            GetModelInfo(10, 1);
                         }
                         else {
                             layer.msg("删除失败!");

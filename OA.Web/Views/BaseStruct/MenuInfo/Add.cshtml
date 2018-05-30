@@ -190,10 +190,10 @@
             //提交
             function GetSave() {
                 var data = {};
-                for (var i = 0; i < vList.menuStructList.length; i++) {
-                    console.log(vList.menuStructList[i].Field);
-                    console.log(vList.menuStructList[i].FieldValue);
-                    data[vList.menuStructList[i].Field] = vList.menuStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
+                for (var i = 0; i < vList.tableStructList.length; i++) {
+                    console.log(vList.tableStructList[i].Field);
+                    console.log(vList.tableStructList[i].FieldValue);
+                    data[vList.tableStructList[i].Field] = vList.tableStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
                 }
                 data.MenuID=@Model.MenuID;
                 console.log(data);

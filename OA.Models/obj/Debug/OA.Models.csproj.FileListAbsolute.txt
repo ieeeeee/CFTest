@@ -13,15 +13,6 @@ F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CoreCompile
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.dll
 F:\Learn\CFTest\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.pdb
-F:\GitDepo\CFTest\OA.Models\bin\Debug\OA.Models.dll
-F:\GitDepo\CFTest\OA.Models\bin\Debug\OA.Models.pdb
-F:\GitDepo\CFTest\OA.Models\bin\Debug\Newtonsoft.Json.dll
-F:\GitDepo\CFTest\OA.Models\bin\Debug\Newtonsoft.Json.xml
-F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csprojResolveAssemblyReference.cache
-F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.cache
-F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
-F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.dll
-F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.pdb
 F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\bin\Debug\Newtonsoft.Json.dll
 F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\bin\Debug\Newtonsoft.Json.xml
 F:\ZL\20180323翟璐整理\CFTest\CFTestOA\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
@@ -34,3 +25,11 @@ F:\GitRepo\CFTest\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.
 F:\GitRepo\CFTest\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
 F:\GitRepo\CFTest\CFTest\OA.Models\obj\Debug\OA.Models.dll
 F:\GitRepo\CFTest\CFTest\OA.Models\obj\Debug\OA.Models.pdb
+F:\GitDepo\CFTest\OA.Models\bin\Debug\OA.Models.dll
+F:\GitDepo\CFTest\OA.Models\bin\Debug\OA.Models.pdb
+F:\GitDepo\CFTest\OA.Models\bin\Debug\Newtonsoft.Json.dll
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csprojResolveAssemblyReference.cache
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.cache
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.dll
+F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.pdb

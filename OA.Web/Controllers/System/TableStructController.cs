@@ -1,4 +1,5 @@
 ﻿using OA.Basis;
+using OA.Basis.Extentions;
 using OA.Interfaces;
 using OA.Models;
 using OA.Models.Filters;
@@ -24,6 +25,11 @@ namespace OA.Web.Controllers.System
         {
             return View();
         }
+        public async Task<ActionResult> Add(int id)
+        {
+            var result = await _tableStructService.FindAsync(id);
+            return View(result);
+        }
         #endregion
         #region GetInfo
         public async Task<JsonResult> GetTableStructInfo(TableStructFilter filters)
@@ -31,10 +37,41 @@ namespace OA.Web.Controllers.System
             var result = await _tableStructService.SearchAsync(filters);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public async Task<JsonResult> GetDetailInfo(int id)
+        {
+            var result = await _tableStructService.FindAsync(id);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region OperateResult
+
+        public async Task<JsonResult> Save(TableStructDto dto)
+        {
+            var result = string.Empty;
+            var success = false;
+            if (ModelState.IsValid)
+            {
+                if(dto.TStructID==0)
+                {
+                    result = await _tableStructService.AddAsync(dto);
+                    if (result.IsNotBlank())
+                    {
+                        return OkOperate(result);
+                    }
+                    else
+                        return FailOperate("添加失败");
+                }
+                else
+                {
+                    success = await  _tableStructService.UpdateAsync(dto);
+                    return Json(success);
+                }
+            }
+            return FailOperate("验证失败");
+
+        }
         #endregion
-        
+
 
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.Owin.Security;
 using OA.Basis.Extentions;
 using SimpleInjector.Lifestyles;
 
-namespace OA.Web.Controllers
+namespace OA.Web.Controllers.System
 {
     public class LoginController : Controller
     {

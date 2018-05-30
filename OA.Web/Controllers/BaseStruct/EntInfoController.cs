@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace OA.Web.Controllers
+namespace OA.Web.Controllers.BaseStruct
 {
     public class EntInfoController : Controller
     {
@@ -28,9 +28,9 @@ namespace OA.Web.Controllers
         {
             return View();
         }
-        public async Task<ActionResult> Add(int entID)
+        public async Task<ActionResult> Add(int id)
         {
-            var model = await _entService.FindAsync(entID);
+            var model = await _entService.FindAsync(id);
             if (model == null)
             {
                 return View(new EntDto());
