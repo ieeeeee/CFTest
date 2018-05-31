@@ -24,7 +24,7 @@ namespace OA.Data.Config
             Property(item => item.Position).HasColumnType("nvarchar").HasMaxLength(20);
             Property(item => item.Gender).HasColumnType("varchar").HasMaxLength(2);
 
-            HasOptional(x => x.B_Department).WithMany(x => x.B_Users).HasForeignKey(x => x.DepartmentID).WillCascadeOnDelete(false);
+            HasOptional(x => x.B_Department).WithMany(x => x.B_Users).HasForeignKey(x => x.DeptID).WillCascadeOnDelete(false);
             HasOptional(x => x.B_Enterprise).WithMany(x => x.B_Users).HasForeignKey(x => x.EntID).WillCascadeOnDelete(false);
             //B_Role n:n
 

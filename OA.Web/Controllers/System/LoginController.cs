@@ -59,7 +59,7 @@ namespace OA.Web.Controllers.System
 
                 var claims = new List<Claim>
                 {
-                    new Claim("LoginUserID",loginDto.User.UserID),
+                    new Claim("LoginUserID",loginDto.User.UserID.ToString()),
                     new Claim(ClaimTypes.Name,model.LoginName)
                 };
                 var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);//安装NuGet包  Microsoft.AspNet.Identity;

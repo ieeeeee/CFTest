@@ -23,6 +23,14 @@
         <div class="buttons-ui">
             <a id="btnAdd" class="btn green" v-on:click="AddModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
             <a id="btnDel" class="btn red" v-on:click="DelData(-1,0)"><i class="fa fa-close"></i>&nbsp;删除</a>
+            <div class="input-group" style="width:30%;float:right;">
+                <input type="text" class="input form-control" v-model="searchKeyWords" placehoder="Search" />
+                <span class="input-group-btn">
+                    <button v-on:click="Search(searchKeyWords)" class="btn btn btn-primary" type="button">
+                        <i class="fa fa-search"></i>搜索
+                    </button>
+                </span>
+            </div>
         </div>
     </div>
     <div class="graph">
@@ -31,7 +39,7 @@
                 <thead><tr><th><input class="Allcb" type="checkbox" />全选</th><th>#</th> <th>企业名称</th> <th>企业地址</th> <th>联系方式</th><th>使用状态</th><th>操作</th></tr> </thead>
                 <tbody v-for="(item,index) in modelInfoList">
                     <tr>
-                        <td><input class="Subcb" data-id="item.EntID" type="checkbox" /></td>
+                        <td><input class="Subcb" :data-id="item.EntID" type="checkbox" /></td>
                         <td scope="row">{{index+1}}</td>
                         <td>{{item.EntName}}</td>
                         <td>{{item.Address}}</td>
@@ -70,7 +78,8 @@
                     pageIndex: 1,
                     entID: 0,
                     modelInfoList: [],
-                    message: "没有数据"
+                    message: "没有数据",
+                    searchKeyWords: ""
                 },
                 methods: {
                     AddModel: function () {
@@ -81,17 +90,21 @@
                     },
                     DelData: function (index, ID) {
                         return GetDelData(index, ID);
+                    },
+                    Search: function (searchKeyWords) {
+                        return GetSearch(searchKeyWords);
                     }
                 }
             })
-            GetEntInfo(6, 1);
+            var modelFilter = {};
+            modelFilter.rows = 10;
+            modelFilter.page = 1;
+            modelFilter.keywords = vList.searchKeyWords;
+            GetEntInfo(modelFilter);
+
 
         //获取企业信息
-            function GetEntInfo(pageSize, pageIndex) {
-                var entFilter = {
-                    rows: pageSize,
-                    page: pageIndex
-                };
+            function GetEntInfo(entFilter) {
                 //console.log(entFilter);
                 $.post("/EntInfo/GetEntInfo", entFilter, function (result) {
                     console.log(result);
@@ -111,7 +124,9 @@
                                     , last: false
                                     , jump: function (obj, first) {
                                         if (!first) {
-                                            GetMenuInfo(obj.limit, obj.curr);
+                                            modelFilter.rows = obj.limit;
+                                            modelFilter.page = obj.curr;
+                                            GetEntInfo(modelFilter);
                                         }
                                     }
                                 });
@@ -141,7 +156,11 @@
                 window.location.href = "@Url.Action("Add")" + "?id=" + ID;
           
             }
-
+            //查找
+            function GetSearch(searchKeyWords) {
+                modelFilter.keywords = searchKeyWords;
+                GetEntInfo(modelFilter);
+            }
             //删除
             function GetDelData(index, ID) {
                 var ids = [];
@@ -149,14 +168,14 @@
                     ids.push(ID);
                 }
                 else {
-                    $("#menuInfoList table tbody tr td").find("input[type=checkbox]").each(function (i, item) {
+                    $("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i, item) {
                         if ($(item).is(':checked')) {
                             ids.push(item.getAttribute("data-id"));
                         }
 
                     })
                 }
-                //console.log(ids);
+                console.log(ids);
                 //layer询问框
                 layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
                     //确定
@@ -165,7 +184,7 @@
                             if (result.flag) {
                                 layer.msg("删除成功!");
                                 $("#modelInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
-                                GetEntInfo(10, 1);
+                                GetEntInfo(modelFilter);
                             }
                             else {
                                 layer.msg("删除失败!");

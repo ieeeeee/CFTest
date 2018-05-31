@@ -12,8 +12,8 @@ namespace OA.Data.Config
             ToTable("B_Department");
             HasKey(item => item.DepartmentID);
             Property(item => item.DepartmentID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(item => item.DepartmentNo).HasColumnType("varchar").HasMaxLength(6);
-            Property(item => item.DepartmentName).HasColumnType("nvarchar").IsRequired().HasMaxLength(40);
+            Property(item => item.DeptNo).HasColumnType("varchar").HasMaxLength(6);
+            Property(item => item.DeptName).HasColumnType("nvarchar").IsRequired().HasMaxLength(40);
 
             //B_User 1:n
            // HasMany(b => b.B_Users).WithOptional(a => a.B_Department).HasForeignKey(b => b.DepartmentID);

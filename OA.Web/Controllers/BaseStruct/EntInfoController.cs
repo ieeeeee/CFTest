@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace OA.Web.Controllers.BaseStruct
 {
-    public class EntInfoController : Controller
+    public class EntInfoController : BaseMsgController
     {
         private readonly IEntService _entService;
 
@@ -52,6 +52,13 @@ namespace OA.Web.Controllers.BaseStruct
             var result = await _entService.SearchAsync(entFilter);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        //根据主键或得企业信息
+        public async Task<JsonResult> GetDetailInfo(int id)
+        {
+            var result = await _entService.FindAsync(id);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region OperateResult
@@ -70,7 +77,29 @@ namespace OA.Web.Controllers.BaseStruct
             }
             return View(dto);
         }
-
+        //添加或修改保存
+        public async Task<JsonResult> Save(EntDto dto)
+        {
+            var result = string.Empty;
+            var success = false;
+            if(ModelState.IsValid)
+            {
+                if(dto.EntID==0)
+                {
+                    result = await _entService.AddAsync(dto);
+                    if (result.IsNotBlank())
+                        return OkOperate(result);
+                    else
+                        return FailOperate("添加失败");
+                }
+                else
+                {
+                    success = await _entService.UpdateAsync(dto);
+                    return Json(success);
+                }
+            }
+            return FailOperate("验证失败");
+        }
         //删除
         public async Task<JsonResult> Del(IList<int> ids)
         {

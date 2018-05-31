@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Mehdime.Entity;
+using OA.Basis;
 using OA.Basis.Extentions;
 using OA.Basis.Utilities;
 using OA.Data;
@@ -7,7 +8,11 @@ using OA.Data.Entity;
 using OA.Interfaces;
 using OA.Models;
 using OA.Models.Enum;
+using OA.Models.Filters;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -24,6 +29,109 @@ namespace OA.Services.AppServices
             _dbContextScopeFactory = dbContextScopeFactory;
             _mapper = mapper;
         }
+        //增加
+        public async Task<string> AddASync(UserDto dto)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entity = _mapper.Map<UserDto,B_UserEntity>(dto);
+                entity.Create();
+                entity.CreateDateTime = DateTime.Now;
+                db.B_Users.Add(entity);
+                return await scope.SaveChangesAsync() > 0 ? entity.UserID.ToString() : string.Empty;
+                
+            }
+        }
+
+        //删
+        public async Task<bool> DeleteAsync(IEnumerable<int> ids)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entities = db.B_Users.Where(x => x.IsDeleted != 1);
+                foreach(var entity in entities)
+                {
+                    entity.IsDeleted = 1;
+                }
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        //查
+        public async Task<UserDto> FindAsync(int ID)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entity = await db.B_Users.FindAsync(ID);
+                var dto = _mapper.Map<B_UserEntity, UserDto>(entity);
+                if (dto == null)
+                    return new UserDto();
+                return dto;
+            }
+        }
+
+        //查列表
+        public async Task<PagedResult<UserDto>> SearchAsync(UserFilter filter)
+        {
+            using (var scope = _dbContextScopeFactory.CreateReadOnly())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var query = db.B_Users.Where(x => x.IsDeleted != 1)
+                    .WhereIf(filter.keywords.IsNotBlank(), x => x.UserNo.Contains(filter.keywords) || x.UserName.Contains(filter.keywords) || x.NickName.Contains(filter.keywords));
+                return await query.OrderByCustom(filter.sidx, filter.sord)
+                    .Select(item => new UserDto
+                    {
+                        UserID = item.UserID,
+                        UserNo=item.UserNo,
+                        UserName=item.UserName,
+                        NickName=item.NickName,
+                        EntID=item.EntID,
+                        EntName=item.B_Enterprise.EntName,
+                        DeptID=item.DeptID,
+                        DeptName=item.B_Department.DeptName,
+                        Gender=item.Gender,
+                        Tel=item.Tel,
+                        Address=item.Address,
+                        Age=item.Age,
+                        Email=item.Email,
+                        Password=item.Password,
+                        PlainCode=item.PlainCode,
+                        Position=item.Position,
+                        Remark=item.Remark,
+                        IsDeleted=item.IsDeleted 
+                    }).PagingAsync(filter.page, filter.rows);
+            }
+        }
+
+        //改
+        public async Task<bool> UpdateAsync(UserDto dto)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entity = await db.B_Users.LoadAsync(dto.UserID);
+                entity.UserNo = dto.UserNo;
+                entity.NickName = dto.NickName;
+                entity.Tel = dto.Tel;
+                entity.Address = dto.Address;
+                entity.Age = dto.Age;
+                entity.Gender = dto.Gender;
+                entity.Position = dto.Position;
+                entity.Remark = dto.Remark;
+                entity.IsDeleted = dto.IsDeleted;
+                entity.EntID = dto.EntID;
+                entity.DeptID = dto.DeptID;
+                await scope.SaveChangesAsync();
+                return true;
+
+            }
+        }
+
+
         public async Task<UserLoginDto> Login(LoginDto dto)
         {
             using (var scope = _dbContextScopeFactory.Create())

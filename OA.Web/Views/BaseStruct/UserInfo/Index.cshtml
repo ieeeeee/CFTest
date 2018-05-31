@@ -1,0 +1,198 @@
+﻿@using OA.Models.Filters
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headerJS{
+
+}
+<div class="graph-visual tables-main" id="listControl">
+    <h3 class="inner-tittle two">用户信息 </h3>
+    <div class="graph">
+        <div class="buttons-ui">
+            <a id="btnAdd" class="btn green" v-on:click="AddModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+            <a id="btnDel" class="btn red" v-on:click="DelData(-1,0)"><i class="fa fa-close"></i>&nbsp;删除</a>
+            <div class="input-group" style="width:30%;float:right;">
+                <input type="text" class="input form-control" v-model="searchKeyWords" placehoder="Search" />
+                <span class="input-group-btn">
+                    <button v-on:click="Search(searchKeyWords)" class="btn btn btn-primary" type="button">
+                        <i class="fa fa-search"></i>搜索
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="graph">
+        <div class="tables" id="modelInfoList">
+            <table class="table table-hover">
+                <thead><tr><th><input class="Allcb" type="checkbox" />全选</th><th>用户编号</th> <th>用户名称</th><th>用户登录名</th><th>性别</th><th>企业名称</th><th>部门名称</th><th>联系电话</th><th>地址</th><th>使用状态</th><th>操作</th></tr> </thead>
+                <tbody v-for="(item,index) in modelInfoList">
+                    <tr>
+                        <td><input class="Subcb" :data-id="item.UserID" type="checkbox" /></td>
+                        <td>{{item.UserNo}}</td>
+                        <td>{{item.NickName}}</td>
+                        <td>{{item.UserName}}</td>
+                        <td>{{item.Gender}}</td>
+                        <td>{{item.EntName}}</td>
+                        <td>{{item.DeptName}}</td>
+                        <td>{{item.Tel}}</td>
+                        <td>{{item.Address}}</td>
+                        <td>{{item.IsDeleted}}</td>
+                        <td>
+                            <a id="btnAdd" style="color:#55acee;" v-on:click="EditModel(index,item.UserID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
+                            <a id="btnDel" style="color:#e74c3c;" v-on:click="DelData(index,item.UserID)"><i class="fa fa-close" title="删除"></i>&nbsp;&nbsp;</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 text-center" v-if="modelInfoList.length<=0 ">
+            {{message}}
+        </div>
+        <div class="row" id="pageDiv">
+            <div class="col-xs-12">
+                <hr style="margin:10px auto;" />
+                <div id="pager" style="margin-top:4px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section pageJS{
+    <script type="text/javascript">
+ $(function () {
+            var vList = new Vue({
+                el: "#listControl",
+                data: {
+                    pageSize: 6,
+                    pageIndex: 1,
+                    modelInfoList: [],
+                    message: "没有数据",
+                    searchKeyWords: ""
+                },
+                methods: {
+                    AddModel: function () {
+                        return GetAddModel();
+                    },
+                    EditModel: function (index, ID) {
+                        return GetEditModel(index, ID);
+                    },
+                    DelData: function (index, ID) {
+                        return GetDelData(index, ID);
+                    },
+                    Search: function (searchKeyWords) {
+                        return GetSearch(searchKeyWords);
+                    }
+                }
+             })
+             var modelFilter = {};
+             modelFilter.rows = 10;
+             modelFilter.page = 1;
+             modelFilter.keywords = vList.searchKeyWords;
+             GetModelInfo(modelFilter);
+
+        //获取分页菜单信息
+     function GetModelInfo(Filter) {
+            //console.log(menuFilter);
+            $.post("/UserInfo/GetAllUserInfo", Filter, function (result) {
+                console.log(result);
+                if (result) {
+                    vList.modelInfoList = result.rows;
+                    if (result.rows.length > 0) {
+                        $("#pageDiv").show();
+                        layui.use('laypage', function () {
+                            var laypage = layui.laypage;
+                            laypage.render({
+                                elem: 'pager'
+                                , count: result.records
+                                ,curr:result.page
+                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                , groups: 1
+                                , first: false
+                                ,last:false
+                                , jump: function (obj, first) {
+                                    if (!first) {
+                                        modelFilter.rows = obj.limit;
+                                        modelFilter.page = obj.curr;
+                                        GetModelInfo(modelFilter);
+                                    }
+                                }
+                            });
+                        });
+                        } else {
+                        $("#pageDiv").hide()
+                        }
+                }
+            },"json");
+
+         }
+
+     $(".Allcb").click(function () {
+                $(this).closest("table").find("td [type=checkbox]").prop('checked', $(this).prop('checked'));
+            })
+
+
+    //添加 新开页面
+    function GetAddModel() {
+        $("#btnAdd").button("loading");
+        window.location.href = "@Url.Action("Add")" + "?id=0";
+    }
+        //编辑 layer
+     function GetEditModel(index, ID) {
+         //layer.open({
+         //    type: 2, //表示Frame层
+         //    title: '编辑',
+         //    shadeClose: false,
+         //    shade: 0.8,
+         //    area: ['60%', '50%'],
+         //    content: '/MenuInfo/Add?menuID=' + MenuID,
+         //    end: function () {
+         //        GetMenuInfo(10, 1);
+         //    }
+         //});
+         window.location.href = "@Url.Action("Add")" + "?id=" + ID;
+      }
+
+     //查找
+     function GetSearch(searchKeyWords) {
+         modelFilter.keywords = searchKeyWords;
+         GetModelInfo(modelFilter);
+     }
+        //删除
+     function GetDelData(index, ID) {
+            var ids = [];
+            if (index != -1) {
+                ids.push(ID);
+            }
+            else {
+                $("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i,item) {
+                    if ($(item).is(':checked')) {
+                        ids.push(item.getAttribute("data-id"));
+                    }
+
+                })
+            }
+            //console.log(ids);
+            //layer询问框
+            layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
+                //确定
+                $.post("/TableStruct/Del", { "ids": ids }, function (result) {
+                    if (result) {
+                        if (result.flag) {
+                            layer.msg("删除成功!");
+                            $("#modelInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
+                            GetModelInfo(modelFilter);
+                        }
+                        else {
+                            layer.msg("删除失败!");
+                        }
+                    }
+                })
+                //关闭询问框
+                layer.close(index);
+            });
+        }
+ })
+
+    </script>
+}

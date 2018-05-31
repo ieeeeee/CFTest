@@ -88,7 +88,6 @@ F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\EntityFramework.xml
 F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\EntityFramework.SqlServer.xml
 F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\SimpleInjector.xml
 F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\AutoMapper.xml
-F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\Newtonsoft.Json.xml
 F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\de\Microsoft.Data.Entity.Design.Extensibility.resources.dll
 F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\es\Microsoft.Data.Entity.Design.Extensibility.resources.dll
 F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\fr\Microsoft.Data.Entity.Design.Extensibility.resources.dll
@@ -128,3 +127,4 @@ F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.csproj.CoreCompileInputs.cache
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.dll
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.pdb
+F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\Newtonsoft.Json.xml

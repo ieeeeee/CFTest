@@ -100,6 +100,7 @@ namespace OA.Services.AppServices
                 var db = scope.DbContexts.Get<OAContext>();
                 var entity = _mapper.Map<TableStructDto, B_TableStructEntity>(dto);
                 entity.Create();
+                entity.CreateDateTime = DateTime.Now;
                 db.B_TableStructEntities.Add(entity);
                 return await scope.SaveChangesAsync() > 0 ? entity.TStructID.ToString() : string.Empty;
 ;               
@@ -111,7 +112,7 @@ namespace OA.Services.AppServices
             using (var scope = _dbContextScopeFactory.Create())
             {
                 var db = scope.DbContexts.Get<OAContext>();
-                var entity = await db.B_TableStructEntities.FindAsync(dto.TStructID);
+                var entity = await db.B_TableStructEntities.LoadAsync(dto.TStructID);
                 entity.TableID = dto.TableID;
                 entity.TableName = dto.TableName;
                 entity.Field = dto.Field;

@@ -458,6 +458,70 @@ cursor: pointer;
 	width: 25px;
 	cursor:pointer;
 }
+/*.list-searchform {
+    position: absolute;
+    background: #fff;
+    width: 20%;
+    height: 30px;
+}
+
+.list-searchbox {
+    display: inline-block;
+    border: 1px solid blue;
+    color: #5d5d5d;
+    outline:none;
+    font-size:14px;
+    -webkit-appearance:none;
+    margin: 0;
+    background: none;
+    padding: 10px;
+    width: 89%;
+}
+
+.list-searchbutton {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    background: url('../images/search2.png') no-repeat -0px -0px;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    display: inline-block;
+    color: #5d5d5d;
+    padding: inherit;
+    font-size: 14px;
+}*/
+.list-searchform {
+    width: 30%;
+    margin: 0 20px;
+    float: right;
+    position: relative;
+    border: 2px #55acee solid;
+    display:table;
+}
+
+.list-searchbox {
+    border-radius: 0px;
+    border: none;
+    height: 32px;
+    width: 95%;
+    padding-left: 20px;
+    padding-right: 36px;
+    background: rgba(255,255,255,0.95);
+    color: #3736e3;
+    box-shadow: inset 0px 1px 0px #F1F0F1;
+}
+
+.list-searchbutton {
+    border: none;
+    color: rgba(0,0,0,0.5);
+    background: none;
+    position: absolute;
+    top: 8px;
+    font-size: 16px;
+    right: 15px;
+    cursor: pointer;
+}
 .close{
     color: #333;
         padding: 2px 3px 0px 0px;
@@ -2749,8 +2813,8 @@ form.com-mail {
 }
  input[type="submit"] {
     font-size: 0.9em;
-    background-color:#002561;
-    border: 1px solid #002561;
+    /*background-color:#002561;
+    border: 1px solid #002561;*/
     color: #fff;
     padding: 0.4em 1em;
     margin-top: 1em;
@@ -3976,7 +4040,7 @@ th {
   margin: 10px;
   border-radius: 5px;
   text-decoration: none;
-  padding: 10px;
+  /*padding: 10px;*/
   font-size: 22px;
   transition: .3s;
   -webkit-transition: .3s;
@@ -4052,8 +4116,8 @@ th {
     margin: 10px;
     border-radius: 0;
     text-decoration: none;
-    padding: 10px 20px;
-    font-size: 17px;
+    padding: 8px 20px;
+    font-size: 14px;
 	}
 .inner-grid-button {
     padding: 0;
@@ -8189,3 +8253,23 @@ footer  p a:hover ,.footer p a:hover{
 	}
 }
 /***responsive***/
+
+.btn-primary {
+    background-color: #1ab394;
+    border-color: #1ab394;
+    color: #fff;
+}
+
+.btn {
+    border-radius: 3px;
+    margin-bottom: 5px;
+    margin: 0;
+}
+
+.form-control {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+}

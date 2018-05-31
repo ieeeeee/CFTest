@@ -34,6 +34,7 @@ namespace OA.Services.AppServices
                 var entity = _mapper.Map<EntDto, B_EnterpriseEntity>(dto);
                 entity.Create();
                 entity.GroupID= BaseIdGenerator.Instance.GetNo();
+                entity.CreateDateTime = DateTime.Now;
                 var db = scope.DbContexts.Get<OAContext>();
                 db.B_Enterprises.Add(entity);
                 return await scope.SaveChangesAsync()>0 ? entity.EntID.ToString() : string.Empty;
@@ -48,6 +49,10 @@ namespace OA.Services.AppServices
                 var db = scope.DbContexts.Get<OAContext>();
                 var entity = await db.B_Enterprises.FindAsync(EntID);
                 var dto = _mapper.Map<B_EnterpriseEntity,EntDto>(entity);
+                if (dto == null)
+                {
+                    return new EntDto();
+                }
                 return dto;
             }
                
@@ -89,6 +94,22 @@ namespace OA.Services.AppServices
                 {
                     entEntity.IsDeleted = 1;
                 }
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
+
+       public async Task<bool> UpdateAsync(EntDto dto)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entity = await db.B_Enterprises.LoadAsync(dto.EntID);
+                entity.EntName = dto.EntName;
+                entity.Tel = dto.Tel;
+                entity.Address = dto.Address;
+                entity.Remark = dto.Remark;
+                entity.CreateDateTime = DateTime.Now;
                 await scope.SaveChangesAsync();
                 return true;
             }

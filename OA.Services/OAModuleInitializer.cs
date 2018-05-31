@@ -37,6 +37,7 @@ namespace OA.Services
             mapperConfig.CreateMap<B_EnterpriseEntity, EntDto>().ReverseMap();
             mapperConfig.CreateMap<B_MenuEntity, MenuDto>().ReverseMap();
             mapperConfig.CreateMap<B_TableStructEntity, TableStructDto>().ReverseMap();
+            mapperConfig.CreateMap<B_EnterpriseEntity, DeptDto>().ReverseMap();
         }
     }
 }

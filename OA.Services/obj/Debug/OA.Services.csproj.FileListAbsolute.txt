@@ -80,7 +80,6 @@ F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\AutoMapper.xml
 F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\EntityFramework.xml
 F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\EntityFramework.SqlServer.xml
 F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\SimpleInjector.xml
-F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Newtonsoft.Json.xml
 F:\GitRepo\CFTest\CFTest\OA.Services\obj\Debug\OA.Services.csprojResolveAssemblyReference.cache
 F:\GitRepo\CFTest\CFTest\OA.Services\obj\Debug\OA.Services.csproj.CoreCompileInputs.cache
 F:\GitRepo\CFTest\CFTest\OA.Services\obj\Debug\OA.Services.csproj.CopyComplete
@@ -115,3 +114,4 @@ F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.csproj.CoreCompileInputs.cac
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.dll
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.pdb
+F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Newtonsoft.Json.xml

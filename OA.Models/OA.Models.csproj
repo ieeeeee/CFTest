@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeptDto.cs" />
     <Compile Include="EntDto.cs" />
     <Compile Include="Enum\GroupOperator.cs" />
     <Compile Include="Enum\LoginResult.cs" />
@@ -53,9 +54,11 @@
     <Compile Include="Enum\MenuType.cs" />
     <Compile Include="Filters\AdvanceFilter.cs" />
     <Compile Include="Filters\BaseFiter.cs" />
+    <Compile Include="Filters\DeptFilter.cs" />
     <Compile Include="Filters\EntFilter.cs" />
     <Compile Include="Filters\MenuFilter.cs" />
     <Compile Include="Filters\TableStructFilter.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="LoginDto.cs" />
     <Compile Include="MenuDto.cs" />
     <Compile Include="Message.cs" />

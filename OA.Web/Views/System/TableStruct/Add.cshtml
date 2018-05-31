@@ -120,7 +120,6 @@
 
             });
             var modelInfo = {};
-            var parentMenuInfo = [];
             //获取值
             GetModelInfo(function () {
                     //获取结构
@@ -173,9 +172,18 @@
                     if (result.flag) {
                         layer.msg(result.msg);
                         //window.location.href = "/TableS/Index";
+                        var initField = ["Field", "FieldName", "VueTemplate"];
+                        
                         for (var i = 0; i < vList.tableStructList.length; i++) {
-                            vList.tableStructList[i].FieldValue = "";//$("#" + vList.menuStructList[i].Field + "").val();
-                            console.log(vList.tableStructList[i].FieldValue);
+                            for (var j = 0; j < initField.length; j++) {
+                                if(vList.tableStructList[i].Field==initField[j])
+                                    vList.tableStructList[i].FieldValue = "";
+                                if (vList.tableStructList[i].Field == "OrderID")
+                                    vList.tableStructList[i].FieldValue = vList.tableStructList[i].FieldValue+2;
+                            }
+                            
+                            //$("#" + vList.menuStructList[i].Field + "").val();
+                            //console.log(vList.tableStructList[i].FieldValue);
                         }
                         
                     } else {

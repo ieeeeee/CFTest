@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDatabaseInitService.cs" />
+    <Compile Include="IDeptService.cs" />
     <Compile Include="IEntService.cs" />
     <Compile Include="IMenuService.cs" />
     <Compile Include="ITableStructService.cs" />

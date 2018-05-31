@@ -67,6 +67,7 @@
     top:18px;
     font-size:16px;
     right:15px;
+    cursor:pointer;
 }
 .sidebar-open-button {
     height: 60px;

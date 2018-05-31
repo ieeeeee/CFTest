@@ -22,17 +22,14 @@ namespace OA.Models
         public string EntName { get; set; }
 
         [Display(Name = "联系电话")]
-        [MinLength(2, ErrorMessage = Message.MinLength)]
         [MaxLength(20, ErrorMessage = Message.MaxLength)]
         public string Tel { get; set; }
 
         [Display(Name = "企业地址")]
-        [MinLength(2, ErrorMessage = Message.MinLength)]
         [MaxLength(100, ErrorMessage = Message.MaxLength)]
         public string Address { get; set; }
 
         [Display(Name = "备注")]
-        [MinLength(2, ErrorMessage = Message.MinLength)]
         [MaxLength(100, ErrorMessage = Message.MaxLength)]
         public string Remark { get; set; }
 

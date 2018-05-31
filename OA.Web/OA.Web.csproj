@@ -211,8 +211,10 @@
     <Compile Include="App_Start\ViewEngineConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseMsgController.cs" />
+    <Compile Include="Controllers\BaseStruct\DeptInfoController.cs" />
     <Compile Include="Controllers\BaseStruct\EntInfoController.cs" />
     <Compile Include="Controllers\BaseStruct\MenuInfoController.cs" />
+    <Compile Include="Controllers\BaseStruct\UserInfoController.cs" />
     <Compile Include="Controllers\System\HomeController.cs" />
     <Compile Include="Controllers\System\LoginController.cs" />
     <Compile Include="Controllers\System\TableStructController.cs" />
@@ -236,6 +238,7 @@
     <Content Include="Content\FrameTheme\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\FrameTheme\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\FrameTheme\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Content\FrameTheme\images\search2.png" />
     <Content Include="Content\FrameTheme\js\Base.js" />
     <Content Include="Content\Login\css\login.css" />
     <Content Include="Content\Login\images\green_light.jpeg" />
@@ -395,7 +398,9 @@
     <Content Include="Content\FrameTheme\js\modernizr-2.6.2.js" />
     <Content Include="Content\FrameTheme\js\respond.min.js" />
     <Content Include="Views\Shared\bak.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -417,12 +422,14 @@
     <Content Include="Views\BaseStruct\MenuInfo\Add.cshtml" />
     <Content Include="Views\System\TableStruct\Index.cshtml" />
     <Content Include="Views\System\TableStruct\Add.cshtml" />
+    <Content Include="Views\BaseStruct\DeptInfo\Index.cshtml" />
+    <Content Include="Views\BaseStruct\DeptInfo\Add.cshtml" />
+    <Content Include="Views\BaseStruct\UserInfo\Index.cshtml" />
+    <Content Include="Views\BaseStruct\UserInfo\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BaseMsg\" />
-    <Folder Include="Views\BaseStruct\DeptInfo\" />
-    <Folder Include="Views\BaseStruct\UserInfo\" />
     <Folder Include="Views\CustomerMgr\" />
     <Folder Include="Views\SelfCenter\" />
     <Folder Include="Views\WorkerCenter\" />

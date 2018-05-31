@@ -34,7 +34,6 @@ F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\OA.Models.pdb
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\SimpleInjector.xml
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\AutoMapper.xml
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\EntityFramework.xml
-F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.xml
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csprojResolveAssemblyReference.cache
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CoreCompileInputs.cache
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CopyComplete
@@ -60,3 +59,4 @@ F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CoreCompileInputs
 F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.dll
 F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.pdb
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.xml

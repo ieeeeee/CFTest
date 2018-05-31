@@ -55,7 +55,7 @@ namespace OA.Data.Entity
         public virtual B_EnterpriseEntity B_Enterprise { get; set; }
 
         //对应一个部门
-        public Nullable<int> DepartmentID { get; set; }
+        public Nullable<int> DeptID { get; set; }
         public virtual B_DepartmentEntity B_Department { get; set; }
 
         public virtual ICollection<B_RoleEntity> B_Roles { get; set; }

@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OA.Models
 {
     //用户DTO
     public class UserDto
     {
-        public string UserID { get; set; }
+        public int UserID { get; set; }
 
 
 
@@ -35,16 +37,23 @@ namespace OA.Models
         public string Address { get; set; }
 
         //对应一个企业
-        public int EntID { get; set; }
+        public Nullable<int> EntID { get; set; }
 
-        public string EnterpriseName { get; set; }
+        public string EntName { get; set; }
 
         //对应一个部门
-        public int DepartmentID { get; set; }
-        public string DepartmentName { get; set; }
+        public Nullable<int> DeptID { get; set; }
+        public string DeptName { get; set; }
 
         public virtual IList<UserRoleDto> UserRoles { get; set; }
 
         public virtual IList<UserPlanDto> UserPlans { get; set; }
+
+
+        [Display(Name = "备注")]
+        [MaxLength(100, ErrorMessage = Message.MaxLength)]
+        public string Remark { get; set; }
+
+        public int IsDeleted { get; set; }
     }
 }
