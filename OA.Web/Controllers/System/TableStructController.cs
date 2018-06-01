@@ -42,6 +42,11 @@ namespace OA.Web.Controllers.System
             var result = await _tableStructService.FindAsync(id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        //public async Task<JsonResult> GetVueTemplate()
+        //{
+        //    var result=
+        //}
         #endregion
         #region OperateResult
 

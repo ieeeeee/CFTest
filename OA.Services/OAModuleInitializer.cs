@@ -38,6 +38,8 @@ namespace OA.Services
             mapperConfig.CreateMap<B_MenuEntity, MenuDto>().ReverseMap();
             mapperConfig.CreateMap<B_TableStructEntity, TableStructDto>().ReverseMap();
             mapperConfig.CreateMap<B_EnterpriseEntity, DeptDto>().ReverseMap();
+            mapperConfig.CreateMap<B_BaseInfoEntity, BaseInfoDto>().ReverseMap();
+            mapperConfig.CreateMap<B_BaseClassEntity, BaseClassDto>().ReverseMap();
         }
     }
 }

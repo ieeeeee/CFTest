@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBaseClassService.cs" />
+    <Compile Include="IBaseInfoService.cs" />
     <Compile Include="IDatabaseInitService.cs" />
     <Compile Include="IDeptService.cs" />
     <Compile Include="IEntService.cs" />

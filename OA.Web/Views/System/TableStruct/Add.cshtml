@@ -66,47 +66,12 @@
     </div>
 </div>
 @section scripts{
-    <script src="~/Content/Plugin/vue.js"></script>
-    <script src="~/Content/Plugin/VueTemplate.js"></script>
-    <script>
+   
+    <script src="~/Content/Plugin/main.js"></script>
+    @*<script>
         $(function () {
-            //Vue组件
-            Vue.component('vadd-text', {
-                props: ['txt_index', 'txt_item'],
-                template: `
-                        <div class="input-group input-icon right">
-                            <span class= "input-group-addon">
-                                <i :class="txt_item.Icon"></i>
-                            </span>
-                            <input type="text" v-model="txt_item.FieldValue" :placeholder="txt_item.Placeholder" class="form-control1 icon"/>
-                        </div>
-                        `
-            });
-            Vue.component('vadd-checkbox', {
-                props: ['ck_index', 'ck_item'],
-                template: `
-                         <div>
-                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="0">启用</label></div>
-                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="2"> 禁用</label></div>
-                         </div>
-                        `
-            });
-            Vue.component('vadd-textarea', {
-                props: ['txtarea_index', 'txtarea_item'],
-                template: `
-                         <div>
-                             <textarea class="form-control1" cols="50" rows="4" style="height:70px;" v-model="txtarea_item.FieldValue"></textarea>
-                         </div>
-                          `
-            });
-            Vue.component('vadd-select', {
-                props: ['select_index', 'select_item'],
-                template: `
-                         <select class="form-control1" v-model="select_item.FieldValue">
-                             <option v-for="option in select_item.FieldSelect" :value="option.value" >{{option.text}}</option>
-                         </select>
-                          `
-            });
+            import vaddtext from "~/Content/Plugin/vueTemplate";
+            Vue.use(vaddtext);
             var vList = new Vue({
                 el: "#tsAddControl",
                 data: {
@@ -120,10 +85,13 @@
 
             });
             var modelInfo = {};
+            var vueTemplate = [];
             //获取值
             GetModelInfo(function () {
+                GetVueTemplate(function () {
                     //获取结构
                     GetTableStruct();
+                });
             });
 
 
@@ -139,12 +107,47 @@
                                     result[i].FieldValue = modelInfo[key];
                                 }
                             }
+                            //select 选项操作
+                            if (result[i].Field == "VueTemplate") {
+                                var options = [];
+                                for (var j = 0; j < vueTemplate.length; j++) {
+                                    options.push({ text: vueTemplate[j].BaseName, value: vueTemplate[j].BaseValue });
+                                }
+                                result[i].FieldSelect = options;
+                                console.log(result[i].FieldSelect);
+                            }
+
+                            if (result[i].Field == "IsQuery" ) {
+                                var options = [];
+                                for (var j = 0; j < RadioNum.length; j++) {
+                                    options.push({ text: RadioNum[j].text, value: RadioNum[j].value });
+                                }
+                                result[i].FieldSelect = options;
+                                console.log(result[i].FieldSelect);
+                            }
+                            if (result[i].Field == "IsDeleted") {
+                                var options = [];
+                                for (var j = 0; j < RadioIsDel.length; j++) {
+                                    options.push({ text: RadioIsDel[j].text, value: RadioIsDel[j].value });
+                                }
+                                result[i].FieldSelect = options;
+                                console.log(result[i].FieldSelect);
+                            }
+                            if (result[i].Field == "IsHide") {
+                                var options = [];
+                                for (var j = 0; j < RadioBool.length; j++) {
+                                    options.push({ text: RadioBool[j].text, value: RadioBool[j].value });
+                                }
+                                result[i].FieldSelect = options;
+                                console.log(result[i].FieldSelect);
+                            }
                         }
                         console.log(result);
                         vList.tableStructList = result;
                     }
                 }, 'Json');
             }
+
             //获取初始值
              function GetModelInfo(func) {
                  var ID =@Model.TStructID;
@@ -158,6 +161,17 @@
                  }, 'Json');
 
             }
+
+            //获取select选项 vueTemplate
+            function GetVueTemplate(func) {
+                $.post("/BaseInfo/GetClassInfo", {"baseClassID":1} , function (result) {
+                    if (result) {
+                        vueTemplate = result;
+                    }
+                    func();
+                }, 'Json');
+            }
+
             //提交
             function GetSave() {
                 var data = {};
@@ -172,20 +186,25 @@
                     if (result.flag) {
                         layer.msg(result.msg);
                         //window.location.href = "/TableS/Index";
-                        var initField = ["Field", "FieldName", "VueTemplate"];
-                        
-                        for (var i = 0; i < vList.tableStructList.length; i++) {
-                            for (var j = 0; j < initField.length; j++) {
-                                if(vList.tableStructList[i].Field==initField[j])
-                                    vList.tableStructList[i].FieldValue = "";
-                                if (vList.tableStructList[i].Field == "OrderID")
-                                    vList.tableStructList[i].FieldValue = vList.tableStructList[i].FieldValue+2;
+                        if (@Model.TStructID== 0) {
+                            var initField = ["Field", "FieldName", "VueTemplate"];
+
+                            for (var i = 0; i < vList.tableStructList.length; i++) {
+                                for (var j = 0; j < initField.length; j++) {
+                                    if (vList.tableStructList[i].Field == initField[j])
+                                        vList.tableStructList[i].FieldValue = "";
+                                    if (vList.tableStructList[i].Field == "OrderID")
+                                        vList.tableStructList[i].FieldValue = vList.tableStructList[i].FieldValue + 2;
+                                }
+
+                                //$("#" + vList.menuStructList[i].Field + "").val();
+                                //console.log(vList.tableStructList[i].FieldValue);
                             }
-                            
-                            //$("#" + vList.menuStructList[i].Field + "").val();
-                            //console.log(vList.tableStructList[i].FieldValue);
+                        } else {
+                            window.location.href = "/TableStruct/Index";
                         }
-                        
+
+
                     } else {
                         layer.msg(result.msg);
                     }
@@ -193,7 +212,7 @@
             }
 
         })
-    </script>
+    </script>*@
 
 }
 

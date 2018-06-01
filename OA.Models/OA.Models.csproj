@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseClassDto.cs" />
+    <Compile Include="BaseInfoDto.cs" />
     <Compile Include="DeptDto.cs" />
     <Compile Include="EntDto.cs" />
     <Compile Include="Enum\GroupOperator.cs" />
@@ -53,7 +55,9 @@
     <Compile Include="Enum\LogType.cs" />
     <Compile Include="Enum\MenuType.cs" />
     <Compile Include="Filters\AdvanceFilter.cs" />
+    <Compile Include="Filters\BaseClassFilter.cs" />
     <Compile Include="Filters\BaseFiter.cs" />
+    <Compile Include="Filters\BaseInfoFilter.cs" />
     <Compile Include="Filters\DeptFilter.cs" />
     <Compile Include="Filters\EntFilter.cs" />
     <Compile Include="Filters\MenuFilter.cs" />

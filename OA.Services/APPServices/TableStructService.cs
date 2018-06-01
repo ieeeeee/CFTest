@@ -57,6 +57,7 @@ namespace OA.Services.AppServices
                 var query = db.B_TableStructEntities.Where(item => item.IsDeleted != 1)
                     .WhereIf(filters.keywords.IsNotBlank(), x => (x.TableName.Contains(filters.keywords) || x.Field.Contains(filters.keywords)));
                 filters.sidx = "TableID,OrderID";
+                filters.sord = "ASC";
                 return await query.OrderByCustom(filters.sidx, filters.sord)
                     .Select(item => new TableStructDto
                     {
@@ -72,7 +73,8 @@ namespace OA.Services.AppServices
                         OrderID=item.OrderID,
                         IsQuery=item.IsQuery,
                         IsHide = item.IsHide,
-                        Icon = item.Icon
+                        Icon = item.Icon,
+                        ShowID=item.ShowID
                     }).PagingAsync(filters.page, filters.rows);
             }
         }

@@ -50,6 +50,9 @@
                                 <div v-else-if="item.VueTemplate==='vadd-select'">
                                     <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
                                 </div>
+                                <div v-else-if="item.VueTemplate==='vadd-password'">
+                                    <vadd-password :class="{IsHide:item.IsHide}" :pwd_item="item" :pwd_index="index"></vadd-password>
+                                </div>
                                 @*<span>{{item.FieldValue}}</span>*@
                             </div>
                         </div>
@@ -105,6 +108,17 @@
                              <option v-for="option in select_item.FieldSelect" :value="option.value" >{{option.text}}</option>
                          </select>
                           `
+            });
+            Vue.component('vadd-password', {
+                props: ['pwd_index', 'pwd_item'],
+                template: `
+                        <div class="input-group input-icon right">
+                            <span class= "input-group-addon">
+                                <i :class="pwd_item.Icon"></i>
+                            </span>
+                            <input type="password" v-model="pwd_item.FieldValue" :placeholder="pwd_item.Placeholder" class="form-control1 icon"/>
+                        </div>
+                        `
             });
             var vList = new Vue({
                 el: "#addControl",

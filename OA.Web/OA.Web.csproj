@@ -211,6 +211,8 @@
     <Compile Include="App_Start\ViewEngineConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseMsgController.cs" />
+    <Compile Include="Controllers\BaseStruct\BaseClassController.cs" />
+    <Compile Include="Controllers\BaseStruct\BaseInfoController.cs" />
     <Compile Include="Controllers\BaseStruct\DeptInfoController.cs" />
     <Compile Include="Controllers\BaseStruct\EntInfoController.cs" />
     <Compile Include="Controllers\BaseStruct\MenuInfoController.cs" />
@@ -356,12 +358,14 @@
     <Content Include="Content\Plugin\layui\lay\modules\tree.js" />
     <Content Include="Content\Plugin\layui\lay\modules\upload.js" />
     <Content Include="Content\Plugin\layui\lay\modules\util.js" />
+    <Content Include="Content\Plugin\main.js" />
     <Content Include="Content\Plugin\pagination\bgPager.css" />
     <Content Include="Content\Plugin\pagination\Pager.css" />
     <Content Include="Content\Plugin\pagination\Pager.js" />
     <Content Include="Content\Plugin\vue.js" />
     <Content Include="Content\Plugin\vue.min.js" />
     <Content Include="Content\Plugin\VueTemplate.js" />
+    <Content Include="Content\Plugin\vueTemplate\index.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -426,6 +430,10 @@
     <Content Include="Views\BaseStruct\DeptInfo\Add.cshtml" />
     <Content Include="Views\BaseStruct\UserInfo\Index.cshtml" />
     <Content Include="Views\BaseStruct\UserInfo\Add.cshtml" />
+    <Content Include="Views\BaseStruct\BaseInfo\Index.cshtml" />
+    <Content Include="Views\BaseStruct\BaseInfo\Add.cshtml" />
+    <Content Include="Views\BaseStruct\BaseClass\Index.cshtml" />
+    <Content Include="Views\BaseStruct\BaseClass\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -447,6 +455,7 @@
     <Content Include="Content\Plugin\layui\font\iconfont.eot" />
     <Content Include="Content\Plugin\layui\font\iconfont.ttf" />
     <Content Include="Content\Plugin\layui\font\iconfont.woff" />
+    <Content Include="Content\Plugin\vueTemplate\vadd-text.vue" />
     <None Include="packages.config" />
     <Content Include="Content\FrameTheme\js\jquery-1.10.2.min.map" />
   </ItemGroup>
