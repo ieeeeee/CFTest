@@ -1,33 +1,70 @@
-﻿import Vue from "~/Content/Plugin/vue.js"
-$(function () {
-    import vaddtext from "~/Content/Plugin/vueTemplate";
-    Vue.use(vaddtext);
+﻿
+    Vue.component('vadd-text', {
+        props: ['txt_index', 'txt_item'],
+        template: `
+                        <div class="input-group input-icon right">
+                            <span class= "input-group-addon">
+                                <i :class="txt_item.Icon"></i>
+                            </span>
+                            <input type="text" v-model="txt_item.FieldValue" :placeholder="txt_item.Placeholder" class="form-control1 icon"/>
+                        </div>
+                        `
+    });
+    Vue.component('vadd-checkbox', {
+        props: ['ck_index', 'ck_item'],
+        template: `
+                         <div>
+                             <div class="checkbox-inline"  v-for="option in ck_item.FieldSelect"><label><input type="radio" v-model="ck_item.FieldValue" :value="option.value">{{option.text}}</label></div>
+                         </div>
+                        `
+    });
+    Vue.component('vadd-textarea', {
+        props: ['txtarea_index', 'txtarea_item'],
+        template: `
+                         <div>
+                             <textarea class="form-control1" cols="50" rows="4" style="height:70px;" v-model="txtarea_item.FieldValue"></textarea>
+                         </div>
+                          `
+    });
+    Vue.component('vadd-select', {
+        props: ['select_index', 'select_item'],
+        template: `
+                         <select class="form-control1" v-model="select_item.FieldValue">
+                             <option v-for="option in select_item.FieldSelect" :value="option.value" >{{option.text}}</option>
+                         </select>
+                          `
+    });
+    Vue.component('vadd-password', {
+        props: ['pwd_index', 'pwd_item'],
+        template: `
+                            <div class="input-group input-icon right">
+                                <span class= "input-group-addon">
+                                    <i :class="pwd_item.Icon"></i>
+                                </span>
+                                <input type="password" v-model="pwd_item.FieldValue" :placeholder="pwd_item.Placeholder" class="form-control1 icon"/>
+                            </div>
+                            `
+    });
     var vList = new Vue({
-        el: "#tsAddControl",
+        el: "#AddControl",
         data: {
             tableStructList: []
         },
         methods: {
-            Save: function () {
-                GetSave();
+            Save: function (SaveControl,ID,IDFlag) {
+                GetSave(SaveControl,ID, IDFlag);
             }
         }
 
     });
     var modelInfo = {};
     var vueTemplate = [];
-    //获取值
-    GetModelInfo(function () {
-        GetVueTemplate(function () {
-            //获取结构
-            GetTableStruct();
-        });
-    });
-
+    var parentMenuInfo = [];
+    var baseClassInfo = [];
 
     //获取界面结构
-    function GetTableStruct() {
-        $.post("/Base/GetAddTableStruct", { "TableID": 98 }, function (result) {
+    function GetTableStruct(ID) {
+        $.post("/Base/GetAddTableStruct", { "TableID": ID }, function (result) {
             if (result) {
                 console.log(modelInfo);
                 for (var i = 0; i < result.length; i++) {
@@ -71,6 +108,24 @@ $(function () {
                         result[i].FieldSelect = options;
                         console.log(result[i].FieldSelect);
                     }
+                    //select 选项操作
+                    if (result[i].Field == "ParentID") {
+                        var options = [];
+                        for (var j = 0; j < parentMenuInfo.length; j++) {
+                            options.push({ text: parentMenuInfo[j].MenuName, value: parentMenuInfo[j].MenuID });
+                        }
+                        result[i].FieldSelect = options;
+                        console.log(result[i].FieldSelect);
+                    }
+                    //获取select 选项
+                    if (result[i].Field == "BaseClassID") {
+                        var options = [];
+                        for (var j = 0; j < baseClassInfo.rows.length; j++) {
+                            options.push({ text: baseClassInfo.rows[j].BaseClassName, value: baseClassInfo.rows[j].BaseClassID });
+                        }
+                        result[i].FieldSelect = options;
+                        console.log(result[i].FieldSelect);
+                    }
                 }
                 console.log(result);
                 vList.tableStructList = result;
@@ -79,10 +134,9 @@ $(function () {
     }
 
     //获取初始值
-    function GetModelInfo(func) {
-        var ID =@Model.TStructID;
-
-        $.post("/TableStruct/GetDetailInfo", { "id": ID }, function (result) {
+    function GetModelInfo(Url,ID,func) {
+        //var ID =@Model.TStructID;
+        $.post(Url, { "id": ID }, function (result) {
             if (result) {
                 // console.log(result);
                 modelInfo = result;
@@ -101,44 +155,66 @@ $(function () {
             func();
         }, 'Json');
     }
-
+    //select 选项操作
+    function GetParentInfo(func) {
+        $.post("/Base/GetMenuInfo", {}, function (result) {
+            if (result) {
+                console.log(result);
+                parentMenuInfo = result;
+            }
+            func();
+        }, 'Json');
+}
+    //获取select选项 字典分类
+    function GetBaseClass(baseClassFilter, func) {
+        $.post("/BaseClass/GetAllBaseClass", baseClassFilter, function (result) {
+            if (result) {
+                baseClassInfo = result;
+                console.log(result);
+            }
+            func();
+        });
+    }
     //提交
-    function GetSave() {
+    function GetSave(SaveControl,ID, IDFlag) {
         var data = {};
         for (var i = 0; i < vList.tableStructList.length; i++) {
             console.log(vList.tableStructList[i].Field);
             console.log(vList.tableStructList[i].FieldValue);
             data[vList.tableStructList[i].Field] = vList.tableStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
         }
-        data.TStructID =@Model.TStructID;
         console.log(data);
-        $.post('/TableStruct/Save', data, function (result) {
+        data["" + IDFlag + ""] = ID;
+        console.log(data);
+        $.post("/" + SaveControl+"/Save", data, function (result) {
             if (result.flag) {
                 layer.msg(result.msg);
+                if (SaveControl == "MenuInfo" || SaveControl == "BaseClass" || SaveControl == "DeptInfo" || SaveControl == "EntInfo") {
+                    window.location.href = "/" + SaveControl + "/Index";
+                }
                 //window.location.href = "/TableS/Index";
-                if (@Model.TStructID== 0) {
-            var initField = ["Field", "FieldName", "VueTemplate"];
+                if (ID== 0) {
+                    var initField = ["Field", "FieldName", "VueTemplate"];
 
-            for (var i = 0; i < vList.tableStructList.length; i++) {
-                for (var j = 0; j < initField.length; j++) {
-                    if (vList.tableStructList[i].Field == initField[j])
-                        vList.tableStructList[i].FieldValue = "";
-                    if (vList.tableStructList[i].Field == "OrderID")
-                        vList.tableStructList[i].FieldValue = vList.tableStructList[i].FieldValue + 2;
+                    for (var i = 0; i < vList.tableStructList.length; i++) {
+                        for (var j = 0; j < initField.length; j++) {
+                            if (vList.tableStructList[i].Field == initField[j])
+                                vList.tableStructList[i].FieldValue = "";
+                            if (vList.tableStructList[i].Field == "OrderID")
+                                vList.tableStructList[i].FieldValue = vList.tableStructList[i].FieldValue + 2;
+                        }
+
+                        //$("#" + vList.menuStructList[i].Field + "").val();
+                        //console.log(vList.tableStructList[i].FieldValue);
+                    }
+                } else {
+                    window.location.href = "/" + SaveControl +"/Index";
                 }
 
-                //$("#" + vList.menuStructList[i].Field + "").val();
-                //console.log(vList.tableStructList[i].FieldValue);
+
+            } else {
+                layer.msg(result.msg);
             }
-        } else {
-            window.location.href = "/TableStruct/Index";
-        }
+        }, 'Json');
+     }
 
-
-    } else {
-        layer.msg(result.msg);
-    }
-}, 'Json');
-            }
-
-        })

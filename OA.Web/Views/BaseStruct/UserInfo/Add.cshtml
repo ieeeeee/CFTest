@@ -31,7 +31,7 @@
             {<h3 class="inner-tittle two">编辑用户</h3> }
             else
             { <h3 class="inner-tittle two">添加用户</h3>}
-            <div class="grid-1" id="addControl">
+            <div class="grid-1" id="AddControl">
                 <div class="form-body">
                     <form class="form-horizontal" v-on:submit.prevent="onSubmit">
 
@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="col-sm-offset-2">
-                            <button type="button" class="btn btn-default" v-on:click="Save()">保存</button>
+                            <button type="button" class="btn btn-default" v-on:click="Save('UserInfo',@Model.UserID,'UserID')">保存</button>
                             <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
                         </div>
                     </form>
@@ -69,144 +69,18 @@
 </div>
 @section scripts{
     <script src="~/Content/Plugin/vue.js"></script>
-    <script src="~/Content/Plugin/VueTemplate.js"></script>
+    <script src="~/Content/Plugin/main.js"></script>
     <script>
-        $(function () {
-            //Vue组件
-            Vue.component('vadd-text', {
-                props: ['txt_index', 'txt_item'],
-                template: `
-                        <div class="input-group input-icon right">
-                            <span class= "input-group-addon">
-                                <i :class="txt_item.Icon"></i>
-                            </span>
-                            <input type="text" v-model="txt_item.FieldValue" :placeholder="txt_item.Placeholder" class="form-control1 icon"/>
-                        </div>
-                        `
-            });
-            Vue.component('vadd-checkbox', {
-                props: ['ck_index', 'ck_item'],
-                template: `
-                         <div>
-                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="0">启用</label></div>
-                             <div class="checkbox-inline"><label><input type="radio" v-model="ck_item.FieldValue" value="2"> 禁用</label></div>
-                         </div>
-                        `
-            });
-            Vue.component('vadd-textarea', {
-                props: ['txtarea_index', 'txtarea_item'],
-                template: `
-                         <div>
-                             <textarea class="form-control1" cols="50" rows="4" style="height:70px;" v-model="txtarea_item.FieldValue"></textarea>
-                         </div>
-                          `
-            });
-            Vue.component('vadd-select', {
-                props: ['select_index', 'select_item'],
-                template: `
-                         <select class="form-control1" v-model="select_item.FieldValue">
-                             <option v-for="option in select_item.FieldSelect" :value="option.value" >{{option.text}}</option>
-                         </select>
-                          `
-            });
-            Vue.component('vadd-password', {
-                props: ['pwd_index', 'pwd_item'],
-                template: `
-                        <div class="input-group input-icon right">
-                            <span class= "input-group-addon">
-                                <i :class="pwd_item.Icon"></i>
-                            </span>
-                            <input type="password" v-model="pwd_item.FieldValue" :placeholder="pwd_item.Placeholder" class="form-control1 icon"/>
-                        </div>
-                        `
-            });
-            var vList = new Vue({
-                el: "#addControl",
-                data: {
-                    tableStructList: []
-                },
-                methods: {
-                    Save: function () {
-                        GetSave();
-                    }
-                }
+        var param = {};
+        param.TableID = 4;
+        param.ModelID =@Model.UserID;
+        param.ModelUrl = "/DeptInfo/GetDetailInfo";
+        //获取值
+        GetModelInfo(param.ModelUrl, param.ModelID, function () {
+               //获取结构
+                GetTableStruct(param.TableID);
 
-            });
-            var modelInfo = {};
-            //获取值
-            GetModelInfo(function () {
-                    //获取结构
-                    GetTableStruct();
-            });
-
-
-            //获取界面结构
-            function GetTableStruct() {
-                $.post("/Base/GetAddTableStruct", { "TableID": 4 }, function (result) {
-                    if (result) {
-                        console.log(modelInfo);
-                        for (var i = 0; i < result.length; i++) {
-                            //赋初值
-                            for (var key in modelInfo) {
-                                if (result[i].Field == key) {
-                                    result[i].FieldValue = modelInfo[key];
-                                }
-                            }
-                        }
-                        console.log(result);
-                        vList.tableStructList = result;
-                    }
-                }, 'Json');
-            }
-            //获取初始值
-             function GetModelInfo(func) {
-                 var ID =@Model.UserID;
-
-                $.post("/UserInfo/GetDetailInfo", { "id": ID }, function (result) {
-                    if (result) {
-                       // console.log(result);
-                        modelInfo = result;
-                    }
-                    func();
-                 }, 'Json');
-
-            }
-            //提交
-            function GetSave() {
-                var data = {};
-                for (var i = 0; i < vList.tableStructList.length; i++) {
-                    console.log(vList.tableStructList[i].Field);
-                    console.log(vList.tableStructList[i].FieldValue);
-                    data[vList.tableStructList[i].Field] = vList.tableStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
-                }
-                data.TStructID=@Model.UserID;
-                console.log(data);
-                $.post('/UserInfo/Save', data, function (result) {
-                    if (result.flag) {
-                        layer.msg(result.msg);
-                        //window.location.href = "/TableS/Index";
-                        var initField = ["Field", "FieldName", "VueTemplate"];
-
-                        for (var i = 0; i < vList.tableStructList.length; i++) {
-                            for (var j = 0; j < initField.length; j++) {
-                                if(vList.tableStructList[i].Field==initField[j])
-                                    vList.tableStructList[i].FieldValue = "";
-                                if (vList.tableStructList[i].Field == "OrderID")
-                                    vList.tableStructList[i].FieldValue = vList.tableStructList[i].FieldValue+2;
-                            }
-
-                            //$("#" + vList.menuStructList[i].Field + "").val();
-                            //console.log(vList.tableStructList[i].FieldValue);
-                        }
-
-                    } else {
-                        layer.msg(result.msg);
-                    }
-                },'Json');
-            }
-
-        })
+        });
     </script>
-
 }
 

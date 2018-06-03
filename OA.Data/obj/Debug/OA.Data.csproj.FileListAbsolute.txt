@@ -128,3 +128,13 @@ F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.dll
 F:\GitDepo\CFTest\OA.Data\obj\Debug\OA.Data.pdb
 F:\GitRepo\CFTest\CFTest\OA.Data\bin\Debug\Newtonsoft.Json.xml
+F:\GitDepo\CFTest\OA.Data\bin\Debug\Newtonsoft.Json.xml
+F:\GitDepo\CFTest\OA.Data\bin\Debug\de\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\es\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\fr\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\it\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\ja\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\ko\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\ru\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\zh-Hans\Microsoft.Data.Entity.Design.Extensibility.resources.dll
+F:\GitDepo\CFTest\OA.Data\bin\Debug\zh-Hant\Microsoft.Data.Entity.Design.Extensibility.resources.dll

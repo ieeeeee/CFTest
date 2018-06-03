@@ -18,6 +18,30 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jquery")
     @this.RenderSection("headerJs", false)
+    <style>
+        .graph-2.general {
+            width: 90%;
+        }
+
+        .col-md-8 {
+            width: 60%;
+        }
+
+        .col-sm-offset-2 {
+            margin-left: 36%
+        }
+
+        .IsHide {
+            display: none;
+        }
+        .grid-1 {
+            margin: 2em 0 0 2em;
+        }
+
+        h3.inner-tittle.two {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -29,3 +53,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", false)
 </body>
+<script src="~/Content/Plugin/vue.js"></script>
+<script>
+    var pageGlobalParam = { currPage: 1, pageSize: 10 };
+    var RadioNum = [{ text: "是", value: 0 }, { text: "否", value: 1 }];
+    var RadioBool = [{ text: "是", value: true }, { text: "否", value: false }];
+    var RadioIsDel = [{ text: "启用", value: 0 }, { text: "禁用", value: 2 }];
+</script>

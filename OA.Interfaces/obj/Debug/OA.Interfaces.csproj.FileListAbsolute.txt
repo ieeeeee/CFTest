@@ -60,3 +60,4 @@ F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.dll
 F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.pdb
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.xml
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.xml

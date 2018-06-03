@@ -33,3 +33,4 @@ F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CoreCompileInputs.cache
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.dll
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.pdb
+F:\GitDepo\CFTest\OA.Models\bin\Debug\Newtonsoft.Json.xml

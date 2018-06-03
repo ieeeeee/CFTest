@@ -43,9 +43,9 @@ namespace OA.Web.Controllers.BaseStruct
 
         #region GetInfo
         //根据主键获取这条信息
-        public async Task<JsonResult> GetMenuInfo(int menuID)
+        public async Task<JsonResult> GetMenuInfo(int id)
         {
-            var result = await _menuService.FindAsync(menuID);
+            var result = await _menuService.FindAsync(id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //index加载获取 分页menuList
