@@ -13,7 +13,7 @@ namespace OA.Interfaces
         Task<UserLoginDto> Login(LoginDto dto);
 
         //增加
-        Task<string> AddASync(UserDto dto);
+        Task<string> AddASync(UserAddDto dto);
 
         //删
         Task<bool> DeleteAsync(IEnumerable<int> ids);
@@ -25,6 +25,6 @@ namespace OA.Interfaces
         Task<PagedResult<UserDto>> SearchAsync(UserFilter filter);
 
         //改
-        Task<bool> UpdateAsync(UserDto dto);
+        Task<bool> UpdateAsync(UserAddDto dto);
     }
 }

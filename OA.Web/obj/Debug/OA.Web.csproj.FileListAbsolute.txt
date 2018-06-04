@@ -984,3 +984,7 @@ F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.csproj.CoreCompileInputs.cache
 F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.dll
 F:\GitDepo\CFTest\OA.Web\obj\Debug\OA.Web.pdb
+F:\GitRepo\CFTest\CFTest\OA.Web\bin\Hangfire.Core.dll
+F:\GitRepo\CFTest\CFTest\OA.Web\bin\Hangfire.Core.xml
+F:\GitRepo\CFTest\CFTest\OA.Web\bin\es\Hangfire.Core.resources.dll
+F:\GitRepo\CFTest\CFTest\OA.Web\bin\zh\Hangfire.Core.resources.dll

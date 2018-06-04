@@ -32,7 +32,6 @@ namespace OA.Services.AppServices
                 var db = scope.DbContexts.Get<OAContext>();
                 var entity = _mapper.Map<DeptDto, B_DepartmentEntity>(dto);//查看OAModuleInitializer
                 entity.Create();
-                entity.CreateDateTime = DateTime.Now;
                 db.B_Departments.Add(entity);
                 return await scope.SaveChangesAsync() > 0 ? entity.DepartmentID.ToString() : string.Empty;
             }
@@ -103,6 +102,25 @@ namespace OA.Services.AppServices
                 entity.Remark = dto.Remark;
                 await scope.SaveChangesAsync();
                 return true;
+            }
+        }
+
+        //根据企业ID获取部门列表
+        public async Task<List<DeptDto>> GetEntDeptInfo(int loginUserID)
+        {
+            using (var scope = _dbContextScopeFactory.CreateReadOnly())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var user =await  db.B_Users.LoadAsync(loginUserID);
+                var query = db.B_Departments.Where(x => (x.IsDeleted != 1 || x.IsDeleted != 2) && x.EntID == user.LockEntID);
+                          
+                return await query.OrderBy(x=>x.DeptNo)
+                    .Select(item => new DeptDto
+                    {
+                        DepartmentID = item.DepartmentID,
+                        DeptNo = item.DeptNo,
+                        DeptName = item.DeptName
+                    }).ToListAsync();
             }
         }
     }

@@ -18,6 +18,7 @@ namespace OA.Data.Entity
 
         public string DeptName { get; set; }
 
+        public int EntID { get; set; }
         public virtual B_EnterpriseEntity B_Enterprise { get; set; }
         public virtual ICollection<B_UserEntity> B_Users { get; set; }
         

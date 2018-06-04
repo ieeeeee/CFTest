@@ -534,7 +534,7 @@ cursor: pointer;
 /*--- User Panel---*/
 .profile_details_left {
         float: right;
-           width: 25%;
+        /*width: 35%;*/
 }
 .dropdown {
     position: relative;

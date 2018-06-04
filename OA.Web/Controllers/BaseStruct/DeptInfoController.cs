@@ -48,6 +48,11 @@ namespace OA.Web.Controllers.BaseStruct
             var result = await _deptService.FindAsync(id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public async Task<JsonResult> GetEntDeptInfo()
+        {
+            var result = await _deptService.GetEntDeptInfo(int.Parse(User.Identity.GetLoginUserID()));
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region OperateResult

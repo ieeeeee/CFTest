@@ -34,12 +34,15 @@ namespace OA.Services
         public override void LoadAutoMapper(IMapperConfigurationExpression mapperConfig)
         {
             mapperConfig.CreateMap<B_UserEntity, UserDto>().ReverseMap();
+            mapperConfig.CreateMap<B_UserEntity, UserAddDto>().ReverseMap();
             mapperConfig.CreateMap<B_EnterpriseEntity, EntDto>().ReverseMap();
             mapperConfig.CreateMap<B_MenuEntity, MenuDto>().ReverseMap();
             mapperConfig.CreateMap<B_TableStructEntity, TableStructDto>().ReverseMap();
             mapperConfig.CreateMap<B_EnterpriseEntity, DeptDto>().ReverseMap();
             mapperConfig.CreateMap<B_BaseInfoEntity, BaseInfoDto>().ReverseMap();
             mapperConfig.CreateMap<B_BaseClassEntity, BaseClassDto>().ReverseMap();
+            mapperConfig.CreateMap<B_DepartmentEntity, DeptDto>().ReverseMap();
+
         }
     }
 }

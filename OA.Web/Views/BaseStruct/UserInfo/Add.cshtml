@@ -77,9 +77,11 @@
         param.ModelUrl = "/DeptInfo/GetDetailInfo";
         //获取值
         GetModelInfo(param.ModelUrl, param.ModelID, function () {
-               //获取结构
+            //获取select 部门选项
+            GetEntDeptInfo(function () {
+                //获取结构
                 GetTableStruct(param.TableID);
-
+            });
         });
     </script>
 }

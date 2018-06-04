@@ -61,6 +61,7 @@
     var vueTemplate = [];
     var parentMenuInfo = [];
     var baseClassInfo = [];
+    var deptInfo = [];
 
     //获取界面结构
     function GetTableStruct(ID) {
@@ -108,6 +109,14 @@
                         result[i].FieldSelect = options;
                         console.log(result[i].FieldSelect);
                     }
+                    if (result[i].Field == "Gender") {
+                        var options = [];
+                        for (var j = 0; j < RadioSex.length; j++) {
+                            options.push({ text: RadioSex[j].text, value: RadioSex[j].value });
+                        }
+                        result[i].FieldSelect = options;
+                        console.log(result[i].FieldSelect);
+                    }
                     //select 选项操作
                     if (result[i].Field == "ParentID") {
                         var options = [];
@@ -124,6 +133,16 @@
                             options.push({ text: baseClassInfo.rows[j].BaseClassName, value: baseClassInfo.rows[j].BaseClassID });
                         }
                         result[i].FieldSelect = options;
+                        console.log(result[i].FieldSelect);
+                    }
+                    //select 部门
+                    if (result[i].Field == "DeptID") {
+                        var options = [];
+                        for (var j = 0; j < deptInfo.length; j++) {
+                            options.push({ text: deptInfo[j].DeptName, value: deptInfo[j].DepartmentID});
+                        }
+                        result[i].FieldSelect = options;
+                       
                         console.log(result[i].FieldSelect);
                     }
                 }
@@ -164,13 +183,27 @@
             }
             func();
         }, 'Json');
-}
+    }
     //获取select选项 字典分类
     function GetBaseClass(baseClassFilter, func) {
         $.post("/BaseClass/GetAllBaseClass", baseClassFilter, function (result) {
             if (result) {
                 baseClassInfo = result;
                 console.log(result);
+            }
+            func();
+        });
+    }
+    //获取select选项 部门
+    function GetEntDeptInfo(func) {
+        //var entID = UserInfo.LockEntID;
+        //console.log(UserInfo);
+        //console.log($("#LockEnt").val());
+        $.post("/DeptInfo/GetEntDeptInfo", {}, function (result) {
+            if (result) {
+                deptInfo = result;
+                console.log(deptInfo);
+
             }
             func();
         });
@@ -183,13 +216,13 @@
             console.log(vList.tableStructList[i].FieldValue);
             data[vList.tableStructList[i].Field] = vList.tableStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
         }
-        console.log(data);
         data["" + IDFlag + ""] = ID;
         console.log(data);
+        data.EntID = UserInfo.LockEntID;
         $.post("/" + SaveControl+"/Save", data, function (result) {
             if (result.flag) {
                 layer.msg(result.msg);
-                if (SaveControl == "MenuInfo" || SaveControl == "BaseClass" || SaveControl == "DeptInfo" || SaveControl == "EntInfo") {
+                if (SaveControl == "MenuInfo" || SaveControl == "BaseClass" || SaveControl == "DeptInfo" || SaveControl == "EntInfo" || SaveControl == "UserInfo") {
                     window.location.href = "/" + SaveControl + "/Index";
                 }
                 //window.location.href = "/TableS/Index";

@@ -45,6 +45,10 @@ namespace OA.Web.Controllers.BaseStruct
 
         public async Task<JsonResult> GetDetailInfo(int id)
         {
+            if (id <= 0)
+            {
+                id = int.Parse(User.Identity.GetLoginUserID());
+            }
             var result = await _userService.FindAsync(id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -53,7 +57,7 @@ namespace OA.Web.Controllers.BaseStruct
 
         #region OperateResult
 
-        public async Task<JsonResult> Save(UserDto dto)
+        public async Task<JsonResult> Save(UserAddDto dto)
         {
             var result = string.Empty;
             var success = false;

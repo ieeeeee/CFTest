@@ -84,10 +84,12 @@ namespace OA.Services.AppServices
         // 获取主菜单下的子菜单列表
         public async Task<List<MenuDto>> GetSubMenuInfo(int MenuID,int LoginUserID)
         {
-            using (var scope = _dbContextScopeFactory.CreateReadOnly())
+            using (var scope = _dbContextScopeFactory.Create())
             {
                 var db = scope.DbContexts.Get<OAContext>();
-                var user = db.B_Users.Find(LoginUserID);
+                var user = await db.B_Users.LoadAsync(LoginUserID);
+                user.LockMenuID = MenuID;
+                await scope.SaveChangesAsync();
                 if(user.B_Roles.AnyOne())
                 {
                     var roleIDs = user.B_Roles.Select(x => x.RoleID);
@@ -153,6 +155,18 @@ namespace OA.Services.AppServices
                 {
                     menuEntity.IsDeleted = 1;
                 }
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        public async Task<bool> WriteLockSubMenu(int loginUserID,int subMenuID)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var user = await db.B_Users.LoadAsync(loginUserID);
+                user.LockSubMenuID = subMenuID;
                 await scope.SaveChangesAsync();
                 return true;
             }

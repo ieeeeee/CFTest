@@ -57,132 +57,142 @@
                                     <i class="fa fa-search"></i>
                                 </span>
                             </form>
-                            <ul class="nav navbar-nav pull-right">
-                                <li class="dropdown note dra-down" id="LockEnt">
-                                    <div class="wrapper-dropdown-3" tabindex="1"><span>企业名称</span></div>
-                                    @*<ul class="dropdown">
-                                             <li><a class="deutsch">企业1</a></li>
-                                             <li><a class="deutsch">企业2</a></li>
-                                             <li><a class="deutsch">企业3</a></li>
-                                        </ul>*@
-                                </li>
-                                <li class="dropdown note">
-                                    <a href="#" data-toggle="dropdown">
-                                        <i class="fa fa-envelope-o"></i>
-                                    </a>
-                                    <ul class="dropdown-menu two">
-                                        <li>
-                                            <div class="notification_header">
-                                                <h3>You have9 pending task</h3>
-                                            </div>
+                            <div class="profile_details_left">
+                                <ul class="nofitications-dropdown">
+                                    @*<ul class="nav navbar-nav pull-right">*@
+                                        <li class="dropdown note dra-down">
+                                            <select class="wrapper-dropdown-3" id="LockEnt" v-model="LockEntID">
+                                                <option v-for="(item,index) in entMenuList" :value="item.EntID">{{item.EntName}}</option>
+                                            </select>
+                                            @*<div id="dd" class="wrapper-dropdown-3" tabindex="1"><span data-id="0">测试企业</span></div>
+                                      <ul class="dropdown" id="LockEntLi">
+                                            <li v-for="(item,index) in entMenuList"><a class="deutsch" :data-id="item.EntD">{{item.EntName}}</a></li>*@
+                                            @*<li><a class="deutsch">企业2</a></li>
+                <li><a class="deutsch">企业3</a></li>*@
+                                            @*</ul>*@
+
+
                                         </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="task-info">
-                                                    <span class="task-desc">task 1</span>
-                                                    <span class="percentage">40%</span>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="progress progress-striped active">
-                                                    <div class="fa-bars yellow" style="width:40%"></div>
-                                                </div>
+                                        <li class="dropdown note">
+                                            <a href="#" data-toggle="dropdown">
+                                                <i class="fa fa-envelope-o"></i>
                                             </a>
+                                            <ul class="dropdown-menu two">
+                                                <li>
+                                                    <div class="notification_header">
+                                                        <h3>You have9 pending task</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="task-info">
+                                                            <span class="task-desc">task 1</span>
+                                                            <span class="percentage">40%</span>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="progress progress-striped active">
+                                                            <div class="fa-bars yellow" style="width:40%"></div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="notification_bottom">
+                                                        <a href="#">See all pengding tasks</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <div class="notification_bottom">
-                                                <a href="#">See all pengding tasks</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown note">
-                                    <a href="#" data-toggle="dropdown">
-                                        <i class="fa fa-bell-o"></i>
-                                    </a>
-                                    <ul class="dropdown-menu two">
-                                        <li>
-                                            <div class="notification_header">
-                                                <h3>You have9 pending task</h3>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="task-info">
-                                                    <span class="task-desc">task 1</span>
-                                                    <span class="percentage">40%</span>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="progress progress-striped active">
-                                                    <div class="fa-bars yellow" style="width:40%"></div>
-                                                </div>
+                                        <li class="dropdown note">
+                                            <a href="#" data-toggle="dropdown">
+                                                <i class="fa fa-bell-o"></i>
                                             </a>
+                                            <ul class="dropdown-menu two">
+                                                <li>
+                                                    <div class="notification_header">
+                                                        <h3>You have9 pending task</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="task-info">
+                                                            <span class="task-desc">task 1</span>
+                                                            <span class="percentage">40%</span>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="progress progress-striped active">
+                                                            <div class="fa-bars yellow" style="width:40%"></div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="notification_bottom">
+                                                        <a href="#">See all pengding tasks</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <div class="notification_bottom">
-                                                <a href="#">See all pengding tasks</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown note">
-                                    <a href="#" data-toggle="dropdown">
-                                        <i class="fa fa-tasks"></i>
-                                    </a>
-                                    <ul class="dropdown-menu two">
-                                        <li>
-                                            <div class="notification_header">
-                                                <h3>You have9 pending task</h3>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="task-info">
-                                                    <span class="task-desc">task 1</span>
-                                                    <span class="percentage">40%</span>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="progress progress-striped active">
-                                                    <div class="fa-bars yellow" style="width:40%"></div>
-                                                </div>
+                                        <li class="dropdown note">
+                                            <a href="#" data-toggle="dropdown">
+                                                <i class="fa fa-tasks"></i>
                                             </a>
+                                            <ul class="dropdown-menu two">
+                                                <li>
+                                                    <div class="notification_header">
+                                                        <h3>You have9 pending task</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="task-info">
+                                                            <span class="task-desc">task 1</span>
+                                                            <span class="percentage">40%</span>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="progress progress-striped active">
+                                                            <div class="fa-bars yellow" style="width:40%"></div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="notification_bottom">
+                                                        <a href="#">See all pengding tasks</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <div class="notification_bottom">
-                                                <a href="#">See all pengding tasks</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown note">
-                                    <a href="#" data-toggle="dropdown">
-                                        <i class="fa fa-user"><span id="username"></span></i>
-                                    </a>
-                                    <ul class="dropdown-menu two">
-                                        <li>
-                                            <div class="notification_header">
-                                                <h3>You have9 pending task</h3>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="task-info">
-                                                    <span class="task-desc">task 1</span>
-                                                    <span class="percentage">40%</span>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="progress progress-striped active">
-                                                    <div class="fa-bars yellow" style="width:40%"></div>
-                                                </div>
+                                        <li class="dropdown note">
+                                            <a href="#" data-toggle="dropdown">
+                                                <i class="fa fa-user"><span id="username"></span></i>
                                             </a>
+                                            <ul class="dropdown-menu two">
+                                                <li>
+                                                    <div class="notification_header">
+                                                        <h3>You have9 pending task</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="task-info">
+                                                            <span class="task-desc">task 1</span>
+                                                            <span class="percentage">40%</span>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="progress progress-striped active">
+                                                            <div class="fa-bars yellow" style="width:40%"></div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <div class="notification_bottom">
+                                                        <a href="#">See all pengding tasks</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <div class="notification_bottom">
-                                                <a href="#">See all pengding tasks</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                                    @*</ul>*@
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -213,7 +223,7 @@
             <div class="menu">
                 <ul id="menu">
                     <li  v-for="(item,index) in subMenuList">
-                        <a v-bind:href="item.Url">
+                        <a v-bind:href="item.Url" v-on:click="WriteSubMenuID(item.MenuID)">
                             <i v-bind:class="item.Icon" style="color:#0FBA5A;"></i>
                             <span>{{item.MenuName}}</span>
                         </a>
@@ -264,22 +274,52 @@
 <script>
     //获取当前登录用户信息
     var UserInfo = {}, SpecialMark = "", circ = 0;
-    //function GetUserInfo(func) {
-    //    $.post("/Base/GetUserInfo", {}, function (result) {
-    //        UserInfo = eval('(' + result + ')');
 
-    //    })
-    //}
     var pageGlobalParam = { currPage: 1, pageSize: 10 };
-    var RadioNum = [{ text: "是", value: 0 }, { text: "否", value: 1}];
+    var RadioNum = [{ text: "是", value: 1 }, { text: "否", value: 0 }];
+    var RadioSex = [{ text: "男", value: 1 }, { text: "女", value: 0 }];
     var RadioBool = [{ text: "是", value: true }, { text: "否", value: false }];
     var RadioIsDel = [{ text: "启用", value: 0 }, { text: "禁用", value: 2 }];
+    function DropDown(el) {
+        this.dd = el;
+        this.placeholder = this.dd.children('span');
+        this.opts = this.dd.find('ul.dropdown > li');
+        this.val = '';
+        this.index = -1;
+        this.initEvents();
+    }
+    DropDown.prototype = {
+        initEvents: function () {
+            var obj = this;
+
+            obj.dd.on('click', function (event) {
+                $(this).toggleClass('active');
+                return false;
+            });
+
+            obj.opts.on('click', function () {
+                var opt = $(this);
+                obj.val = opt.text();
+                obj.index = opt.index();
+                obj.placeholder.text(obj.val);
+            });
+        },
+        getValue: function () {
+            return this.val;
+        },
+        getIndex: function () {
+            return this.index;
+        }
+    }
+
     $(function () {
         var LockMenuID = 0;
         var vMenu = new Vue({
             el: "#head-menu",
             data: {
-                menuList:[]
+                menuList: [],
+                entMenuList: [],
+                LockEntID:0
             },
             methods: {
                 GetSubMenu: function (event) {
@@ -292,40 +332,99 @@
         var vSubMenu = new Vue({
             el: "#sub-menu",
             data: {
-                subMenuList:[]
+                subMenuList: []
+            },
+            methods: {
+                WriteSubMenuID: function (subMenuID) {
+                    GetWriteSubMenuID(subMenuID);
+                }
             }
         });
-        GetMenuList();
-        function GetMenuList() {
+       
+        //GetEntMenuList();
+        GetUserInfo(function () {
+            GetEntMenuList(function () {
+                console.log(UserInfo.LockEntID);
+
+                if (UserInfo.LockEntID > 0) {
+                    vMenu.LockEntID = UserInfo.LockEntID;
+                    $("#LockEnt").val(UserInfo.LockEntID);
+                } else {
+                    vMenu.LockEntID = vMenu.entMenuList[0].EntID;
+                    $("#LockEnt").get(0).selectedIndex = 0;
+                    WriteLockEnt();
+                }
+                GetMenuList(function () {
+                    GetSubMenuList(UserInfo.LockMenuID);
+                });
+            })
+        });
+        function GetMenuList(func) {
             $.post("/Base/GetMenuInfo", {}, function (result) {
                 if (result) {
                     vMenu.menuList = result;
                 }
-            },'Json');
+                func();
+            }, 'Json');
         }
         function GetSubMenuList(MenuID) {
             LockMenuID = MenuID;
-            $.post("/Base/GetSubMenuInfo", {"MenuID":MenuID}, function (result) {
+            $.post("/Base/GetSubMenuInfo", { "MenuID": MenuID }, function (result) {
                 if (result) {
                     vSubMenu.subMenuList = result;
                 }
             }, 'Json');
         }
-        //function GetMenu() {
-        //    console.log("111");
-        //    var menuID = $(this).attr("data-id");
-        //    console.log(menuID);
-        //    GetSubMenuList(menuID);
-        //}
-        //$(".menuLink").on("click", function () {
-        //    console.log("111");
-        //    var menuID = $(this).attr("data-id");
-        //    console.log(menuID);
-        //    GetSubMenuList(menuID);
-        //});
+        function GetEntMenuList(func) {
+            $.post("/Base/GetEntMenuList", {}, function (result) {
+                if (result) {
+                    vMenu.entMenuList = result;
+                }
+                //if (result) {
+                //    var html = "";
+                //    $.each(result, function (index, item) {
+                //        html += " <li><a class='deutsch' data-id='"+item.EntID+"'>"+item.EntName+"</a></li>"
+                //    })
+                //    $("#LockEntLi").html(html);
+                //}
+                func();
+            }, 'Json');
+        }
+        function GetUserInfo(func) {
+            $.post("/UserInfo/GetDetailInfo", {"id":0}, function (result) {
+                UserInfo = result;
+                console.log(UserInfo);
+                func();
+            }, 'Json')
+        }
+        //存储锁定的企业
+        function WriteLockEnt() {
+            var lockEntID = vMenu.LockEntID;
+            $.post("/Base/WriteLockEnt", { "lockEntID": lockEntID }, function (result) {
 
+            });
+
+        }
+        //企业改变刷新
+        $("#LockEnt").on("change", function () {
+            vMenu.LockEntID = $("#LockEnt").val();
+            console.log(vMenu.LockEntID);
+            console.log($("#LockEnt").val());
+            WriteLockEnt();
+        });
+
+        function GetWriteSubMenuID(subMenuID) {
+            $.post("/Base/WriteLockSubMenu", { "subMenuID": subMenuID }, function (result) {
+
+            });
+        }
+        var dd = new DropDown($('#dd'));
+
+        $(document).click(function () {
+            // all dropdowns
+            $('.wrapper-dropdown-3').removeClass('active');
+        });
     })
-
-   
+           
 </script>
 @this.RenderSection("pageJs", false)

@@ -20,5 +20,8 @@ namespace OA.Interfaces
          Task<PagedResult<EntDto>> SearchAsync(EntFilter entFilter);
 
          Task<bool> UpdateAsync(EntDto dto);
+         Task<List<EntDto>> GetEntMenuList(string loginUserID);
+
+         Task<bool> WriteLockEnt(int loginUserID, int lockEntID);
     }
 }

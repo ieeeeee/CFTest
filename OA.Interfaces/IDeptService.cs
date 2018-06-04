@@ -22,6 +22,6 @@ namespace OA.Interfaces
 
         //改
         Task<bool> UpdateAsync(DeptDto dto);
-
+        Task<List<DeptDto>> GetEntDeptInfo(int loginUserID);
     }
 }

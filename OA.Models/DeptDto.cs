@@ -24,7 +24,9 @@ namespace OA.Models
         [Display(Name = "备注")]
         [MaxLength(100, ErrorMessage = Message.MaxLength)]
         public string Remark { get; set; }
-
+        
         public int IsDeleted { get; set; }
+
+        public int EntID { get; set; }
     }
 }

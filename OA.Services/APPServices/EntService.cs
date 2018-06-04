@@ -114,5 +114,58 @@ namespace OA.Services.AppServices
                 return true;
             }
         }
+
+        public async Task<List<EntDto>> GetEntMenuList(string loginUserID)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var user = await db.B_Users.FindAsync(int.Parse(loginUserID));
+                if (!user.EntID.HasValue||user.EntID<=0)
+                {
+                    var query = db.B_Enterprises.Where(x => x.IsDeleted != 1 || x.IsDeleted != 2);
+                    return await query.OrderByCustom("GroupID, EntID","").Select(item => new EntDto
+                    {
+                        EntID = item.EntID,
+                        GroupID = item.GroupID,
+                        EntName = item.EntName
+                    }).ToListAsync();
+                }
+                if(user.B_Roles.AnyOne())
+                {
+                    var roleIDs = user.B_Roles.Select(x => x.RoleID <= 3);
+                    var query = db.B_Enterprises.Where(x => (x.IsDeleted != 1 || x.IsDeleted != 2));
+                    if (roleIDs.AnyOne())
+                    {
+                         query =query.Where(x => x.GroupID == user.B_Enterprise.GroupID);
+                    }
+                    else
+                    {
+                        query = query.Where(x => x.EntID == user.B_Enterprise.EntID);
+                    }
+                    
+                    return await query.OrderByCustom("GroupID, EntID", "").Select(item => new EntDto
+                    {
+                        EntID = item.EntID,
+                        GroupID = item.GroupID,
+                        EntName = item.EntName
+                    }).ToListAsync();
+
+                }
+                return null;
+            }
+        }
+
+        public async Task<bool> WriteLockEnt(int loginUserID,int lockEntID)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var user = await db.B_Users.LoadAsync(loginUserID);
+                user.LockEntID = lockEntID;
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }

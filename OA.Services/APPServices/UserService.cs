@@ -30,14 +30,15 @@ namespace OA.Services.AppServices
             _mapper = mapper;
         }
         //增加
-        public async Task<string> AddASync(UserDto dto)
+        public async Task<string> AddASync(UserAddDto dto)
         {
             using (var scope = _dbContextScopeFactory.Create())
             {
                 var db = scope.DbContexts.Get<OAContext>();
-                var entity = _mapper.Map<UserDto,B_UserEntity>(dto);
+                var entity = _mapper.Map<UserAddDto,B_UserEntity>(dto);
                 entity.Create();
                 entity.CreateDateTime = DateTime.Now;
+                entity.Password = EnDecryption.MD5Encrypt(dto.PlainCode);
                 db.B_Users.Add(entity);
                 return await scope.SaveChangesAsync() > 0 ? entity.UserID.ToString() : string.Empty;
                 
@@ -108,7 +109,7 @@ namespace OA.Services.AppServices
         }
 
         //改
-        public async Task<bool> UpdateAsync(UserDto dto)
+        public async Task<bool> UpdateAsync(UserAddDto dto)
         {
             using (var scope = _dbContextScopeFactory.Create())
             {

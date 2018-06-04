@@ -216,10 +216,13 @@
     <Compile Include="Controllers\BaseStruct\DeptInfoController.cs" />
     <Compile Include="Controllers\BaseStruct\EntInfoController.cs" />
     <Compile Include="Controllers\BaseStruct\MenuInfoController.cs" />
+    <Compile Include="Controllers\BaseStruct\RoleMenuController.cs" />
     <Compile Include="Controllers\BaseStruct\UserInfoController.cs" />
     <Compile Include="Controllers\System\HomeController.cs" />
     <Compile Include="Controllers\System\LoginController.cs" />
     <Compile Include="Controllers\System\TableStructController.cs" />
+    <Compile Include="Controllers\WorkerCenter\PlanListController.cs" />
+    <Compile Include="Controllers\WorkerCenter\TaskListController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,6 +245,7 @@
     <Content Include="Content\FrameTheme\fonts\weathericons-regular-webfont.svg" />
     <Content Include="Content\FrameTheme\images\search2.png" />
     <Content Include="Content\FrameTheme\js\Base.js" />
+    <Content Include="Content\FrameTheme\js\cbpFWTabs.js" />
     <Content Include="Content\Login\css\login.css" />
     <Content Include="Content\Login\images\green_light.jpeg" />
     <Content Include="Content\Login\images\green_sky.jpg" />
@@ -434,13 +438,15 @@
     <Content Include="Views\BaseStruct\BaseInfo\Add.cshtml" />
     <Content Include="Views\BaseStruct\BaseClass\Index.cshtml" />
     <Content Include="Views\BaseStruct\BaseClass\Add.cshtml" />
+    <Content Include="Views\BaseStruct\RoleMenu\index.cshtml" />
+    <Content Include="Views\WorkerCenter\TaskList\Index.cshtml" />
+    <Content Include="Views\WorkerCenter\PlanList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BaseMsg\" />
     <Folder Include="Views\CustomerMgr\" />
     <Folder Include="Views\SelfCenter\" />
-    <Folder Include="Views\WorkerCenter\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

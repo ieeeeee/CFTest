@@ -8,15 +8,17 @@ using System.Web.Mvc;
 
 namespace OA.Web.Controllers
 {
-    public class BaseController : Controller
+    public class BaseController : BaseMsgController
     {
         private readonly IMenuService _menuService;
         private readonly ITableStructService _tableStructService;
+        private readonly IEntService _entService;
 
-        public BaseController(IMenuService menuService,ITableStructService tableStructService)
+        public BaseController(IMenuService menuService,ITableStructService tableStructService,IEntService entService)
         {
             _menuService = menuService;
             _tableStructService = tableStructService;
+            _entService = entService;
         }
         // GET: Base
         public ActionResult Index()
@@ -46,6 +48,25 @@ namespace OA.Web.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
 
+        }
+
+        //获取菜单上的下拉列表
+        public async Task<JsonResult> GetEntMenuList()
+        {
+            var result = await _entService.GetEntMenuList(User.Identity.GetLoginUserID());
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> WriteLockEnt(int lockEntID)
+        {
+            var success = await _entService.WriteLockEnt(int.Parse(User.Identity.GetLoginUserID()),lockEntID);
+            return Json(success);
+        }
+
+        public async Task<JsonResult> WriteLockSubMenu(int subMenuID)
+        {
+            var success = await _menuService.WriteLockSubMenu(int.Parse(User.Identity.GetLoginUserID()),subMenuID);
+            return Json(success);
         }
     }
 }

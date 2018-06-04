@@ -55,5 +55,9 @@ namespace OA.Models
         public string Remark { get; set; }
 
         public int IsDeleted { get; set; }
+
+        public int LockEntID { get; set; }
+        public int LockMenuID { get; set; }
+        public int LockSubMenuID { get; set; }
     }
 }

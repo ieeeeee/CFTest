@@ -116,3 +116,8 @@ F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.dll
 F:\GitDepo\CFTest\OA.Services\obj\Debug\OA.Services.pdb
 F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Newtonsoft.Json.xml
 F:\GitDepo\CFTest\OA.Services\bin\Debug\Newtonsoft.Json.xml
+F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Hangfire.Core.dll
+F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Owin.dll
+F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Hangfire.Core.xml
+F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\es\Hangfire.Core.resources.dll
+F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\zh\Hangfire.Core.resources.dll

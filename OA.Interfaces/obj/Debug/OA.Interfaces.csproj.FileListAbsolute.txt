@@ -61,3 +61,14 @@ F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.dll
 F:\GitDepo\CFTest\OA.Interfaces\obj\Debug\OA.Interfaces.pdb
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.xml
 F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Newtonsoft.Json.xml
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Hangfire.Core.dll
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Hangfire.SqlServer.dll
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.dll
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Owin.dll
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Hangfire.Core.xml
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Hangfire.SqlServer.xml
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.xml
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\es\Hangfire.Core.resources.dll
+F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\zh\Hangfire.Core.resources.dll
