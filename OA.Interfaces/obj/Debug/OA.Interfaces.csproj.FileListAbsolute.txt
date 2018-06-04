@@ -72,3 +72,14 @@ F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.xml
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\es\Hangfire.Core.resources.dll
 F:\GitRepo\CFTest\CFTest\OA.Interfaces\bin\Debug\zh\Hangfire.Core.resources.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Hangfire.Core.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Hangfire.SqlServer.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Owin.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Hangfire.Core.xml
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Hangfire.SqlServer.xml
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.xml
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\es\Hangfire.Core.resources.dll
+F:\GitDepo\CFTest\OA.Interfaces\bin\Debug\zh\Hangfire.Core.resources.dll

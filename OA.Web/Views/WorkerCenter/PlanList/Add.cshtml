@@ -1,0 +1,68 @@
+﻿@model OA.Models.PlanDto
+@{
+    if (Model.TStructID > 0) { ViewBag.Title = "编辑表结构"; }
+    else { ViewBag.Title = "添加表结构"; }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section headerJS{
+
+}
+<div class="wrapper wrapper-content">
+    <div class="set-3">
+        <div class="graph-2 general">
+            @if (Model.PlanID > 0)
+            {<h3 class="inner-tittle two">编辑计划单</h3> }
+            else
+            { <h3 class="inner-tittle two">添加计划单</h3>}
+            <div class="grid-1" id="AddControl">
+                <div class="form-body">
+                    <form class="form-horizontal" v-on:submit.prevent="onSubmit">
+
+                        <div class="form-group" v-for="(item,index) in tableStructList">
+                            <label class="col-md-2 control-label">{{item.FieldName}}</label>
+                            <div class="col-md-8">
+                                <div v-if="item.VueTemplate==='vadd-text'">
+                                    <vadd-text :class="{IsHide:item.IsHide}" :txt_item="item" :txt_index="index"></vadd-text>
+                                </div>
+                                <div v-else-if="item.VueTemplate==='vadd-checkbox'">
+                                    <vadd-checkbox :class="{IsHide:item.IsHide}" :ck_item="item" :ck_index="index"></vadd-checkbox>
+                                </div>
+                                <div v-else-if="item.VueTemplate==='vadd-textarea'">
+                                    <vadd-textarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-textarea>
+                                </div>
+                                <div v-else-if="item.VueTemplate==='vadd-select'">
+                                    <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
+                                </div>
+                                @*<span>{{item.FieldValue}}</span>*@
+                            </div>
+                        </div>
+
+                        <div class="col-sm-offset-2">
+                            <button type="button" class="btn btn-default" v-on:click="Save('PlanList',@Model.PlanID,'PlanID')">保存</button>
+                            <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Content/Plugin/vue.js"></script>
+    <script src="~/Content/Plugin/main.js"></script>
+    <script>
+        var param = {};
+        param.TableID = 98;
+        param.ModelID =@Model.PlanID;
+        param.ModelUrl = "/PlanList/GetDetailInfo";
+        //获取值
+        GetModelInfo(param.ModelUrl, param.ModelID, function () {
+            //获取select 选项
+            GetPlanType(function () {
+                //获取结构
+                GetTableStruct(param.TableID);
+            });
+        });
+    </script>
+}
+

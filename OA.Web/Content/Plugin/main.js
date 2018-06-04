@@ -216,9 +216,9 @@
             console.log(vList.tableStructList[i].FieldValue);
             data[vList.tableStructList[i].Field] = vList.tableStructList[i].FieldValue;//$("#" + vList.menuStructList[i].Field + "").val();
         }
-        data["" + IDFlag + ""] = ID;
-        console.log(data);
         data.EntID = UserInfo.LockEntID;
+        data["" + IDFlag + ""] = ID;
+        console.log(data);    
         $.post("/" + SaveControl+"/Save", data, function (result) {
             if (result.flag) {
                 layer.msg(result.msg);

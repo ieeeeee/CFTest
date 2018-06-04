@@ -10,7 +10,7 @@ namespace OA.Data.Config
         {
             ToTable("W_PlanList");
             HasKey(item => item.PlanID);
-            Property(item => item.PlanID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            //Property(item => item.PlanID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             Property(item => item.PlanTitle).HasColumnType("nvarchar").IsRequired().HasMaxLength(60);
             Property(item => item.PlanBody).HasColumnType("nvarchar").IsRequired();

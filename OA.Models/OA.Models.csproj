@@ -63,6 +63,7 @@
     <Compile Include="Filters\EntFilter.cs" />
     <Compile Include="Filters\MenuFilter.cs" />
     <Compile Include="Filters\PlanFilter.cs" />
+    <Compile Include="Filters\RoleFilter.cs" />
     <Compile Include="Filters\TableStructFilter.cs" />
     <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="LoginDto.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Message.cs" />
     <Compile Include="PlanDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleDto.cs" />
     <Compile Include="TableStructDto.cs" />
     <Compile Include="UserAddDto.cs" />
     <Compile Include="UserDto.cs" />

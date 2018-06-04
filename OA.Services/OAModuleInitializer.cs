@@ -20,7 +20,7 @@ namespace OA.Services
                 from type in typeof (OAModuleInitializer).Assembly.GetTypes()
                 where
                     type.Namespace != null && (type.Namespace.IsNotBlank() &&
-                                               type.Namespace.StartsWith("OA.Services.AppServices") &&
+                                               (type.Namespace.StartsWith("OA.Services.AppServices")|| type.Namespace.StartsWith("OA.Services.TaskServices")) &&
                                                type.GetInterfaces().Any(x => x.Name.EndsWith("Service")) &&
                                                type.GetInterfaces().Any())
                 select new { Service = type.GetInterfaces().First(), Implementation = type };
@@ -42,6 +42,7 @@ namespace OA.Services
             mapperConfig.CreateMap<B_BaseInfoEntity, BaseInfoDto>().ReverseMap();
             mapperConfig.CreateMap<B_BaseClassEntity, BaseClassDto>().ReverseMap();
             mapperConfig.CreateMap<B_DepartmentEntity, DeptDto>().ReverseMap();
+            mapperConfig.CreateMap<B_RoleEntity, RoleDto>().ReverseMap();
 
         }
     }

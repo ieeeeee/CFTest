@@ -441,6 +441,7 @@
     <Content Include="Views\BaseStruct\RoleMenu\index.cshtml" />
     <Content Include="Views\WorkerCenter\TaskList\Index.cshtml" />
     <Content Include="Views\WorkerCenter\PlanList\Index.cshtml" />
+    <Content Include="Views\WorkerCenter\PlanList\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

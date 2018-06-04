@@ -121,3 +121,8 @@ F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Owin.dll
 F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\Hangfire.Core.xml
 F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\es\Hangfire.Core.resources.dll
 F:\GitRepo\CFTest\CFTest\OA.Services\bin\Debug\zh\Hangfire.Core.resources.dll
+F:\GitDepo\CFTest\OA.Services\bin\Debug\Hangfire.Core.dll
+F:\GitDepo\CFTest\OA.Services\bin\Debug\Owin.dll
+F:\GitDepo\CFTest\OA.Services\bin\Debug\Hangfire.Core.xml
+F:\GitDepo\CFTest\OA.Services\bin\Debug\es\Hangfire.Core.resources.dll
+F:\GitDepo\CFTest\OA.Services\bin\Debug\zh\Hangfire.Core.resources.dll

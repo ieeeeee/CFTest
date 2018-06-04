@@ -63,6 +63,7 @@
     <Compile Include="AppServices\DeptService.cs" />
     <Compile Include="AppServices\EntService.cs" />
     <Compile Include="AppServices\MenuService.cs" />
+    <Compile Include="AppServices\RoleMenuService.cs" />
     <Compile Include="AppServices\UserService.cs" />
     <Compile Include="OAJobInitializer.cs" />
     <Compile Include="OAModuleInitializer.cs" />

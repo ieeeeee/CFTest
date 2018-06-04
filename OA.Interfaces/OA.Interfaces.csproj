@@ -65,6 +65,7 @@
     <Compile Include="IEntService.cs" />
     <Compile Include="IMenuService.cs" />
     <Compile Include="IPlanService.cs" />
+    <Compile Include="IRoleMenuService.cs" />
     <Compile Include="ITableStructService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

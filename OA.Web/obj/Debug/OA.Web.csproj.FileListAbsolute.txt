@@ -988,3 +988,7 @@ F:\GitRepo\CFTest\CFTest\OA.Web\bin\Hangfire.Core.dll
 F:\GitRepo\CFTest\CFTest\OA.Web\bin\Hangfire.Core.xml
 F:\GitRepo\CFTest\CFTest\OA.Web\bin\es\Hangfire.Core.resources.dll
 F:\GitRepo\CFTest\CFTest\OA.Web\bin\zh\Hangfire.Core.resources.dll
+F:\GitDepo\CFTest\OA.Web\bin\Hangfire.Core.dll
+F:\GitDepo\CFTest\OA.Web\bin\Hangfire.Core.xml
+F:\GitDepo\CFTest\OA.Web\bin\es\Hangfire.Core.resources.dll
+F:\GitDepo\CFTest\OA.Web\bin\zh\Hangfire.Core.resources.dll
