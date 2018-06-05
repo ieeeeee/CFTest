@@ -49,7 +49,7 @@
                                 <thead><tr><th>#</th><th>用户名称</th></tr> </thead>
                                 <tbody v-for="(item,index) in modelInfoList">
                                     <tr>
-                                        <td><input class="Subcb" :data-id="item.UserID" type="radio" v-on:click="onCheck(item.UserID)" v-model="item.UserID"/></td>
+                                        <td><input class="Subcb" :data-id="item.UserID" type="checkbox" v-on:click="onCheck($event)" /></td>
                                         <td>{{item.NickName}}</td>
                                        
                                     </tr>
@@ -158,8 +158,9 @@
                     Search: function (searchKeyWords) {
                         return GetSearch(searchKeyWords);
                     },
-                    onCheck: function (ID) {
-                        return GetCheck(ID);
+                    onCheck: function (event) {
+                        return GetCheck(event);
+                        
                     },
                     AddRights: function (index, RoleID) {
                         return GetAddRights(index, RoleID);
@@ -221,19 +222,49 @@
             },"json");
 
          }
-
-     $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
-         if ($(item).is(':checked')) {
-             console.log("333");
-             $(item).parent().siblings().find("input[type=radio]").removeAttr('checked');
-         }
-     })
+     $(':checkbox[typr="checkbox"]').each(function () {
+         $(this).click(function () {
+             if ($(this).attr('checked')) {
+                 $(':checkbox[type="checkbox"]').removeAttr('checked');
+                 $(this).attr('checked', 'checked');
+                 
+             }
+         })
+     });
+     //$("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i, item) {
+     //    if ($(item).is(':checked')) {
+     //        console.log("333");
+     //        $(item).parent().siblings().find("input[type=radio]").removeAttr('checked');
+     //    }
+     //})
      //查找
      function GetSearch(searchKeyWords) {
          modelFilter.keywords = searchKeyWords;
          GetModelInfo(modelFilter);
      }
+     //选中用户
+     function GetCheck(event) {
+         var ID = event.target.getAttribute("data-id")
+         // console.log(event.target);
+         if ($(event.target).prop('checked')) {
+             //console.log($(':input[type="checkbox"]'));
+             $(':input[type="checkbox"]').each(function (i, item) {
+                 $(item).prop('checked', false);
+                 console.log($(item).is(':checked'));
+             })
+             $(event.target).prop('checked', true);
+             //console.log($(event.target).prop("checked"));
+         }
 
+         // console.log(ID);
+         userFilter.UserID = ID;
+         console.log(userFilter);
+         GetUserRoles(userFilter);
+         roleFilter.UserID = ID;
+         roleFilter.ExcludeMyRoles = true;
+         console.log(roleFilter);
+         GetNotUserRoles(roleFilter);
+     }
      //得到用户下的角色
      function GetUserRoles(Filter) {
          $.post("/UserInfo/GetUserRoles", Filter, function (result) {
@@ -271,7 +302,7 @@
      function GetNotUserRoles(Filter) {
          $.post("/UserInfo/GetNotUserRoles", Filter, function (result) {
              if (result) {
-                 vList.userRoleInfoList = result.rows;
+                 vList.roleInfoList = result.rows;
                  if (result.rows.length > 0) {
                      $("#pageRoleDiv").show();
                      layui.use('laypage', function () {
@@ -300,37 +331,18 @@
          }, 'json');
      }
 
-     //选中用户
-     function GetCheck(ID) {
-         var userIDs = [];
-         $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
-             if ($(item).is(':checked')) {
-                 console.log("222");
-                 console.log($(item).parents("tr").siblings());
-                 $(item).parents("tr").siblings().find("input[type=radio]").removeAttr('checked');
-                 userIDs.push(item.getAttribute("data-id"));
-             }
-
-             console.log(userIDs);
-         })
-        // console.log(userIDs);
-         //userFilter.UserID = ID;
-         //GetUserRoles(userFilter);
-         //roleFilter.UserID = ID;
-         //roleFilter.ExcludeMyRoles = true;
-         //GetNotUserRoles(roleFilter);
-     }
+   
 
      //添加授权
      function GetAddRights(index, RoleID)
      {
          var userIDs=[];
-         $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
+         $("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i, item) {
              if ($(item).is(':checked')) {
                  userIDs.push(item.getAttribute("data-id"));
              }
          })
-         $.post("UserInfo/AddRights", { "userID": userIDs[0], "roleID": RoleID }, function (result) {
+         $.post("/UserInfo/AddRights", { "userID": userIDs[0], "roleID": RoleID }, function (result) {
              if (result.flag) {  
                  parent.layer.alert("授权成功");
                  GetUserRoles(userFilter);
@@ -343,12 +355,12 @@
      //取消授权
      function GetCancelRights(index, RoleID) {
          var userIDs = [];
-         $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
+         $("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i, item) {
              if ($(item).is(':checked')) {
                  userIDs.push(item.getAttribute("data-id"));
              }
          })
-         $.post("UserInfo/CancelRights", { "userID": userIDs[0], "roleID": RoleID }, function (result) {
+         $.post("/UserInfo/CancelRights", { "userID": userIDs[0], "roleID": RoleID }, function (result) {
              if (result.flag) {
                  parent.layer.alert("取消授权成功");
                  GetUserRoles(userFilter);

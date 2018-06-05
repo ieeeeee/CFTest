@@ -78,7 +78,7 @@ namespace OA.Services.AppServices
                 var db = scope.DbContexts.Get<OAContext>();
                 var query = db.B_Roles.Where(x => x.IsDeleted != 1)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.RoleName.Contains(filter.keywords));
-                if(filter.UserID.IsNotBlank())
+                if(filter.UserID>0)
                 {
                     var user = await db.B_Users.LoadAsync(filter.UserID);
                     var roleIDs = user.B_Roles

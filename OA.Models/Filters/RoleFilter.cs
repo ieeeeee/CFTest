@@ -14,7 +14,7 @@ namespace OA.Models.Filters
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserID { get; set; }
+        public int UserID { get; set; }
 
         /// <summary>
         /// 是否排除当前UserID拥有的角色
