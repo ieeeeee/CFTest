@@ -26,5 +26,21 @@ namespace OA.Interfaces
 
         //改
         Task<bool> UpdateAsync(UserAddDto dto);
+        
+        /// <summary>
+        /// 用户角色授权
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        Task<bool> AddRightsAsync(int userID, int roleID);
+
+        /// <summary>
+        /// 用户角色取消授权
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        Task<bool> CancelRightsAsync(int userID, int roleID);
     }
 }

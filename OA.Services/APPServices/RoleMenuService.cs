@@ -78,6 +78,15 @@ namespace OA.Services.AppServices
                 var db = scope.DbContexts.Get<OAContext>();
                 var query = db.B_Roles.Where(x => x.IsDeleted != 1)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.RoleName.Contains(filter.keywords));
+                if(filter.UserID.IsNotBlank())
+                {
+                    var user = await db.B_Users.LoadAsync(filter.UserID);
+                    var roleIDs = user.B_Roles
+                        .Select(item => item.RoleID).ToList();
+                    query = filter.ExcludeMyRoles
+                        ? query.Where(item => !roleIDs.Contains(item.RoleID))
+                        : query.Where(item => roleIDs.Contains(item.RoleID));
+                }
                 return await query.OrderByCustom(filter.sidx, filter.sord).Select(item => new RoleDto
                 {
                     RoleID=item.RoleID,
@@ -100,6 +109,59 @@ namespace OA.Services.AppServices
                 entity.Description = dto.Description;
                 entity.Remark = dto.Remark;
                 entity.IsDeleted = dto.IsDeleted;
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 授权角色菜单
+        /// </summary>
+        /// <param name="datas"></param>
+        /// <returns></returns>
+        public async Task<bool> SaveRoleMenusAsync(List<RoleMenuDto> datas)
+        {
+            if (!datas.AnyOne()) return false;
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var roleID = datas.First().RoleID;
+                var role = await db.B_Roles.LoadAsync(roleID);
+                var oldMenus = role.B_Menus.ToList();
+                var oldMenuIDs = oldMenus.Select(item => item.MenuID); //123
+                var newMenuIDs = datas.Select(item => item.MenuID); //345
+                var adds = datas.Where(item => !oldMenuIDs.Contains(item.MenuID)).Select(x => x.MenuID).ToList(); //添加  新数据中不含原有的  45
+                var removes = oldMenus.Where(item => !newMenuIDs.Contains(item.MenuID)).ToList(); //去除 原有数据不含新添加的节点 12
+                if(adds.AnyOne())
+                {
+                    var addPages = await db.B_Menus.Where(x => adds.Contains(x.MenuID)).ToListAsync();
+                    addPages.ForEach(m => role.B_Menus.Add(m));
+                }
+                if(removes.AnyOne())
+                {
+                    foreach(var menu in removes)
+                    {
+                        role.B_Menus.Remove(menu);
+                    }
+                }
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 清空该角色下的所有菜单
+        /// </summary>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        public async Task<bool> ClearRoleMenusAsync(int roleID)
+        {
+            if (roleID==0) return false;
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var role = db.B_Roles.Load(roleID);
+                role.B_Menus = null;
                 await scope.SaveChangesAsync();
                 return true;
             }

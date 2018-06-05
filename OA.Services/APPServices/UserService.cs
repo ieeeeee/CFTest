@@ -182,5 +182,43 @@ namespace OA.Services.AppServices
             }
         }
 
+        /// <summary>
+        /// 用户角色授权
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        public async Task<bool> AddRightsAsync(int userID, int roleID)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var user = await db.B_Users.LoadAsync(userID);
+                if (user.B_Roles.Any(x => x.RoleID == roleID))
+                    return true;
+                var role = await db.B_Roles.LoadAsync(roleID);
+                user.B_Roles.Add(role);
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
+        /// <summary>
+        /// 用户角色取消授权
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        public async Task<bool> CancelRightsAsync(int userID, int roleID)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var user = await db.B_Users.LoadAsync(userID);
+                var role = await db.B_Roles.LoadAsync(roleID);
+                user.B_Roles.Remove(role);
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }

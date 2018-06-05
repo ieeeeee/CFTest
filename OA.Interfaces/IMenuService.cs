@@ -30,5 +30,7 @@ namespace OA.Interfaces
         //批量删除
         Task<bool> DeleteAsync(IEnumerable<int> ids);
         Task<bool> WriteLockSubMenu(int loginUserID,int subMenuID);
+        Task<List<TreeDto>> GetMenuTreeAsync();
+        Task<List<MenuDto>> GetMenusByRoleIDAsync(int roleID);
     }
 }

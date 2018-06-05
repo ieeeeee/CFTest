@@ -30,7 +30,7 @@ namespace OA.Services
                 container.Register(reg.Service, reg.Implementation, Lifestyle.Scoped);
             }
         }
-        //加载AutoMapper配置
+        //加载AutoMapper配置 将Entity和DTO的字段对应起来
         public override void LoadAutoMapper(IMapperConfigurationExpression mapperConfig)
         {
             mapperConfig.CreateMap<B_UserEntity, UserDto>().ReverseMap();
@@ -43,7 +43,10 @@ namespace OA.Services
             mapperConfig.CreateMap<B_BaseClassEntity, BaseClassDto>().ReverseMap();
             mapperConfig.CreateMap<B_DepartmentEntity, DeptDto>().ReverseMap();
             mapperConfig.CreateMap<B_RoleEntity, RoleDto>().ReverseMap();
-
+            mapperConfig.CreateMap<B_MenuEntity, TreeDto>()
+                .ForMember(m => m.id, e => e.MapFrom(item => item.MenuID))
+                .ForMember(m => m.pId, e => e.MapFrom(item => item.ParentID))
+                .ForMember(m => m.name, e => e.MapFrom(item => item.MenuName));
         }
     }
 }

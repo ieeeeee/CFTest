@@ -82,7 +82,7 @@ namespace OA.Data
                 {
                     MenuName = "角色授权",
                     Icon = "fa fa-usersecret",
-                    Url = "/BaseStruct/RoleMenuMgr",
+                    Url = "/RoleMenu/Index",
                     MenuType = 3,
                     ParentID = baseStruct.MenuID,
                     OrderID = 5,

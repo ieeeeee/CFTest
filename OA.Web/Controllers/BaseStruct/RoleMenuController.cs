@@ -15,9 +15,11 @@ namespace OA.Web.Controllers.BaseStruct
     public class RoleMenuController : BaseMsgController
     {
         private readonly IRoleMenuService  _roleMenuService;
-        public RoleMenuController(IRoleMenuService roleMenuService)
+        private readonly IMenuService _menuService;
+        public RoleMenuController(IRoleMenuService roleMenuService, IMenuService menuService)
         {
             _roleMenuService = roleMenuService;
+            _menuService = menuService;
         }
         #region View
         // GET: DeptInfo
@@ -47,6 +49,19 @@ namespace OA.Web.Controllers.BaseStruct
         {
             var result = await _roleMenuService.FindAsync(id);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //加载菜单
+        public async Task<ActionResult> AuthenMenuData()
+        {
+            var result = await _menuService.GetMenuTreeAsync();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //根据角色ID 获取对应的菜单
+        public async Task<JsonResult> AuthenRoleMenus(int id)
+        {
+            var list = await _menuService.GetMenusByRoleIDAsync(id);
+            var menuIDs = list?.Select(item => item.MenuID);
+            return Json(menuIDs, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -86,6 +101,39 @@ namespace OA.Web.Controllers.BaseStruct
                 success.flag = await _roleMenuService.DeleteAsync(ids);
                 
             }
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 角色菜单授权
+        /// </summary>
+        /// <param name="datas"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> SaveRoleMenus(List<RoleMenuDto> datas)
+        {
+            var success = new JsonResultModel<bool>();
+            if(datas.AnyOne())
+            {
+                success.flag = await _roleMenuService.SaveRoleMenusAsync(datas);
+            }
+            else
+            {
+                success.msg = "请选择要授权的菜单";
+            }
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 清空该角色下的所有菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> ClearRoleMenus(int id)
+        {
+            var success = new JsonResultModel<bool>
+            {
+                flag = await _roleMenuService.ClearRoleMenusAsync(id)
+            };
             return Json(success, JsonRequestBehavior.AllowGet);
         }
         #endregion

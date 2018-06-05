@@ -171,5 +171,36 @@ namespace OA.Services.AppServices
                 return true;
             }
         }
+
+        /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        public async  Task<List<TreeDto>> GetMenuTreeAsync()
+        {
+            using (var scope = _dbContextScopeFactory.CreateReadOnly())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var list = await db.B_Menus.Where(m => m.IsDeleted != 1 && m.IsDeleted != 2).ToListAsync();
+                var result = _mapper.Map<List<B_MenuEntity>, List<TreeDto>>(list);
+                result.ForEach(t => t.open = true);
+                return result;
+            }
+        }
+        /// <summary>
+        /// 获取角色下的菜单树
+        /// </summary>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        public async Task<List<MenuDto>> GetMenusByRoleIDAsync(int roleID)
+        {
+            using (var scope = _dbContextScopeFactory.CreateReadOnly())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var list = await db.B_Menus.Where(m => m.IsDeleted != 1 && m.IsDeleted != 2 && m.B_Roles.Any(r => r.RoleID == roleID))
+                    .ToListAsync();
+                return _mapper.Map<List<B_MenuEntity>, List<MenuDto>>(list);
+            }
+        }
     }
 }

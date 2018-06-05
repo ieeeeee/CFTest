@@ -25,5 +25,17 @@ namespace OA.Interfaces
 
         //改
         Task<bool> UpdateAsync(RoleDto dto);
+        
+        /// <summary>
+        /// 角色授权菜单
+        /// </summary>
+        Task<bool> SaveRoleMenusAsync(List<RoleMenuDto> datas);
+
+        /// <summary>
+        /// 清空该角色下的所有菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> ClearRoleMenusAsync(int roleID);
     }
 }

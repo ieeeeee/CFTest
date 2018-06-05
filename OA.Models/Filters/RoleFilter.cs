@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace OA.Models.Filters
 {
+    /// <summary>
+    /// 角色搜索过滤器
+    /// </summary>
    public  class RoleFilter:BaseFilter
     {
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public string UserID { get; set; }
+
+        /// <summary>
+        /// 是否排除当前UserID拥有的角色
+        /// </summary>
+        public bool ExcludeMyRoles { get; set; }
     }
 }

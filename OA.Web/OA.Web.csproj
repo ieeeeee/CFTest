@@ -253,6 +253,8 @@
     <Content Include="Content\Login\images\green_tree.jpeg" />
     <Content Include="Content\Login\images\Login_bg.jpg" />
     <Content Include="Content\Login\images\Star.jpg" />
+    <Content Include="Content\Page\roleMenuAuthen.js" />
+    <Content Include="Content\Page\userRoleAuthen.js" />
     <Content Include="Content\Plugin\layer\layer.js" />
     <Content Include="Content\Plugin\layer\theme\default\icon-ext.png" />
     <Content Include="Content\Plugin\layer\theme\default\icon.png" />
@@ -370,6 +372,17 @@
     <Content Include="Content\Plugin\vue.min.js" />
     <Content Include="Content\Plugin\VueTemplate.js" />
     <Content Include="Content\Plugin\vueTemplate\index.js" />
+    <Content Include="Content\Plugin\ztree\css\metroStyle\img\line_conn.png" />
+    <Content Include="Content\Plugin\ztree\css\metroStyle\img\loading.gif" />
+    <Content Include="Content\Plugin\ztree\css\metroStyle\img\metro.gif" />
+    <Content Include="Content\Plugin\ztree\css\metroStyle\img\metro.png" />
+    <Content Include="Content\Plugin\ztree\css\metroStyle\metroStyle.css" />
+    <Content Include="Content\Plugin\ztree\jquery-1.4.4.min.js" />
+    <Content Include="Content\Plugin\ztree\jquery.ztree.all.js" />
+    <Content Include="Content\Plugin\ztree\jquery.ztree.core.min.js" />
+    <Content Include="Content\Plugin\ztree\jquery.ztree.excheck.min.js" />
+    <Content Include="Content\Plugin\ztree\jquery.ztree.exedit.min.js" />
+    <Content Include="Content\Plugin\ztree\jquery.ztree.exhide.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -442,9 +455,11 @@
     <Content Include="Views\WorkerCenter\TaskList\Index.cshtml" />
     <Content Include="Views\WorkerCenter\PlanList\Index.cshtml" />
     <Content Include="Views\WorkerCenter\PlanList\Add.cshtml" />
+    <Content Include="Views\BaseStruct\UserInfo\Authen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Plugin\ztree\css\awesomeStyle\" />
     <Folder Include="Views\BaseMsg\" />
     <Folder Include="Views\CustomerMgr\" />
     <Folder Include="Views\SelfCenter\" />

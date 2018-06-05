@@ -15,9 +15,11 @@ namespace OA.Web.Controllers.BaseStruct
     public class UserInfoController : BaseMsgController
     {
         private readonly IUserService _userService;
-        public UserInfoController(IUserService userService)
+        private readonly IRoleMenuService _roleMenuService;
+        public UserInfoController(IUserService userService,IRoleMenuService roleMenuService)
         {
             _userService = userService;
+            _roleMenuService = roleMenuService;
         }
         #region View
         // GET: DeptInfo
@@ -33,6 +35,11 @@ namespace OA.Web.Controllers.BaseStruct
                 return View(new UserDto());
             return View(model);
         }
+        public ActionResult Authen()
+        {
+            return View();
+        }
+
         #endregion
 
         #region GetInfo
@@ -53,6 +60,27 @@ namespace OA.Web.Controllers.BaseStruct
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 得到用户下的角色
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> GetUserRoles(RoleFilter filter)
+        {
+            var result = await _roleMenuService.SearchAsync(filter);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 得到用户下尚未拥有的角色
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> GetNotUserRoles(RoleFilter filter)
+        {
+            var result = await _roleMenuService.SearchAsync(filter);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region OperateResult
@@ -88,6 +116,35 @@ namespace OA.Web.Controllers.BaseStruct
             {
                 success.flag = await _userService.DeleteAsync(ids);
             }
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 用户角色授权
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> AddRights(int userID, int roleID)
+        {
+            var success = new JsonResultModel<bool>
+            {
+                flag = await _userService.AddRightsAsync(userID, roleID)
+            };
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 用户角色取消授权
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> CancelRights(int userID, int roleID)
+        {
+            var success = new JsonResultModel<bool>
+            {
+                flag = await _userService.CancelRightsAsync(userID, roleID)
+            };
             return Json(success, JsonRequestBehavior.AllowGet);
         }
         #endregion

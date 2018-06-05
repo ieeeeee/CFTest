@@ -1,0 +1,369 @@
+﻿@using OA.Models.Filters
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section headerJS{
+    <style>
+
+        /*.graph-visual.tables-main{
+            width:50%;
+        }*/
+        .panel-primary > .panel-heading {
+            background-color: #428bca;
+            border-color: #428bca;
+        }
+        .graph-2{
+            width:30%;
+        }
+        .graph-2.second{
+            width:30%;
+        }
+    </style>
+}
+    <div class="graph-visual tables-main" id="listControl">
+        <h3 class="inner-tittle two">用户授权 </h3>
+        <div class="graph">
+            <div class="buttons-ui">
+                <a id="btnSave" class="btn green"><i class="fa fa-plus"></i>&nbsp;保存授权</a>
+                <a id="btnClear" class="btn red"><i class="fa fa-close"></i>&nbsp;清空授权</a>
+                <div class="input-group" style="width:30%;float:right;">
+                    <input type="text" class="input form-control" v-model="searchKeyWords" placehoder="Search" />
+                    <span class="input-group-btn">
+                        <button v-on:click="Search(searchKeyWords)" class="btn btn btn-primary" type="button">
+                            <i class="fa fa-search"></i>搜索
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 graph-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">用户列表</div>
+                <div class="panel-body">
+                    <div class="graph">
+                        <div class="tables" id="modelInfoList">
+                            <table class="table table-hover">
+                                <thead><tr><th>#</th><th>用户名称</th></tr> </thead>
+                                <tbody v-for="(item,index) in modelInfoList">
+                                    <tr>
+                                        <td><input class="Subcb" :data-id="item.UserID" type="radio" v-on:click="onCheck(item.UserID)" v-model="item.UserID"/></td>
+                                        <td>{{item.NickName}}</td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 text-center" v-if="modelInfoList.length<=0 ">
+                            {{message}}
+                        </div>
+                        <div class="row" id="pageDiv">
+                            <div class="col-xs-12">
+                                <hr style="margin:10px auto;" />
+                                <div id="pager" style="margin-top:4px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 graph-2 second">
+            <div class="panel panel-primary">
+                <div class="panel-heading">已分配的角色列表</div>
+                <div class="panel-body two">
+                    <div class="graph">
+                        <div class="tables" id="userRoleInfoList">
+                            <table class="table table-hover">
+                                <thead><tr><th>用户名称</th><th>取消授权</th></tr> </thead>
+                                <tbody v-for="(item,index) in userRoleInfoList">
+                                    <tr>
+                                        <td>{{item.RoleName}}</td>
+                                        <td>
+                                            <a id="btnDel" style="color:#e74c3c;" v-on:click="CancelRights(index,item.RoleID)"><i class="fa fa-close" title="取消授权"></i>&nbsp;&nbsp;</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 text-center" v-if="userRoleInfoList.length<=0 ">
+                            {{message}}
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row" id="pageUserRoleDiv">
+                                <div class="col-xs-12">
+                                    <hr style="margin:10px auto;" />
+                                    <div id="userPager" style="margin-top:4px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 graph-2 second">
+            <div class="panel panel-primary">
+                <div class="panel-heading">未分配的角色列表</div>
+                <div class="panel-body two">
+                    <div class="graph">
+                        <div class="tables" id="roleInfoList">
+                            <table class="table table-hover">
+                                <thead><tr><th>用户名称</th><th>授权</th></tr></thead>
+                                <tbody v-for="(item,index) in roleInfoList">
+                                    <tr>
+                                        <td>{{item.RoleName}}</td>
+                                        <td>
+                                            <a id="btnAdd" style="color:#55acee;" v-on:click="AddRights(index,item.RoleID)"><i class="fa fa-edit" title="授权"></i>&nbsp;</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 text-center" v-if="roleInfoList.length<=0 ">
+                            {{message}}
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row" id="pageRoleDiv">
+                                <div class="col-xs-12">
+                                    <hr style="margin:10px auto;" />
+                                    <div id="rolePager" style="margin-top:4px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section pageJS{
+    <link href="~/Content/Plugin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/layui/layui.all.js"></script>
+    <script src="~/Content/Plugin/vue.js"></script>
+    <script type="text/javascript">
+    //var menuTree;
+ $(function () {
+            var vList = new Vue({
+                el: "#listControl",
+                data: {
+                    modelInfoList: [],
+                    userRoleInfoList: [],
+                    roleInfoList:[],
+                    message: "没有数据",
+                    searchKeyWords: ""
+                },
+                methods: {
+                    Search: function (searchKeyWords) {
+                        return GetSearch(searchKeyWords);
+                    },
+                    onCheck: function (ID) {
+                        return GetCheck(ID);
+                    },
+                    AddRights: function (index, RoleID) {
+                        return GetAddRights(index, RoleID);
+                    },
+                    CancelRights: function (index, RoleID) {
+                        return GetCancelRights(index, RoleID);
+                    }
+                }
+             })
+             var modelFilter = {};
+              modelFilter.rows = pageGlobalParam.pageSize;
+              modelFilter.page = pageGlobalParam.currPage;
+              modelFilter.keywords = vList.searchKeyWords;
+              var userFilter = {};
+              userFilter.rows = 10;
+              userFilter.page = 1;
+              var roleFilter = {};
+              roleFilter.rows = 10;
+              roleFilter.page = 1;
+             GetModelInfo(modelFilter);
+             GetUserRoles(userFilter);
+             GetNotUserRoles(roleFilter);
+
+
+        //获取分页菜单信息
+     function GetModelInfo(Filter) {
+            //console.log(menuFilter);
+         $.post("/UserInfo/GetAllUserInfo", Filter, function (result) {
+                console.log(result);
+                if (result) {
+                    vList.modelInfoList = result.rows;
+                    if (result.rows.length > 0) {
+                        $("#pageDiv").show();
+                        layui.use('laypage', function () {
+                            var laypage = layui.laypage;
+                            laypage.render({
+                                elem: 'pager'
+                                , count: result.records
+                                ,curr:result.page
+                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                , groups: 1
+                                , first: false
+                                ,last:false
+                                , jump: function (obj, first) {
+                                    if (!first) {
+                                        //pageGlobalParam.currPage = obj.curr;
+                                        //pageGlobalParam.pageSize = obj.limit;
+                                        modelFilter.rows = obj.limit;
+                                        modelFilter.page = obj.curr;
+                                        GetModelInfo(modelFilter);
+                                    }
+                                }
+                            });
+                        });
+                        } else {
+                        $("#pageDiv").hide()
+                        }
+                }
+            },"json");
+
+         }
+
+     $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
+         if ($(item).is(':checked')) {
+             console.log("333");
+             $(item).parent().siblings().find("input[type=radio]").removeAttr('checked');
+         }
+     })
+     //查找
+     function GetSearch(searchKeyWords) {
+         modelFilter.keywords = searchKeyWords;
+         GetModelInfo(modelFilter);
+     }
+
+     //得到用户下的角色
+     function GetUserRoles(Filter) {
+         $.post("/UserInfo/GetUserRoles", Filter, function (result) {
+             if (result) {
+                 vList.userRoleInfoList = result.rows;
+                 if (result.rows.length > 0) {
+                     $("#pageUserRoleDiv").show();
+                     layui.use('laypage', function () {
+                         var laypage = layui.laypage;
+                         laypage.render({
+                             elem: 'userPager'
+                             , count: result.records
+                             , curr: result.page
+                             , layout: ['count', 'prev', 'page', 'next']
+                             , groups: 1
+                             , first: false
+                             , last: false
+                             , jump: function (obj, first) {
+                                 if (!first) {
+                                     userFilter.rows = obj.limit;
+                                     userFilter.page = obj.curr;
+                                     GetUserRoles(userFilter);
+                                 }
+                             }
+                         });
+                     });
+                 } else {
+                     $("#pageUserRoleDiv").hide()
+                 }
+             }
+         },'json');
+     }
+
+     //得到不是用户下的角色
+     function GetNotUserRoles(Filter) {
+         $.post("/UserInfo/GetNotUserRoles", Filter, function (result) {
+             if (result) {
+                 vList.userRoleInfoList = result.rows;
+                 if (result.rows.length > 0) {
+                     $("#pageRoleDiv").show();
+                     layui.use('laypage', function () {
+                         var laypage = layui.laypage;
+                         laypage.render({
+                             elem: 'rolePager'
+                             , count: result.records
+                             , curr: result.page
+                             , layout: ['count', 'prev', 'page', 'next']
+                             , groups: 1
+                             , first: false
+                             , last: false
+                             , jump: function (obj, first) {
+                                 if (!first) {
+                                     roleFilter.rows = obj.limit;
+                                     roleFilter.page = obj.curr;
+                                     GetNotUserRoles(roleFilter);
+                                 }
+                             }
+                         });
+                     });
+                 } else {
+                     $("#pageRoleDiv").hide()
+                 }
+             }
+         }, 'json');
+     }
+
+     //选中用户
+     function GetCheck(ID) {
+         var userIDs = [];
+         $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
+             if ($(item).is(':checked')) {
+                 console.log("222");
+                 console.log($(item).parents("tr").siblings());
+                 $(item).parents("tr").siblings().find("input[type=radio]").removeAttr('checked');
+                 userIDs.push(item.getAttribute("data-id"));
+             }
+
+             console.log(userIDs);
+         })
+        // console.log(userIDs);
+         //userFilter.UserID = ID;
+         //GetUserRoles(userFilter);
+         //roleFilter.UserID = ID;
+         //roleFilter.ExcludeMyRoles = true;
+         //GetNotUserRoles(roleFilter);
+     }
+
+     //添加授权
+     function GetAddRights(index, RoleID)
+     {
+         var userIDs=[];
+         $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
+             if ($(item).is(':checked')) {
+                 userIDs.push(item.getAttribute("data-id"));
+             }
+         })
+         $.post("UserInfo/AddRights", { "userID": userIDs[0], "roleID": RoleID }, function (result) {
+             if (result.flag) {  
+                 parent.layer.alert("授权成功");
+                 GetUserRoles(userFilter);
+                 GetNotUserRoles(roleFilter);
+             } else {
+                 parent.layer.alert("授权失败:"+result.msg);
+             }
+         },'Json')
+     }
+     //取消授权
+     function GetCancelRights(index, RoleID) {
+         var userIDs = [];
+         $("#modelInfoList table tbody tr td").find("input[type=radio]").each(function (i, item) {
+             if ($(item).is(':checked')) {
+                 userIDs.push(item.getAttribute("data-id"));
+             }
+         })
+         $.post("UserInfo/CancelRights", { "userID": userIDs[0], "roleID": RoleID }, function (result) {
+             if (result.flag) {
+                 parent.layer.alert("取消授权成功");
+                 GetUserRoles(userFilter);
+                 GetNotUserRoles(roleFilter);
+             } else {
+                 parent.layer.alert("取消失败:" + result.msg);
+             }
+         }, 'Json')
+     }
+
+      
+ })
+
+    </script>
+    @*<link href="~/Content/Plugin/ztree/css/metroStyle/metroStyle.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/ztree/jquery.ztree.all.js"></script>
+    <script src="~/Content/Page/userRoleAuthen.js"></script>*@
+}
