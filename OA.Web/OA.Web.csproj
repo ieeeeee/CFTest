@@ -236,6 +236,7 @@
     <Content Include="Content\FrameTheme\css\font-awesome.css" />
     <Content Include="Content\FrameTheme\css\icon-font.min.css" />
     <Content Include="Content\FrameTheme\css\Layout.css" />
+    <Content Include="Content\FrameTheme\css\normalize.css" />
     <Content Include="Content\FrameTheme\css\style.css" />
     <Content Include="Content\FrameTheme\fonts\digital-7-webfont.svg" />
     <Content Include="Content\FrameTheme\fonts\digital-7_italic-webfont.svg" />
@@ -365,6 +366,10 @@
     <Content Include="Content\Plugin\layui\lay\modules\upload.js" />
     <Content Include="Content\Plugin\layui\lay\modules\util.js" />
     <Content Include="Content\Plugin\main.js" />
+    <Content Include="Content\Plugin\markdown\css\bootstrap-markdown.min.css" />
+    <Content Include="Content\Plugin\markdown\css\normalize.css" />
+    <Content Include="Content\Plugin\markdown\js\bootstrap-markdown.js" />
+    <Content Include="Content\Plugin\markdown\js\jquery-1.11.0.min.js" />
     <Content Include="Content\Plugin\pagination\bgPager.css" />
     <Content Include="Content\Plugin\pagination\Pager.css" />
     <Content Include="Content\Plugin\pagination\Pager.js" />
@@ -372,6 +377,7 @@
     <Content Include="Content\Plugin\vue.min.js" />
     <Content Include="Content\Plugin\VueTemplate.js" />
     <Content Include="Content\Plugin\vueTemplate\index.js" />
+    <Content Include="Content\Plugin\wangEditor\wangEditor.js" />
     <Content Include="Content\Plugin\ztree\css\metroStyle\img\line_conn.png" />
     <Content Include="Content\Plugin\ztree\css\metroStyle\img\loading.gif" />
     <Content Include="Content\Plugin\ztree\css\metroStyle\img\metro.gif" />
@@ -456,6 +462,7 @@
     <Content Include="Views\WorkerCenter\PlanList\Index.cshtml" />
     <Content Include="Views\WorkerCenter\PlanList\Add.cshtml" />
     <Content Include="Views\BaseStruct\UserInfo\Authen.cshtml" />
+    <Content Include="Views\BaseStruct\RoleMenu\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

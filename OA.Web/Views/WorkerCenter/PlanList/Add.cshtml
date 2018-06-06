@@ -1,19 +1,24 @@
 ﻿@model OA.Models.PlanDto
 @{
-    if (Model.TStructID > 0) { ViewBag.Title = "编辑表结构"; }
+    if (Model.PlanID == null || Model.PlanID == "") { ViewBag.Title = "编辑表结构"; }
     else { ViewBag.Title = "添加表结构"; }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section headerJS{
 
+    <link href="~/Content/Plugin/markdown/css/bootstrap-markdown.min.css" rel="stylesheet">
+    @*<script type="text/javascript" src="~/Content/Plugin/markdown/js/jquery-1.11.0.min.js"></script>*@
+    <script type="text/javascript" src="~/Content/Plugin/markdown/js/bootstrap-markdown.js"></script>
 }
 <div class="wrapper wrapper-content">
     <div class="set-3">
         <div class="graph-2 general">
-            @if (Model.PlanID > 0)
-            {<h3 class="inner-tittle two">编辑计划单</h3> }
+            @if (Model.PlanID == null || Model.PlanID == "")
+            {/**/
+                <h3 class="inner-tittle two">编辑计划单</h3> }
             else
-            { <h3 class="inner-tittle two">添加计划单</h3>}
+            { /**/
+                <h3 class="inner-tittle two">添加计划单</h3>}
             <div class="grid-1" id="AddControl">
                 <div class="form-body">
                     <form class="form-horizontal" v-on:submit.prevent="onSubmit">
@@ -33,12 +38,16 @@
                                 <div v-else-if="item.VueTemplate==='vadd-select'">
                                     <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
                                 </div>
+                                <div v-else-if="item.VueTemplate==='vadd-editor'">
+                                    <textarea id="add-editor" name="content"  rows="10" v-model="item.FieldValue"></textarea>
+                                    @*<vadd-editor :class="{IsHide:item.IsHide}" :editor_item="item" :editor_index="index"></vadd-editor>*@
+                                </div>
                                 @*<span>{{item.FieldValue}}</span>*@
                             </div>
                         </div>
 
                         <div class="col-sm-offset-2">
-                            <button type="button" class="btn btn-default" v-on:click="Save('PlanList',@Model.PlanID,'PlanID')">保存</button>
+                            <button type="button" class="btn btn-default" v-on:click="Save('PlanList','@Model.PlanID/**/','PlanID')">保存</button>
                             <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
                         </div>
                     </form>
@@ -48,21 +57,47 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/Content/Plugin/wangEditor/wangEditor.js"></script>
     <script src="~/Content/Plugin/vue.js"></script>
     <script src="~/Content/Plugin/main.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/markdown/js/bootstrap-markdown.js"></script>
+
+
     <script>
-        var param = {};
-        param.TableID = 98;
-        param.ModelID =@Model.PlanID;
+        $(function () {
+             var param = {};
+        param.TableID = 20;
+        param.ModelID ='@Model.PlanID';
         param.ModelUrl = "/PlanList/GetDetailInfo";
         //获取值
         GetModelInfo(param.ModelUrl, param.ModelID, function () {
-            //获取select 选项
-            GetPlanType(function () {
+            ////获取select 选项
+            //GetPlanType(function () {
                 //获取结构
-                GetTableStruct(param.TableID);
+            GetTableStruct(param.TableID, function () {
+                $("#add-editor").markdown({ autofocus: false, savable: false });
+                //createEditor();
             });
+            //});
         });
+        })
+
+
+
+        //console.log(document.getElementById('editor'));
+        //if (document.getElementById('editor') != null) {
+        //    var editor = window.wangEditor;
+        //    var addEditor = new editor(document.getElementById('editor'));
+        //    addEditor.create();
+        //}
+
+//function createEditor() {
+//    console.log("111");
+//    console.log(document.getElementById('editor'));
+//    var editor = window.wangEditor;
+//    var addEditor = new editor(document.getElementById('editor'));
+//    addEditor.create();
+//}
     </script>
 }
 

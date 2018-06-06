@@ -45,6 +45,24 @@
                             </div>
                             `
     });
+//    Vue.component('vadd-editor', {
+//        props: ['editor_index', 'editor_item'],
+//        template: `
+//                                <div>
+//                                         <div id="editor" " style="text-align:left">
+//                                                 <button v-on:click="getContent">查看内容</button>
+//                                        </div>
+//                                </div>
+//                                `
+//})
+    Vue.component('vadd-editor', {
+        props: ['editor_index', 'editor_item'],
+        template: `
+                                    <div class="md-editor active">
+                                          <textarea id="add-editor" name="content" data-provide="markdown" rows="10"  v-model="editor_item.FieldValue"></textarea>
+                                    </div>
+                                    `
+    })
     var vList = new Vue({
         el: "#AddControl",
         data: {
@@ -57,6 +75,28 @@
         }
 
     });
+//import E from 'wangeditor'
+
+//export default {
+//    name: 'editor',
+//    data() {
+//        return {
+//            editorContent: ''
+//        }
+//    },
+//    methods: {
+//        getContent: function () {
+//            alert(this.editorContent)
+//        }
+//    },
+//    mounted() {
+//        var editor = new E(this.$refs.editor)
+//        editor.customConfig.onchange = (html) => {
+//            this.editorContent = html
+//        }
+//        editor.create()
+//    }
+//}
     var modelInfo = {};
     var vueTemplate = [];
     var parentMenuInfo = [];
@@ -64,7 +104,8 @@
     var deptInfo = [];
 
     //获取界面结构
-    function GetTableStruct(ID) {
+function GetTableStruct(ID,func) {
+    console.log("222");
         $.post("/Base/GetAddTableStruct", { "TableID": ID }, function (result) {
             if (result) {
                 console.log(modelInfo);
@@ -147,8 +188,9 @@
                     }
                 }
                 console.log(result);
-                vList.tableStructList = result;
+                vList.tableStructList = result;    
             }
+            func();
         }, 'Json');
     }
 
@@ -249,5 +291,14 @@
                 layer.msg(result.msg);
             }
         }, 'Json');
-     }
+}
 
+
+//createEditor();
+//function createEditor() {
+//    console.log("111");
+//    console.log(document.getElementById('editor'));
+//    var editor = window.wangEditor;
+//    var addEditor = new editor(document.getElementById('editor'));
+//    addEditor.create();
+//}

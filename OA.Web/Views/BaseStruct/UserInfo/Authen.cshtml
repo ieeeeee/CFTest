@@ -19,7 +19,7 @@
             width:30%;
         }
         .graph-2.second{
-            width:30%;
+            width:33%;
         }
     </style>
 }
@@ -90,14 +90,14 @@
                         <div class="col-xs-12 text-center" v-if="userRoleInfoList.length<=0 ">
                             {{message}}
                         </div>
-                        <div class="panel-footer">
+                        @*<div class="panel-footer">*@
                             <div class="row" id="pageUserRoleDiv">
                                 <div class="col-xs-12">
                                     <hr style="margin:10px auto;" />
                                     <div id="userPager" style="margin-top:4px;"></div>
                                 </div>
                             </div>
-                        </div>
+                        @*</div>*@
                     </div>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                                     <tr>
                                         <td>{{item.RoleName}}</td>
                                         <td>
-                                            <a id="btnAdd" style="color:#55acee;" v-on:click="AddRights(index,item.RoleID)"><i class="fa fa-edit" title="授权"></i>&nbsp;</a>
+                                            <a id="btnAdd" style="color:#55acee;" v-on:click="AddRights(index,item.RoleID)"><i class="fa fa-plus" title="授权"></i>&nbsp;</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -123,14 +123,14 @@
                         <div class="col-xs-12 text-center" v-if="roleInfoList.length<=0 ">
                             {{message}}
                         </div>
-                        <div class="panel-footer">
+                        @*<div class="panel-footer">*@
                             <div class="row" id="pageRoleDiv">
                                 <div class="col-xs-12">
                                     <hr style="margin:10px auto;" />
                                     <div id="rolePager" style="margin-top:4px;"></div>
                                 </div>
                             </div>
-                        </div>
+                        @*</div>*@
 
                     </div>
                 </div>
@@ -200,7 +200,7 @@
                                 elem: 'pager'
                                 , count: result.records
                                 ,curr:result.page
-                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                , layout: ['count', 'prev', 'page', 'next']
                                 , groups: 1
                                 , first: false
                                 ,last:false
