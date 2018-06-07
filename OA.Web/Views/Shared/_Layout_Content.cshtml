@@ -59,4 +59,11 @@
     var RadioNum = [{ text: "是", value: 0 }, { text: "否", value: 1 }];
     var RadioBool = [{ text: "是", value: true }, { text: "否", value: false }];
     var RadioIsDel = [{ text: "启用", value: 0 }, { text: "禁用", value: 2 }];
+    GetUserInfo();
+    function GetUserInfo() {
+        $.post("/UserInfo/GetDetailInfo", { "id": 0 }, function (result) {
+            UserInfo = result;
+            console.log(UserInfo);
+        }, 'Json')
+    }
 </script>

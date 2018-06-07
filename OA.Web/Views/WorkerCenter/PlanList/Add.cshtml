@@ -49,7 +49,7 @@
                             <label class="col-md-2 control-label">类型</label>
                             <div class="col-md-8">
                                 <select class="form-control1" v-model="planType">
-                                    @*<option v-for="option in planTypeOptions" :value="option.value">{{option.text}}</option>*@
+                                    <option v-for="option in planTypeOptions" :value="option.value">{{option.text}}</option>
                                 </select>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                             <label class="col-md-2 control-label">优先级</label>
                             <div class="col-md-8">
                                 <select class="form-control1" v-model="planPriority">
-                                    @*<option v-for="option in planPriorityOptions" :value="option.value">{{option.text}}</option>*@
+                                    <option v-for="option in planPriorityOptions" :value="option.value">{{option.text}}</option>
                                 </select>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                             <label class="col-md-2 control-label">状态</label>
                             <div class="col-md-8">
                                 <select class="form-control1" v-model="planStatus">
-                                    @*<option v-for="option in planStatusOptions" :value="option.value">{{option.text}}</option>*@
+                                    <option v-for="option in planStatusOptions" :value="option.value">{{option.text}}</option>
                                 </select>
                             </div>
                         </div>
@@ -117,11 +117,25 @@
                 el: "#AddControl",
                 data: {
                     planDate: "",
-                    planType: "",
-                    planPriority: "",
+                    planType: 0,
+                    planPriority:0,
                     planTitle: "",
                     planBody: "",
-                    planStatus: ""
+                    planStatus: 0,
+                    planTypeOptions: [],
+                    planPriorityOptions: [{ "text": "0", "value": 0, "title": "最低", "class": "priority_0" }
+                        , { "text": "1", "value": 1, "title": "非常低", "class": "priority_1" }
+                        , { "text": "2", "value": 2, "title": "低", "class": "priority_2" }
+                        , { "text": "3", "value": 3, "title": "中低", "class": "priority_3" }
+                        , { "text": "4", "value": 4, "title": "中", "class": "priority_4" }
+                        , { "text": "5", "value": 5, "title": "中", "class": "priority_5" }
+                        , { "text": "6", "value": 6, "title": "中", "class": "priority_6" }
+                        , { "text": "7", "value": 7, "title": "中高", "class": "priority_7" }
+                        , { "text": "8", "value": 8, "title": "高", "class": "priority_8" }
+                        , { "text": "9", "value": 9, "title": "非常高", "class": "priority_9" }
+                        , { "text": "10", "value": 10, "title": "最高", "class": "priority_10" }
+                    ],
+                    planStatusOptions: []
                 },
                 methods: {
                     Save: function () {
@@ -151,16 +165,49 @@
             });
             $("#add-editor").markdown({ language: 'zh' });
             vControl.planDate = CurentDate();
-            var planType=GetClassInfo()
+            var planTypeInfo = [], planStatusInfo = [];
+            GetClassInfo(2, function () {
+                var options= [];
+                for (var j = 0; j < planTypeInfo.length; j++) {
+                    options.push({ text: planTypeInfo[j].BaseName, value: planTypeInfo[j].BaseValue });
+                }
+                vControl.planType = options;
+                console.log(vControl.planDate);
+            });
+            GetClassInfo(3, function () {
+                var options = [];
+                for (var j = 0; j < planStatusInfo.length; j++) {
+                    options.push({ text: planStatusInfo[j].BaseName, value: planStatusInfo[j].BaseValue });
+                }
+                vControl.planStatus = options;
+                console.log(vControl.planStatus);
+            });
+           
+            
             //$("#laydate").val(CurentDate());
 
-            function GetClassInfo(classID) {
-                $.post("/BaseInfo/GetClassInfo", { "baseClassID": classID }, function (result) {
-                    if (result) {
-                        return result;
+            function GetClassInfo(classID,func) {
+                //var info;
+                var info=$.post("/BaseInfo/GetClassInfo", { "baseClassID": classID }, function (result) {
+                    if (classID = 2) {
+                        planTypeInfo = result;
+                    } else if (classID = 3) {
+                        planStatusInfo = result;
                     }
-                    return null;
-                })
+                    func();
+                    //console.log(result);
+                    //info = result;
+                    //console.log(info);
+                    //return result;
+                   // return (result);
+                    //if (result) {
+                    //    return result;
+                    //}
+                    //return null;
+                }, 'json')
+                //console.log(info.responseJSON);
+                //return (info);
+
             }
 
             function GetSave() {

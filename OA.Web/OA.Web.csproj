@@ -255,6 +255,7 @@
     <Content Include="Content\Login\images\green_tree.jpeg" />
     <Content Include="Content\Login\images\Login_bg.jpg" />
     <Content Include="Content\Login\images\Star.jpg" />
+    <Content Include="Content\Login\images\Star_sky.jpg" />
     <Content Include="Content\Page\roleMenuAuthen.js" />
     <Content Include="Content\Page\userRoleAuthen.js" />
     <Content Include="Content\Plugin\datepicker\css\bootstrap-datepicker3.css" />
