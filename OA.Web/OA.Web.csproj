@@ -221,6 +221,7 @@
     <Compile Include="Controllers\System\HomeController.cs" />
     <Compile Include="Controllers\System\LoginController.cs" />
     <Compile Include="Controllers\System\TableStructController.cs" />
+    <Compile Include="Controllers\WorkerCenter\DocListController.cs" />
     <Compile Include="Controllers\WorkerCenter\PlanListController.cs" />
     <Compile Include="Controllers\WorkerCenter\TaskListController.cs" />
     <Compile Include="Global.asax.cs">
@@ -256,6 +257,13 @@
     <Content Include="Content\Login\images\Star.jpg" />
     <Content Include="Content\Page\roleMenuAuthen.js" />
     <Content Include="Content\Page\userRoleAuthen.js" />
+    <Content Include="Content\Plugin\datepicker\css\bootstrap-datepicker3.css" />
+    <Content Include="Content\Plugin\datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\Plugin\datepicker\js\locale\bootstrap-datepicker.zh-CN.min.js" />
+    <Content Include="Content\Plugin\datetimepicker\css\bootstrap-datetimepicker.css" />
+    <Content Include="Content\Plugin\datetimepicker\js\bootstrap-datetimepicker.js" />
+    <Content Include="Content\Plugin\other\datetimehelper.js" />
+    <Content Include="Content\Plugin\datetimepicker\js\locales\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="Content\Plugin\layer\layer.js" />
     <Content Include="Content\Plugin\layer\theme\default\icon-ext.png" />
     <Content Include="Content\Plugin\layer\theme\default\icon.png" />
@@ -370,6 +378,7 @@
     <Content Include="Content\Plugin\markdown\css\normalize.css" />
     <Content Include="Content\Plugin\markdown\js\bootstrap-markdown.js" />
     <Content Include="Content\Plugin\markdown\js\jquery-1.11.0.min.js" />
+    <Content Include="Content\Plugin\markdown\js\locale\bootstrap-markdown.zh.js" />
     <Content Include="Content\Plugin\pagination\bgPager.css" />
     <Content Include="Content\Plugin\pagination\Pager.css" />
     <Content Include="Content\Plugin\pagination\Pager.js" />
@@ -463,6 +472,7 @@
     <Content Include="Views\WorkerCenter\PlanList\Add.cshtml" />
     <Content Include="Views\BaseStruct\UserInfo\Authen.cshtml" />
     <Content Include="Views\BaseStruct\RoleMenu\Add.cshtml" />
+    <Content Include="Views\WorkerCenter\DocList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

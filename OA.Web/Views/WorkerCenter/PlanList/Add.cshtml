@@ -5,10 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section headerJS{
-
+    <link href="~/Content/Plugin/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet">
+    <link href="~/Content/Plugin/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="~/Content/Plugin/layui/css/layui.css" rel="stylesheet" media="all">
     <link href="~/Content/Plugin/markdown/css/bootstrap-markdown.min.css" rel="stylesheet">
     @*<script type="text/javascript" src="~/Content/Plugin/markdown/js/jquery-1.11.0.min.js"></script>*@
     <script type="text/javascript" src="~/Content/Plugin/markdown/js/bootstrap-markdown.js"></script>
+    <style>
+        .graph-2.general {
+            width: 80%;
+        }
+
+        .form-group {
+            margin-bottom: 2px;
+        }
+    </style>
 }
 <div class="wrapper wrapper-content">
     <div class="set-3">
@@ -23,31 +34,61 @@
                 <div class="form-body">
                     <form class="form-horizontal" v-on:submit.prevent="onSubmit">
 
-                        <div class="form-group" v-for="(item,index) in tableStructList">
-                            <label class="col-md-2 control-label">{{item.FieldName}}</label>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">日期</label>
                             <div class="col-md-8">
-                                <div v-if="item.VueTemplate==='vadd-text'">
-                                    <vadd-text :class="{IsHide:item.IsHide}" :txt_item="item" :txt_index="index"></vadd-text>
+                                <div class="input-group input-icon right date datepicker">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-th"></i>
+                                    </span>
+                                    <input id="laydate" type="text" v-model="planDate" class="form-control1 icon" />
                                 </div>
-                                <div v-else-if="item.VueTemplate==='vadd-checkbox'">
-                                    <vadd-checkbox :class="{IsHide:item.IsHide}" :ck_item="item" :ck_index="index"></vadd-checkbox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">类型</label>
+                            <div class="col-md-8">
+                                <select class="form-control1" v-model="planType">
+                                    @*<option v-for="option in planTypeOptions" :value="option.value">{{option.text}}</option>*@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">优先级</label>
+                            <div class="col-md-8">
+                                <select class="form-control1" v-model="planPriority">
+                                    @*<option v-for="option in planPriorityOptions" :value="option.value">{{option.text}}</option>*@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">名称</label>
+                            <div class="col-md-8">
+                                <div class="input-group input-icon right">
+                                    <span class="input-group-addon">
+                                        <i></i>
+                                    </span>
+                                    <input type="text" v-model="planTitle" class="form-control1 icon" />
                                 </div>
-                                <div v-else-if="item.VueTemplate==='vadd-textarea'">
-                                    <vadd-textarea :class="{IsHide:item.IsHide}" :txtarea_item="item" :txtarea_index="index"></vadd-textarea>
-                                </div>
-                                <div v-else-if="item.VueTemplate==='vadd-select'">
-                                    <vadd-select :class="{IsHide:item.IsHide}" :select_item="item" :select_index="index"></vadd-select>
-                                </div>
-                                <div v-else-if="item.VueTemplate==='vadd-editor'">
-                                    <textarea id="add-editor" name="content"  rows="10" v-model="item.FieldValue"></textarea>
-                                    @*<vadd-editor :class="{IsHide:item.IsHide}" :editor_item="item" :editor_index="index"></vadd-editor>*@
-                                </div>
-                                @*<span>{{item.FieldValue}}</span>*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">内容</label>
+                            <div class="col-md-8" style="width:80%;">
+                                <textarea id="add-editor" name="content" rows="10" v-model="planBody"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">状态</label>
+                            <div class="col-md-8">
+                                <select class="form-control1" v-model="planStatus">
+                                    @*<option v-for="option in planStatusOptions" :value="option.value">{{option.text}}</option>*@
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-sm-offset-2">
-                            <button type="button" class="btn btn-default" v-on:click="Save('PlanList','@Model.PlanID/**/','PlanID')">保存</button>
+                            <button type="button" class="btn btn-default" v-on:click="Save()">保存</button>
                             <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
                         </div>
                     </form>
@@ -57,47 +98,99 @@
     </div>
 </div>
 @section scripts{
+    <script type="text/javascript" src="~/Content/Plugin/other/datetimehelper.js"></script>
     <script src="~/Content/Plugin/wangEditor/wangEditor.js"></script>
     <script src="~/Content/Plugin/vue.js"></script>
-    <script src="~/Content/Plugin/main.js"></script>
+    @*<script src="~/Content/Plugin/main.js"></script>*@
+    <script type="text/javascript" src="~/Content/Plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/datepicker/js/locale/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/layui/layui.all.js"></script>
     <script type="text/javascript" src="~/Content/Plugin/markdown/js/bootstrap-markdown.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/markdown/js/locale/bootstrap-markdown.zh.js"></script>
 
 
     <script>
         $(function () {
-             var param = {};
-        param.TableID = 20;
-        param.ModelID ='@Model.PlanID';
-        param.ModelUrl = "/PlanList/GetDetailInfo";
-        //获取值
-        GetModelInfo(param.ModelUrl, param.ModelID, function () {
-            ////获取select 选项
-            //GetPlanType(function () {
-                //获取结构
-            GetTableStruct(param.TableID, function () {
-                $("#add-editor").markdown({ autofocus: false, savable: false });
-                //createEditor();
+            var vControl = new Vue({
+                el: "#AddControl",
+                data: {
+                    planDate: "",
+                    planType: "",
+                    planPriority: "",
+                    planTitle: "",
+                    planBody: "",
+                    planStatus: ""
+                },
+                methods: {
+                    Save: function () {
+                        GetSave();
+                    },
+                    clear: function () {
+                        GetClear();
+                    }
+                }
             });
+            //$('.datepicker').datepicker({
+            //    format: 'yyyy-mm-dd',
+            //    language: 'zh-CN'
             //});
-        });
+            //$('.datepicker').datetimepicker({
+            //    format: 'yyyy-MM-dd',
+            //    language: 'zh-CN',
+            //    pickDate: true,
+            //    pickTime: false,
+            //    autoclose: true
+            //});
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+                laydate.render({
+                    elem: '#laydate'
+                });
+            });
+            $("#add-editor").markdown({ language: 'zh' });
+            vControl.planDate = CurentDate();
+            var planType=GetClassInfo()
+            //$("#laydate").val(CurentDate());
+
+            function GetClassInfo(classID) {
+                $.post("/BaseInfo/GetClassInfo", { "baseClassID": classID }, function (result) {
+                    if (result) {
+                        return result;
+                    }
+                    return null;
+                })
+            }
+
+            function GetSave() {
+
+            }
+            function GetClear() {
+
+            }
+            //计算当前日期
+            function CurentDate() {
+                var now = new Date();
+                var year = now.getFullYear();       //年
+                var month = now.getMonth() + 1;     //月
+                var day = now.getDate();            //日
+
+                var clock = year + "-";
+
+                if (month < 10)
+                    clock += "0";
+                clock += month + "-";
+
+                if (day < 10)
+                    clock += "0";
+                clock += day + " ";
+
+                return (clock);
+            }
         })
 
-
-
-        //console.log(document.getElementById('editor'));
-        //if (document.getElementById('editor') != null) {
-        //    var editor = window.wangEditor;
-        //    var addEditor = new editor(document.getElementById('editor'));
-        //    addEditor.create();
-        //}
-
-//function createEditor() {
-//    console.log("111");
-//    console.log(document.getElementById('editor'));
-//    var editor = window.wangEditor;
-//    var addEditor = new editor(document.getElementById('editor'));
-//    addEditor.create();
-//}
     </script>
+
 }
 
