@@ -104,7 +104,7 @@
     var deptInfo = [];
 
     //获取界面结构
-function GetTableStruct(ID,func) {
+function GetTableStruct(ID) {
     console.log("222");
         $.post("/Base/GetAddTableStruct", { "TableID": ID }, function (result) {
             if (result) {
@@ -190,7 +190,7 @@ function GetTableStruct(ID,func) {
                 console.log(result);
                 vList.tableStructList = result;    
             }
-            func();
+           // func();
         }, 'Json');
     }
 

@@ -19,11 +19,47 @@
         .form-group {
             margin-bottom: 2px;
         }
+        /*.cf-checkbox{
+            width:16px;
+            height:16px;
+            line-height:16px;
+        }*/
+        .priority_0{ color:red;}
+        .priority_1 {
+            border-color: red;
+        }
+        .priority_2 {
+            color: red;
+        }
+        .priority_3 {
+            color: red;
+        }
+        .priority_4 {
+            color: red;
+        }
+        .priority_5 {
+            color: red;
+        }
+        .priority_6 {
+            color: red;
+        }
+        .priority_7 {
+            color: red;
+        }
+        .priority_8 {
+            color: red;
+        }
+        .priority_9 {
+            color: red;
+        }
+        .priority_10 {
+            color: red;
+        }
     </style>
 }
 <div class="wrapper wrapper-content">
     <div class="set-3">
-        <div class="graph-2 general">
+        <div class="graph-2 general" style="width:80%;">
             @if (Model.PlanID == null || Model.PlanID == "")
             {/**/
                 <h3 class="inner-tittle two">编辑计划单</h3> }
@@ -36,7 +72,7 @@
 
                         <div class="form-group">
                             <label class="col-md-2 control-label">日期</label>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="input-group input-icon right date datepicker">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-th"></i>
@@ -44,26 +80,52 @@
                                     <input id="laydate" type="text" v-model="planDate" class="form-control1 icon" />
                                 </div>
                             </div>
+                            <label class="col-md-1 control-label">起止时间</label>
+                            <div class="col-md-2">
+                                <div class="input-group input-icon right date datepicker">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-th"></i>
+                                    </span>
+                                    <input id="layStartTime" type="text" v-model="planStartTime" class="form-control1 icon" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-icon right date datepicker">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-th"></i>
+                                    </span>
+                                    <input id="layEndTime" type="text" v-model="planEndTime" class="form-control1 icon" />
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">类型</label>
-                            <div class="col-md-8">
+                            <div class="col-md-3">
                                 <select class="form-control1" v-model="planType">
                                     <option v-for="option in planTypeOptions" :value="option.value">{{option.text}}</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 control-label">状态</label>
+                            <div class="col-md-3">
+                                <select class="form-control1" v-model="planStatus">
+                                    <option v-for="option in planStatusOptions" :value="option.value">{{option.text}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">优先级</label>
                             <div class="col-md-8">
-                                <select class="form-control1" v-model="planPriority">
-                                    <option v-for="option in planPriorityOptions" :value="option.value">{{option.text}}</option>
-                                </select>
+                                <div v-for="(option,index) in planPriorityOptions" class="checkbox-inline"><label><input type="checkbox" :class=" option.class" v-on:click="CheckPlanPriority($event,option.value)" :value="option.value">{{option.text}}</label></div>
+
+                                @*<select class="form-control1" v-model="planPriority">
+                    <option v-for="option in planPriorityOptions" :value="option.value">{{option.text}}</option>
+                </select>*@
                             </div>
+
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">名称</label>
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <div class="input-group input-icon right">
                                     <span class="input-group-addon">
                                         <i></i>
@@ -74,19 +136,10 @@
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">内容</label>
-                            <div class="col-md-8" style="width:80%;">
+                            <div class="col-md-10">
                                 <textarea id="add-editor" name="content" rows="10" v-model="planBody"></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">状态</label>
-                            <div class="col-md-8">
-                                <select class="form-control1" v-model="planStatus">
-                                    <option v-for="option in planStatusOptions" :value="option.value">{{option.text}}</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="col-sm-offset-2">
                             <button type="button" class="btn btn-default" v-on:click="Save()">保存</button>
                             <button type="button" class="btn btn-warning " v-on:click="Clear()">清空</button>
@@ -122,6 +175,8 @@
                     planTitle: "",
                     planBody: "",
                     planStatus: 0,
+                    planStartTime: "00:00:00",
+                    planEndTime: "00:00:00",
                     planTypeOptions: [],
                     planPriorityOptions: [{ "text": "0", "value": 0, "title": "最低", "class": "priority_0" }
                         , { "text": "1", "value": 1, "title": "非常低", "class": "priority_1" }
@@ -141,8 +196,11 @@
                     Save: function () {
                         GetSave();
                     },
-                    clear: function () {
+                    Clear: function () {
                         GetClear();
+                    },
+                    CheckPlanPriority: function (event, Val) {
+                        GetPlanPriority(event, Val);
                     }
                 }
             });
@@ -162,6 +220,14 @@
                 laydate.render({
                     elem: '#laydate'
                 });
+                laydate.render({
+                    elem: '#layStartTime',
+                    type: 'time'
+                });
+                laydate.render({
+                    elem: '#layEndTime',
+                    type: 'time'
+                });
             });
             $("#add-editor").markdown({ language: 'zh' });
             vControl.planDate = CurentDate();
@@ -171,7 +237,7 @@
                 for (var j = 0; j < planTypeInfo.length; j++) {
                     options.push({ text: planTypeInfo[j].BaseName, value: planTypeInfo[j].BaseValue });
                 }
-                vControl.planType = options;
+                vControl.planTypeOptions = options;
                 console.log(vControl.planDate);
             });
             GetClassInfo(3, function () {
@@ -179,7 +245,7 @@
                 for (var j = 0; j < planStatusInfo.length; j++) {
                     options.push({ text: planStatusInfo[j].BaseName, value: planStatusInfo[j].BaseValue });
                 }
-                vControl.planStatus = options;
+                vControl.planStatusOptions = options;
                 console.log(vControl.planStatus);
             });
            
@@ -189,25 +255,13 @@
             function GetClassInfo(classID,func) {
                 //var info;
                 var info=$.post("/BaseInfo/GetClassInfo", { "baseClassID": classID }, function (result) {
-                    if (classID = 2) {
+                    if (classID ==2) {
                         planTypeInfo = result;
-                    } else if (classID = 3) {
+                    } else if (classID ==3) {
                         planStatusInfo = result;
                     }
                     func();
-                    //console.log(result);
-                    //info = result;
-                    //console.log(info);
-                    //return result;
-                   // return (result);
-                    //if (result) {
-                    //    return result;
-                    //}
-                    //return null;
                 }, 'json')
-                //console.log(info.responseJSON);
-                //return (info);
-
             }
 
             function GetSave() {
@@ -215,6 +269,16 @@
             }
             function GetClear() {
 
+            }
+
+            function GetPlanPriority(event, Val) {
+                if ($(event.target).prop('checked')) {
+                    $(':input[type="checkbox"]').each(function (i, item) {
+                        $(item).prop('checked', false);
+                    })
+                    $(event.target).prop('checked', true);
+                    vControl.planPriority = Val;
+                }
             }
             //计算当前日期
             function CurentDate() {
