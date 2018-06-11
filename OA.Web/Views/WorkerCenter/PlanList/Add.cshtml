@@ -24,33 +24,35 @@
             height:16px;
             line-height:16px;
         }*/
-        .priority_0{ color:red;}
+        .priority_0 {
+            color: green;
+        }
         .priority_1 {
-            border-color: red;
+            color: forestgreen;
         }
         .priority_2 {
-            color: red;
+            color: darkseagreen;
         }
         .priority_3 {
-            color: red;
+            color: cornflowerblue;
         }
         .priority_4 {
-            color: red;
+            color: dodgerblue;
         }
         .priority_5 {
-            color: red;
+            color: darkblue;
         }
         .priority_6 {
-            color: red;
+            color: darkslateblue;
         }
         .priority_7 {
-            color: red;
+            color: mediumpurple;
         }
         .priority_8 {
-            color: red;
+            color: rebeccapurple;
         }
         .priority_9 {
-            color: red;
+            color: darkred;
         }
         .priority_10 {
             color: red;
@@ -72,7 +74,7 @@
 
                         <div class="form-group">
                             <label class="col-md-2 control-label">日期</label>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="input-group input-icon right date datepicker">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-th"></i>
@@ -105,7 +107,13 @@
                                     <option v-for="option in planTypeOptions" :value="option.value">{{option.text}}</option>
                                 </select>
                             </div>
-                            <label class="col-md-2 control-label">状态</label>
+                            <label class="col-md-1 control-label">状态</label>
+                            <div class="col-md-2">
+                                <select class="form-control1" v-model="planStatus">
+                                    <option v-for="option in planStatusOptions" :value="option.value">{{option.text}}</option>
+                                </select>
+                            </div>
+                            <label class="col-md-1 control-label">状态</label>
                             <div class="col-md-3">
                                 <select class="form-control1" v-model="planStatus">
                                     <option v-for="option in planStatusOptions" :value="option.value">{{option.text}}</option>
@@ -114,8 +122,8 @@
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">优先级</label>
-                            <div class="col-md-8">
-                                <div v-for="(option,index) in planPriorityOptions" class="checkbox-inline"><label><input type="checkbox" :class=" option.class" v-on:click="CheckPlanPriority($event,option.value)" :value="option.value">{{option.text}}</label></div>
+                            <div class="col-md-10">
+                                <div v-for="(option,index) in planPriorityOptions" class="checkbox-inline"><label :class=" option.class"><input type="checkbox"  v-on:click="CheckPlanPriority($event,option.value)" :value="option.value">{{option.text}}({{option.title}})</label></div>
 
                                 @*<select class="form-control1" v-model="planPriority">
                     <option v-for="option in planPriorityOptions" :value="option.value">{{option.text}}</option>
@@ -137,7 +145,7 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label">内容</label>
                             <div class="col-md-10">
-                                <textarea id="add-editor" name="content" rows="10" v-model="planBody"></textarea>
+                                <textarea id="add-editor" name="content" rows="20" v-model="planBody"></textarea>
                             </div>
                         </div>
                         <div class="col-sm-offset-2">
