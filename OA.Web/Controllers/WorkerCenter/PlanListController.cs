@@ -5,6 +5,7 @@ using OA.Models.Filters;
 using OA.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,7 +60,7 @@ namespace OA.Web.Controllers.WorkerCenter
             var success = false;
             if(ModelState.IsValid)
             {
-                if(dto.PlanID=="")
+                if(string.IsNullOrEmpty(dto.PlanID)||dto.PlanID=="")
                 {
                     result =await  _planService.AddASync(dto);
                     if (result.IsNotBlank())
@@ -86,6 +87,26 @@ namespace OA.Web.Controllers.WorkerCenter
                 success.flag = await _planService.DeleteAsync(ids);
             }
             return Json(success, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> Upload(HttpPostedFile file)
+        {
+            var success = new JsonResultModel<bool>();
+            string _filePath = HttpContext.Server.MapPath(@"upload");
+            string resFileName = string.Empty;
+            if(Directory.Exists(_filePath+"\\"+DateTime.Now.ToString("yyyyMMdd")))
+            {
+                Directory.CreateDirectory(_filePath + "\\" + DateTime.Now.ToString("yyyyMMdd"));
+            }
+            if(file.ContentLength>0)
+            {
+                string fileName = FileExtension.GetFileName(file);
+                /* 保存图片 */
+                file.SaveAs(_filePath + "\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + fileName);
+                resFileName = "/upload/" + DateTime.Now.ToString("yyyyMMdd") + "\\" + fileName;
+                /* 地址存入数据库 */
+                
+            }
         }
         #endregion
     }

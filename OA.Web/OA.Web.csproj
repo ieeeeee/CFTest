@@ -478,6 +478,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Plugin\ztree\css\awesomeStyle\" />
+    <Folder Include="upload\" />
     <Folder Include="Views\BaseMsg\" />
     <Folder Include="Views\CustomerMgr\" />
     <Folder Include="Views\SelfCenter\" />

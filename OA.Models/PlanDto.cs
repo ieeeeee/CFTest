@@ -21,7 +21,6 @@ namespace OA.Models
         [Display(Name = "计划单内容")]
         [Required(ErrorMessage = Message.Required)]
         [MinLength(2, ErrorMessage = Message.MinLength)]
-        [MaxLength(40, ErrorMessage = Message.MaxLength)]
         public string PlanBody { get; set; }
 
         [Display(Name = "计划单类型")]
@@ -37,7 +36,25 @@ namespace OA.Models
 
         public ProcStatus ProcStatus { get; set; }
 
-        public string ProcStatusName { get; set; }
         public int IsDeleted { get; set; }
+
+        /// <summary>
+        /// 是否私密计划
+        /// </summary>
+        public bool IsPrivate { get; set; }
+
+        /// <summary>
+        /// 计划优先级
+        /// </summary>
+        public int PlanPriority { get; set; }
+
+        public string PlanStartTime { get; set; }
+
+        public string PlanEndTime { get; set; }
+
+        /// <summary>
+        ///  计划日期
+        /// </summary>
+        public string PlanDate { get; set; }
     }
 }

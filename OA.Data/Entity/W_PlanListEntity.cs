@@ -19,6 +19,26 @@ namespace OA.Data.Entity
         public DateTime UpdateTime { get; set; }
 
         public byte ProcStatus { get; set; }
+
+        /// <summary>
+        /// 是否私密计划
+        /// </summary>
+        public int IsPrivate { get; set; }
+
+        /// <summary>
+        /// 计划优先级
+        /// </summary>
+        public int PlanPriority { get; set; }
+
+        public string PlanStartTime { get; set; }
+
+        public string PlanEndTime { get; set; }
+
+        /// <summary>
+        ///  计划日期
+        /// </summary>
+        public string PlanDate { get; set; }
+
         public virtual B_UserEntity B_User { get; set; }
     }
 }

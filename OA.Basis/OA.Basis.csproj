@@ -45,10 +45,12 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,9 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extentions\ConfigExtension.cs" />
     <Compile Include="Extentions\DbContextExtension.cs" />
     <Compile Include="Extentions\EnDecryption.cs" />
     <Compile Include="Extentions\EnumerableExtensions.cs" />
+    <Compile Include="Extentions\FileExtension.cs" />
     <Compile Include="Extentions\Int32Extensions.cs" />
     <Compile Include="Extentions\IQueryableExtension.cs" />
     <Compile Include="Extentions\StringExtension.cs" />
