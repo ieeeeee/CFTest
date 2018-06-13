@@ -17,7 +17,9 @@ namespace OA.Web.App_Start
         {
             var moduleInitializers = new ModuleInitializer[]
             {
-                new OAModuleInitializer()
+                new OAModuleInitializer(),
+                new OAJobInitializer()
+
             };
             _mapperConfiguration = new MapperConfiguration(cfg =>
               {

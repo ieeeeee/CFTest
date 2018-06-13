@@ -53,7 +53,7 @@ namespace OA.Web.Controllers.WorkerCenter
         #endregion
 
         #region OperateResult
-
+        [ValidateInput(false)]
         public async Task<JsonResult> Save(PlanDto dto)
         {
             var result = string.Empty;
@@ -89,25 +89,31 @@ namespace OA.Web.Controllers.WorkerCenter
             return Json(success, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> Upload(HttpPostedFile file)
-        {
-            var success = new JsonResultModel<bool>();
-            string _filePath = HttpContext.Server.MapPath(@"upload");
-            string resFileName = string.Empty;
-            if(Directory.Exists(_filePath+"\\"+DateTime.Now.ToString("yyyyMMdd")))
-            {
-                Directory.CreateDirectory(_filePath + "\\" + DateTime.Now.ToString("yyyyMMdd"));
-            }
-            if(file.ContentLength>0)
-            {
-                string fileName = FileExtension.GetFileName(file);
-                /* 保存图片 */
-                file.SaveAs(_filePath + "\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + fileName);
-                resFileName = "/upload/" + DateTime.Now.ToString("yyyyMMdd") + "\\" + fileName;
-                /* 地址存入数据库 */
-                
-            }
-        }
+        //public  JsonResult Upload()
+        //{
+        //    var files = HttpContext.Request.Files;
+        //    HttpPostedFile file = files[0];
+        //    var success = new JsonResultModel<string>();
+        //    string _filePath = HttpContext.Server.MapPath(@"upload");
+        //    string resFileName = string.Empty;
+        //    string result = string.Empty;
+        //    if (Directory.Exists(_filePath+"\\"+DateTime.Now.ToString("yyyyMMdd")))
+        //    {
+        //        Directory.CreateDirectory(_filePath + "\\" + DateTime.Now.ToString("yyyyMMdd"));
+        //    }
+        //    if(file.ContentLength>0)
+        //    {
+        //        string fileName = FileExtension.GetFileName(file);
+        //        /* 保存图片 */
+        //        file.SaveAs(_filePath + "\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + fileName);
+        //        resFileName = "/upload/" + DateTime.Now.ToString("yyyyMMdd") + "\\" + fileName;
+        //        string imgUrl = _filePath + "/" + DateTime.Now.ToString("yyyyMMdd") + "/" + fileName;
+        //        /* 地址存入数据库 */
+        //        result= "{\"error\":0,\"data\":[" + imgUrl + "]}";
+               
+        //    }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
         #endregion
     }
 }

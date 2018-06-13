@@ -35,6 +35,7 @@ namespace OA.Services.TaskServices
                 var entity = _mapper.Map<PlanDto, W_PlanListEntity>(dto);
                 entity.PlanID= BaseIdGenerator.Instance.GetId();
                 entity.CreateDateTime = DateTime.Now;
+                entity.UpdateTime = DateTime.Now;
                 db.W_PlanLists.Add(entity);
                 return await scope.SaveChangesAsync() > 0 ? entity.PlanID : string.Empty;
             }
@@ -104,6 +105,7 @@ namespace OA.Services.TaskServices
                 entity.PlanBody = dto.PlanBody;
                 entity.PlanType = dto.PlanType;
                 entity.ProcStatus =(byte)dto.ProcStatus;
+                entity.UpdateTime = DateTime.Now;
                 await scope.SaveChangesAsync();
                 return true;
             }

@@ -1,7 +1,7 @@
 ﻿@model OA.Models.PlanDto
 @{
-    if (Model.PlanID == null || Model.PlanID == "") { ViewBag.Title = "编辑表结构"; }
-    else { ViewBag.Title = "添加表结构"; }
+    if (Model.PlanID == null || Model.PlanID == "") { ViewBag.Title = "编辑计划"; }
+    else { ViewBag.Title = "添加计划"; }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section headerJS{
@@ -115,13 +115,12 @@
                             </div>
                             <label class="col-md-1 control-label">私密计划</label>
                             <div class="col-md-1">
-                                <input type="checkbox" v-model="isPrivate"/>
-                                <span>{{isPrivate}}</span>
+                                <div class="checkbox-inline"><label><input type="checkbox" v-model="isPrivate" />{{isPrivate}}</label></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">优先级</label>
-                            <div class="col-md-10">
+                            <div class="col-md-10 priority">
                                 <div v-for="(option,index) in planPriorityOptions" class="checkbox-inline"><label :class=" option.class"><input type="checkbox"  v-on:click="CheckPlanPriority($event,option.value)" :value="option.value">{{option.text}}({{option.title}})</label></div>
 
                                 @*<select class="form-control1" v-model="planPriority">
@@ -181,15 +180,15 @@
             var vControl = new Vue({
                 el: "#AddControl",
                 data: {
-                    planDate: "",
-                    planType: 0,
-                    planPriority:0,
-                    planTitle: "",
+                    planDate: '@Model.PlanDate',
+                    planType: '@Model.PlanType',
+                    planPriority:'@Model.PlanPriority',
+                    planTitle: '@Model.PlanTitle',
                     //planBody: "",
-                    procStatus: 0,
-                    isPrivate:false,
-                    planStartTime: "00:00:00",
-                    planEndTime: "00:00:00",
+                    procStatus:'@Model.ProcStatus',
+                    isPrivate: '@Model.IsPrivate',
+                    planStartTime:  '@Model.PlanStartTime',
+                    planEndTime:  '@Model.PlanEndTime',
                     planTypeOptions: [],
                     planPriorityOptions: [{ "text": "0", "value": 0, "title": "最低", "class": "priority_0" }
                         , { "text": "1", "value": 1, "title": "非常低", "class": "priority_1" }
@@ -245,13 +244,40 @@
 
             var E = window.wangEditor;
             var editor = new E('#add-editor');
-           // editor.customConfig.uploadImgShowBase64 = true;
-            editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0;
+           //editor.customConfig.uploadImgShowBase64 = true;
+           // editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0;
             editor.customConfig = {
-                uploadImgServer: '/upload'
+                uploadImgServer: '/UploadOpt/upload.ashx',
+                uploadHeaders: { 'Accept': 'text/x-json' },
+
+            }
+            editor.customConfig.debug = true;
+            editor.customConfig.hideLinkImg = true;
+            editor.customConfig.uploadImgHooks = {
+                before: function (xhr, editor, files) {
+                // 图片上传之前触发
+                // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+                    console.log(xhr);
+                    console.log(editor);
+                    console.log(files);
+
+                // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+                 //return {
+                 //    prevent: true,
+                 //    msg: '放弃上传'
+                 //}
+                },
+                success: function (xhr, editor, result) {
+                    console.log(result);
+                },
+                fail: function (xhr, editor, result) {
+                    console.log(xhr);
+                    console.log(editor);
+                    console.log(result);
+                }
             }
             editor.create();
-
+            SetVal();
 
             //$("#add-editor").markdown({ language: 'zh' });
             vControl.planDate = CurentDate();
@@ -289,26 +315,50 @@
             }
             function GetVal() {
                 var requestDate = {
-                    planDate: vControl.planDate,
-                    planType: vControl.planType,
-                    planPriority: vControl.planPriority,
-                    planTitle: vControl.planTitle,
-                    //planBody: vControl.planBody,
-                    planBody:editor.txt.html(),
-                    procStatus: vControl.procStatus,
-                    isPrivate: vControl.isPrivate,
-                    planStartTime: vControl.planStartTime,
-                    planEndTime: vControl.planEndTime
+                    PlanDate: vControl.planDate,
+                    PlanType: vControl.planType,
+                    PlanPriority: vControl.planPriority,
+                    PlanTitle: vControl.planTitle,
+                    //PlanBody: vControl.planBody,
+                    PlanBody:editor.txt.html(),
+                    ProcStatus: vControl.procStatus,
+                    IsPrivate: vControl.isPrivate,
+                    PlanStartTime: vControl.planStartTime,
+                    PlanEndTime: vControl.planEndTime
                 };
                 console.log(requestDate);
                 return requestDate;
             }
-            function GetSave() {
-                console.log(GetVal());
-                //$.post("/PlanList/Save", GetVal(), function (result) {
-                //    layer.msg(result.msg);
+            function SetVal() {
 
-                //});
+                @*vControl.planDate = '@Model.PlanDate';
+                vControl.planType = '@Model.PlanType';
+                vControl.planPriority = '@Model.PlanPriority';
+                vControl.planTitle = '@Model.PlanTitle';*@
+                    //PlanBody: vControl.planBody,
+                var planBody = '@Model.PlanBody';
+                //console.log(planBody);
+                planBody = planBody.toString().replace(new RegExp("&lt;", 'g'), "<").replace(new RegExp("&gt;", 'g'), ">").replace(new RegExp("&quot;", 'g'), "");
+                //console.log(planBody);
+                editor.txt.html(planBody);
+                //console.log('@Model.PlanBody');
+                console.log(editor.txt.html());
+                @*vControl.procStatus = '@Model.ProcStatus';
+                vControl.isPrivate = '@Model.IsPrivate';
+                vControl.planStartTime = '@Model.PlanStartTime';
+                vControl.planEndTime = '@Model.PlanEndTime';*@
+            }
+            function GetSave() {
+                //console.log(editor.txt.text());
+                //console.log(editor.txt.formatText());
+                console.log(GetVal());
+                //保存为文章
+
+                //保存到数据库
+                $.post("/PlanList/Save", GetVal(), function (result) {
+                    layer.msg(result.msg);
+
+                });
             }
             function GetClear() {
 
@@ -316,7 +366,7 @@
 
             function GetPlanPriority(event, Val) {
                 if ($(event.target).prop('checked')) {
-                    $(':input[type="checkbox"]').each(function (i, item) {
+                    $('.priority :input[type="checkbox"]').each(function (i, item) {
                         $(item).prop('checked', false);
                     })
                     $(event.target).prop('checked', true);

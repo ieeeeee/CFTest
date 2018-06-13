@@ -204,6 +204,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IocConfig.cs" />
+    <Compile Include="App_Start\JobIocConfig.cs" />
     <Compile Include="App_Start\ModelBinderConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -230,6 +231,9 @@
     <Compile Include="Models\JsonResultModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UploadOpt\upload.ashx.cs">
+      <DependentUpon>upload.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\FrameTheme\css\bootstrap.css" />
@@ -474,11 +478,12 @@
     <Content Include="Views\BaseStruct\UserInfo\Authen.cshtml" />
     <Content Include="Views\BaseStruct\RoleMenu\Add.cshtml" />
     <Content Include="Views\WorkerCenter\DocList\Index.cshtml" />
+    <Content Include="UploadOpt\upload.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Plugin\ztree\css\awesomeStyle\" />
-    <Folder Include="upload\" />
+    <Folder Include="uploadedFiles\" />
     <Folder Include="Views\BaseMsg\" />
     <Folder Include="Views\CustomerMgr\" />
     <Folder Include="Views\SelfCenter\" />
