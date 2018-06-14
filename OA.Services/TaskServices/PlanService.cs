@@ -74,22 +74,39 @@ namespace OA.Services.TaskServices
         }
 
         //查列表
-        public async Task<PagedResult<PlanDto>> SearchAsync(PlanFilter filter)
+        public async Task<IList<PlanTabDto>> SearchAsync(PlanFilter filter)
         {
             using (var scope = _dbContextScopeFactory.CreateReadOnly())
             {
                 var db = scope.DbContexts.Get<OAContext>();
                 var query = db.W_PlanLists.Where(x => x.IsDeleted != 1)
+                    .WhereIf(filter.CurrStatus != -1, x => x.ProcStatus == filter.CurrStatus)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.PlanID.Contains(filter.keywords) || x.PlanTitle.Contains(filter.keywords));
-                return await query.OrderByCustom(filter.sidx, filter.sord).Select(item => new PlanDto
+                var dateQuery = query.GroupBy(x => x.PlanDate).Select(p=> (new { PlanDate = p.Key })).ToList();
+                PlanTabDto tab = new PlanTabDto();
+                foreach(var item in dateQuery)
                 {
-                    PlanID = item.PlanID,
-                    PlanTitle = item.PlanTitle,
-                    PlanBody = item.PlanBody,
-                    PlanType = item.PlanType,
-                    Remark = item.Remark,
-                    IsDeleted = item.IsDeleted
-                }).PagingAsync(filter.page,filter.rows);
+                    var itemPlan = new PlanTabDto() {
+                        PlanDate = item.PlanDate,
+                        PlanData= await query.OrderByCustom
+                    }
+                }
+
+                return await dateQuery.OrderBy(x => x.Key).Select(p => new PlanTabDto
+                {
+                    PlanDate = p.Key,
+                    PlanData = p.Select(item => new PlanDto
+                    {
+                        PlanID = item.PlanID,
+                        PlanTitle = item.PlanTitle,
+                        PlanBody = item.PlanBody,
+                        PlanType = item.PlanType,
+                        Remark = item.Remark,
+                        IsDeleted = item.IsDeleted
+                    }).ToList()
+                }).ToListAsync();
+                   
+              
 
             }
         }

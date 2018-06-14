@@ -34,3 +34,13 @@ F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.csproj.CopyComplete
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.dll
 F:\GitDepo\CFTest\OA.Models\obj\Debug\OA.Models.pdb
 F:\GitDepo\CFTest\OA.Models\bin\Debug\Newtonsoft.Json.xml
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\OA.Basis.dll
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\SimpleInjector.dll
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\AutoMapper.dll
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\EntityFramework.dll
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\System.Linq.Dynamic.dll
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\OA.Basis.pdb
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\OA.Basis.dll.config
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\SimpleInjector.xml
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\AutoMapper.xml
+F:\GitRepo\CFTest\CFTest\OA.Models\bin\Debug\EntityFramework.xml

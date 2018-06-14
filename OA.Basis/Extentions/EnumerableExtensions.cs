@@ -36,5 +36,24 @@ namespace OA.Basis.Extentions
             };
         }
 
+        public static  PagedResult<T> Paging<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
+        {
+            if (pageIndex <= 0)
+                throw new ArgumentException("Index of current page can not less than 0 !", "pageIndex");
+            if (pageSize <= 1)
+                throw new ArgumentException("Size of page can not less than 1 !", "pageSize");
+
+            var pagedQuery = source
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize);
+            return new PagedResult<T>
+            {
+                rows =  pagedQuery.ToList(),//引用EntityFramework
+                records =  source.Count(),
+
+                page = pageIndex,
+                pagesize = pageSize
+            };
+        }
     }
 }

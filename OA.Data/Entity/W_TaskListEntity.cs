@@ -8,7 +8,7 @@ namespace OA.Data.Entity
 {
     public class W_TaskListEntity:BaseEntity
     {
-        public int TaskID { get; set; }
+        public string TaskID { get; set; }
 
         public string TaskTitle { get; set; }
         public string TaskBody { get; set; }
@@ -16,6 +16,11 @@ namespace OA.Data.Entity
         public string TaskType { get; set; }
 
         public int TaskStatus { get; set; }
+
+        /// <summary>
+        /// 任务完成评价
+        /// </summary>
+        public string TaskAppr { get; set; }
 
         /// <summary>
         /// 最新状态的时间

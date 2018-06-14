@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppServices\TableStructService.cs" />
     <Compile Include="TaskServices\PlanService.cs" />
+    <Compile Include="TaskServices\TaskService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OA.Basis\OA.Basis.csproj">

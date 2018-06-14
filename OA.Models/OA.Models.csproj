@@ -65,21 +65,30 @@
     <Compile Include="Filters\PlanFilter.cs" />
     <Compile Include="Filters\RoleFilter.cs" />
     <Compile Include="Filters\TableStructFilter.cs" />
+    <Compile Include="Filters\TaskFilter.cs" />
     <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="LoginDto.cs" />
     <Compile Include="MenuDto.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="PlanDto.cs" />
+    <Compile Include="PlanTabDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleDto.cs" />
     <Compile Include="RoleMenuDto.cs" />
     <Compile Include="TableStructDto.cs" />
+    <Compile Include="TaskDto.cs" />
     <Compile Include="TreeDto.cs" />
     <Compile Include="UserAddDto.cs" />
     <Compile Include="UserDto.cs" />
     <Compile Include="UserLoginDto.cs" />
     <Compile Include="UserPlanDto.cs" />
     <Compile Include="UserRoleDto.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OA.Basis\OA.Basis.csproj">
+      <Project>{D84E61F5-9CD4-47CC-8750-BD0EA3F22E3A}</Project>
+      <Name>OA.Basis</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

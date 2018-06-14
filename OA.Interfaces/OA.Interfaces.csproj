@@ -67,6 +67,7 @@
     <Compile Include="IPlanService.cs" />
     <Compile Include="IRoleMenuService.cs" />
     <Compile Include="ITableStructService.cs" />
+    <Compile Include="ITaskService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Task\IRecurringTask.cs" />

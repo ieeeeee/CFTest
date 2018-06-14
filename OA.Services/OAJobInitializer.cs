@@ -38,8 +38,7 @@ namespace OA.Services
         public override void LoadAutoMapper(IMapperConfigurationExpression mapperConfig)
         {
             mapperConfig.CreateMap<W_PlanListEntity, PlanDto>().ReverseMap();
-
+            mapperConfig.CreateMap<W_TaskListEntity, TaskDto>().ReverseMap();
         }
-
     }
 }
