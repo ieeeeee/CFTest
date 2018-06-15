@@ -83,28 +83,30 @@ namespace OA.Services.TaskServices
                     .WhereIf(filter.CurrStatus != -1, x => x.ProcStatus == filter.CurrStatus)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.PlanID.Contains(filter.keywords) || x.PlanTitle.Contains(filter.keywords));
                 var dateQuery = query.GroupBy(x => x.PlanDate).Select(p=> (new { PlanDate = p.Key })).ToList();
-                PlanTabDto tab = new PlanTabDto();
-                foreach(var item in dateQuery)
+                List<PlanTabDto> tab = new List<PlanTabDto>();
+                foreach(var itemDate in dateQuery)
                 {
-                    var itemPlan = new PlanTabDto() {
-                        PlanDate = item.PlanDate,
-                        PlanData= await query.OrderByCustom
-                    }
-                }
-
-                return await dateQuery.OrderBy(x => x.Key).Select(p => new PlanTabDto
-                {
-                    PlanDate = p.Key,
-                    PlanData = p.Select(item => new PlanDto
+                    var itemPlan = new PlanTabDto()
                     {
-                        PlanID = item.PlanID,
-                        PlanTitle = item.PlanTitle,
-                        PlanBody = item.PlanBody,
-                        PlanType = item.PlanType,
-                        Remark = item.Remark,
-                        IsDeleted = item.IsDeleted
-                    }).ToList()
-                }).ToListAsync();
+                        PlanDate = itemDate.PlanDate,
+                        PlanData = query.Where(x=>x.PlanDate==itemDate.PlanDate)
+                    };
+                    tab.Add(itemPlan);
+                }
+                return  tab;
+                //return await dateQuery.OrderBy(x => x.Key).Select(p => new PlanTabDto
+                //{
+                //    PlanDate = p.Key,
+                //    PlanData = p.Select(item => new PlanDto
+                //    {
+                //        PlanID = item.PlanID,
+                //        PlanTitle = item.PlanTitle,
+                //        PlanBody = item.PlanBody,
+                //        PlanType = item.PlanType,
+                //        Remark = item.Remark,
+                //        IsDeleted = item.IsDeleted
+                //    }).ToList()
+                //}).ToListAsync();
                    
               
 
