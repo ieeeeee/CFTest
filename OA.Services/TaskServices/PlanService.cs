@@ -82,14 +82,14 @@ namespace OA.Services.TaskServices
                 var query = db.W_PlanLists.Where(x => x.IsDeleted != 1)
                     .WhereIf(filter.CurrStatus != -1, x => x.ProcStatus == filter.CurrStatus)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.PlanID.Contains(filter.keywords) || x.PlanTitle.Contains(filter.keywords));
-                var dateQuery = query.GroupBy(x => x.PlanDate).Select(p=> (new { PlanDate = p.Key })).ToList();
+                var dateQuery =await query.GroupBy(x => x.PlanDate).Select(p=> (new { PlanDate = p.Key })).ToListAsync();
                 List<PlanTabDto> tab = new List<PlanTabDto>();
                 foreach(var itemDate in dateQuery)
                 {
                     var itemPlan = new PlanTabDto()
                     {
                         PlanDate = itemDate.PlanDate,
-                        PlanData = query.Where(x=>x.PlanDate==itemDate.PlanDate)
+                        PlanData = _mapper.Map<List<W_PlanListEntity>,List<PlanDto>>(query.Where(x=>x.PlanDate==itemDate.PlanDate).ToList())
                     };
                     tab.Add(itemPlan);
                 }

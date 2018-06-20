@@ -119,7 +119,7 @@
                         <div class="graph">
                             <div class="tables" id="modelInfoList">
                                 <table class="table table-hover" v-for="(itemDate,index) in modelInfoList">
-                                    <thead><tr><th>{{item.PlanDate}}</th></tr> </thead>
+                                    <thead><tr><th>{{itemDate.PlanDate}}</th></tr> </thead>
                                     <tbody>
                                         <tr v-for="(item,index) in itemDate.PlanData">
                                             <td><input class="Subcb" :data-id="item.PlanID" type="checkbox" /></td>
@@ -276,8 +276,8 @@
          $.post("/PlanList/GetAllPlanInfo", Filter, function (result) {
                 console.log(result);
                 if (result) {
-                    vList.modelInfoList = result.rows;
-                    if (result.rows.length > 0) {
+                    vList.modelInfoList = result;
+                    if (result.length > 0) {
                         $("#pageDiv").show();
                         layui.use('laypage', function () {
                             var laypage = layui.laypage;

@@ -22,6 +22,6 @@ namespace OA.Models
         /// <summary>
         /// 计划表格内容
         /// </summary>
-        public Task<PagedResult<PlanDto>> PlanData { get; set; }
+        public List<PlanDto> PlanData { get; set; }
     }
 }
