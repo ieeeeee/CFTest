@@ -3206,7 +3206,7 @@ h3.inner-tittle.t-inner {
 /*--/tabs--*/
 .tabs {
 	position: relative;
-	width: 70%;
+	/*width: 70%;*/
 	overflow: hidden;
 	margin: 1em 0 2em;
 	font-weight: 300;

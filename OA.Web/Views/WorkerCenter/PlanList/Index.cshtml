@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 @section headerJS{
     <script src="~/Content/FrameTheme/js/cbpFWTabs.js"></script>
     <style>
@@ -77,111 +78,110 @@
         .btn{
             padding:8px 12px;
         }
+       .li-current{
+           background-color:green;
+       }
+       .panel-Grey{
+           background-color:lightgrey;
+       }
     </style>
 }
-<div class="tab-main">
-    <div class="tab-inner">
-        <div id="tabs" class="tabs">
-            <div class="graph">
-                <nav>
-                    <ul>
-                        <li><a href="#section-1" class="icon-shop"> <span>全部</span></a></li>
-                        <li><a href="#section-2" class="icon-cup"> <span>由我创建</span></a></li>
-                        <li><a href="#section-3" class="icon-food"> <span>待我审核</span></a></li>
-                        <li><a href="#section-4" class="icon-lab"><span>由我发布</span></a></li>
-                        <li><a href="#section-5" class="icon-truck"><span>由我取消</span></a></li>
-                    </ul>
-                </nav>
-                <div class="content tab" id="listControl">
-                    <section id="section-1">
-                        <div class="tabtype">
-                            <ul>
-                                <li>日常</li>
-                                <li>产品</li>
-                                <li>项目1</li>
-                                <li>项目2</li>
-                            </ul>
-                            <div class="buttons-ui">
-                                <a id="btnAdd" class="btn green" v-on:click="AddModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
-                                <a id="btnDel" class="btn red" v-on:click="DelData(-1,0)"><i class="fa fa-close"></i>&nbsp;删除</a>
-                                <div class="input-group" style="width:30%;float:right;">
-                                    <input type="text" class="input form-control" v-model="searchKeyWords" placehoder="Search" />
-                                    <span class="input-group-btn">
-                                        <button v-on:click="Search(searchKeyWords)" class="btn btn btn-primary" type="button">
-                                            <i class="fa fa-search"></i>搜索
-                                        </button>
-                                    </span>
+<div class="col-lg-8">
+    <div class="tab-main">
+        <div class="tab-inner">
+            <div id="tabs" class="tabs">
+                <div class="graph">
+                    <nav>
+                        <ul>
+                            @*<li  v-for="(item,index) in planStatusInfo"><a href="#section-1" class="icon-shop"  v-on:click="GetPlanStatusInfo(item.BaseValue)" > <span>{{item.BaseName}}</span></a></li>*@
+                            <li><a href="#section-1" class="icon-shop" v-on:click="GetPlanStatusInfo($event,-1)"> <span>全部</span></a></li>
+                            <li><a href="#section-2" class="icon-cup" v-on:click="GetPlanStatusInfo($event,0)"> <span>由我创建</span></a></li>
+                            <li><a href="#section-3" class="icon-food" v-on:click="GetPlanStatusInfo($event,1)"> <span>待我审核</span></a></li>
+                            <li><a href="#section-4" class="icon-lab" v-on:click="GetPlanStatusInfo($event,2)"><span>由我发布</span></a></li>
+                            <li><a href="#section-5" class="icon-truck" v-on:click="GetPlanStatusInfo($event,10)"><span>由我取消</span></a></li>
+                        </ul>
+                    </nav>
+                    <div class="content tab" id="listControl">
+                        <section id="section-1">
+                            <div class="tabtype">
+                                <ul>
+                                    <li v-for="(item,index) in planTypeInfo"><a v-on:click="GetPlanTypeInfo($event,item.BaseValue)"><span>{{item.BaseName}}</span></a></li>
+                                    <li>项目2</li>
+                                </ul>
+                                <div class="buttons-ui">
+                                    <a id="btnAdd" class="btn green" v-on:click="AddModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+                                    <a id="btnDel" class="btn red" v-on:click="DelData(-1,0)"><i class="fa fa-close"></i>&nbsp;删除</a>
+                                    <div class="input-group" style="width:30%;float:right;">
+                                        <input type="text" class="input form-control" v-model="searchKeyWords" placehoder="Search" />
+                                        <span class="input-group-btn">
+                                            <button v-on:click="Search(searchKeyWords)" class="btn btn btn-primary" type="button">
+                                                <i class="fa fa-search"></i>搜索
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="clearfix"></div>
-                        <div class="graph">
-                            <div class="tables" id="modelInfoList">
-                                <table class="table table-hover" v-for="(itemDate,index) in modelInfoList">
-                                    <thead><tr><th>{{itemDate.PlanDate}}</th></tr> </thead>
-                                    <tbody>
-                                        <tr v-for="(item,index) in itemDate.PlanData">
-                                            <td><input class="Subcb" :data-id="item.PlanID" type="checkbox" /></td>
-                                            <td>{{item.PlanID}}</td>
-                                            <td>{{item.PlanTitle}}</td>
-                                            <td>{{item.PlanType}}</td>
-                                            <td>{{item.Operator}}</td>
-                                            <td>{{item.IsDeleted}}</td>
-                                            <td>
-                                                <a id="btnAdd" style="color:#55acee;" v-on:click="EditModel(index,item.PlanID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
-                                                <a id="btnDel" style="color:#e74c3c;" v-on:click="DelData(index,item.PlanID)"><i class="fa fa-close" title="删除"></i>&nbsp;&nbsp;</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-xs-12 text-center" v-if="modelInfoList.length<=0 ">
-                                {{message}}
-                            </div>
-                            <div class="row" id="pageDiv">
-                                <div class="col-xs-12">
-                                    <hr style="margin:10px auto;" />
-                                    <div id="pager" style="margin-top:4px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section id="section-2">
-                        <div class="mediabox">
-                            <i class="fa fa-trophy"></i>
-                            <h3>Asparagus Cucumber Cake</h3>
-                            <p>Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd. </p>
-                        </div>
-                    </section>
-                    <section id="section-3">
-                        <div class="mediabox">
-                            <i class="fa fa-leaf"></i>
-                            <h3>Noodle Curry</h3>
-                            <p>Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd. </p>
-                        </div>
-                    </section>
-                    <section id="section-4">
-                        <div class="mediabox">
-                            <i class="fa fa-trophy"></i>
-                            <h3>Tomato Cucumber Curd</h3>
-                            <p>Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd. </p>
-                        </div>
-                    </section>
-                    <section id="section-5">
-                        <div class="mediabox">
-                            <i class="fa fa-leaf"></i>
-                            <h3>Radish Tomato</h3>
-                            <p>Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd. </p>
-                        </div>
-                    </section>
-                </div><!-- /content -->
-            </div>
-            <!-- /tabs -->
 
+                            <div class="clearfix"></div>
+                            <div class="graph">
+                                <div class="tables" id="modelInfoList">
+                                    <table class="table table-hover" v-for="(itemDate,index) in modelInfoList">
+                                        <thead><tr><th>{{itemDate.PlanDate}}</th></tr> </thead>
+                                        <tbody>
+                                            <tr v-for="(item,index) in itemDate.PlanData">
+                                                <td><input class="Subcb" :data-id="item.PlanID" type="checkbox" /></td>
+                                                <td>{{item.PlanID}}</td>
+                                                <td>{{item.PlanTitle}}</td>
+                                                <td>{{item.PlanType}}</td>
+                                                <td>{{item.Operator}}</td>
+                                                <td>{{item.IsDeleted}}</td>
+                                                <td>
+                                                    <a id="btnAdd" style="color:#55acee;" v-on:click="EditModel(index,item.PlanID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
+                                                    <a id="btnDel" style="color:#e74c3c;" v-on:click="DelData(index,item.PlanID)"><i class="fa fa-close" title="删除"></i>&nbsp;&nbsp;</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xs-12 text-center" v-if="modelInfoList.length<=0 ">
+                                    {{message}}
+                                </div>
+                                <div class="row" id="pageDiv">
+                                    <div class="col-xs-12">
+                                        <hr style="margin:10px auto;" />
+                                        <div id="pager" style="margin-top:4px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div><!-- /content -->
+                </div>
+                <!-- /tabs -->
+
+            </div>
         </div>
     </div>
 </div>
+
+
+<div class="col-lg-4 ">
+    <div class="panel panel-Grey">
+        <div class="panel-heading">
+            <h4>计划详情标题</h4>
+            <p><i class="fa fa-clock-o"><span>2018/06/13-2018/06/21</span></i></p>
+        </div>
+        <div class="panel-body">
+            <p>123</p>
+          <div id="planBody"></div>
+          <div>
+              <p><span>分配任务</span><a onclick="GetAssign()"><i class="fa fa-plus-circle"></i></a></p>
+              
+          </div>
+        </div>
+    </div>
+</div>
+
 @*<div class="graph-visual tables-main" >
     <h3 class="inner-tittle two">计划单</h3>*@
 
@@ -238,15 +238,23 @@
     <script type="text/javascript">
         $(function () {
             new CBPFWTabs(document.getElementById('tabs'));
+            var modelFilter = {};
+            modelFilter.rows = pageGlobalParam.pageSize;
+            modelFilter.page = pageGlobalParam.currPage;
+            modelFilter.keywords = "";
+            modelFilter.CurrStatus = -1;
+            modelFilter.PlanType = "-1";
             var vList = new Vue({
-                el: "#listControl",
+                el: "#tabs",
                 data: {
                     pageSize: 6,
                     pageIndex: 1,
                     modelInfoList: [],
                     message: "没有数据",
                     searchKeyWords: "",
-                    allInfoList:[]
+                    allInfoList: [],
+                    planTypeInfo: [],
+                    planStatusInfo:[]
                 },
                 methods: {
                     AddModel: function () {
@@ -261,119 +269,180 @@
                     Search: function (searchKeyWords) {
                         return GetSearch(searchKeyWords);
                     }
+                    , GetPlanTypeInfo: function (event,planType) {
+                        $("#listControl ul li").removeClass("li-current");
+                        // console.log($(event.target).parent().parent());
+                        $(event.target).parent().addClass("li-current");
+                        modelFilter.PlanType = planType;
+                        modelFilter.keywords = vList.searchKeyWords;
+                        return GetModelInfo(modelFilter);
+                    }
+                    , GetPlanStatusInfo: function (event, planStatus) {
+                        $("#tabs nav li").removeClass("tab-current");
+                       // console.log($(event.target).parent().parent());
+                        $(event.target).parent().parent().addClass("tab-current");
+                        modelFilter.CurrStatus = planStatus;
+                        modelFilter.keywords = vList.searchKeyWords;
+                        return GetModelInfo(modelFilter);
+                    }
                 }
              })
-             var modelFilter = {};
-             modelFilter.rows = pageGlobalParam.pageSize;
-             modelFilter.page = pageGlobalParam.currPage;
-             modelFilter.keywords = vList.searchKeyWords;
-             modelFilter.CurrStatus =-1;
-             GetModelInfo(modelFilter);
+            modelFilter.keywords = vList.searchKeyWords;
+            GetModelInfo(modelFilter);
+            GetPlanType();
+            GetPlanStatus();
+            $("#listControl ul li:first").addClass("li-current");
+            //获取分页菜单信息
+             function GetModelInfo(Filter) {
+                    //console.log(menuFilter);
+                 $.post("/PlanList/GetAllPlanInfo", Filter, function (result) {
+                        console.log(result);
+                        if (result) {
+                            vList.modelInfoList = result;
+                            if (result.length > 0) {
+                                $("#pageDiv").show();
+                                layui.use('laypage', function () {
+                                    var laypage = layui.laypage;
+                                    laypage.render({
+                                        elem: 'pager'
+                                        , count: result.records
+                                        ,curr:result.page
+                                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                        , groups: 1
+                                        , first: false
+                                        ,last:false
+                                        , jump: function (obj, first) {
+                                            if (!first) {
+                                                //pageGlobalParam.currPage = obj.curr;
+                                                //pageGlobalParam.pageSize = obj.limit;
+                                                modelFilter.rows = obj.limit;
+                                                modelFilter.page = obj.curr;
+                                                GetModelInfo(modelFilter);
+                                            }
+                                        }
+                                    });
+                                });
+                                } else {
+                                $("#pageDiv").hide()
+                                }
+                        }
+                    },"json");
 
-        //获取分页菜单信息
-     function GetModelInfo(Filter) {
-            //console.log(menuFilter);
-         $.post("/PlanList/GetAllPlanInfo", Filter, function (result) {
+                 }
+
+            $(".Allcb").click(function () {
+                $(this).closest("table").find("td [type=checkbox]").prop('checked', $(this).prop('checked'));
+            });
+
+            function GetPlanType() {
+                $.post("/BaseInfo/GetClassInfo", {"baseClassID":2}, function (result) {
+                    console.log(result);
+                    if (result) {
+                        vList.planTypeInfo = result;
+                    }
+                });
+            }
+
+            function GetPlanStatus() {
+                $.post("/BaseInfo/GetClassInfo", { "baseClassID": 3 }, function (result) {
+                    console.log(result);
+                    if (result) {
+                        vList.planStatusInfo = result;
+                    }
+                });
+            }
+
+            //添加 新开页面
+            function GetAddModel() {
+                $("#btnAdd").button("loading");
+                window.location.href = "@Url.Action("Add")" + "?id=0";
+            }
+            //编辑 layer
+             function GetEditModel(index, ID) {
+                 //layer.open({
+                 //    type: 2, //表示Frame层
+                 //    title: '编辑',
+                 //    shadeClose: false,
+                 //    shade: 0.8,
+                 //    area: ['60%', '50%'],
+                 //    content: '/MenuInfo/Add?menuID=' + MenuID,
+                 //    end: function () {
+                 //        GetMenuInfo(10, 1);
+                 //    }
+                 //});
+                 window.location.href = "@Url.Action("Add")" + "?id=" + ID;
+              }
+
+             //查找
+             function GetSearch(searchKeyWords) {
+                 modelFilter.keywords = searchKeyWords;
+                 GetModelInfo(modelFilter);
+             }
+            //删除
+             function GetDelData(index, ID) {
+                    var ids = [];
+                    if (index != -1) {
+                        ids.push(ID);
+                    }
+                    else {
+                        $("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i,item) {
+                            if ($(item).is(':checked')) {
+                                ids.push(item.getAttribute("data-id"));
+                            }
+
+                        })
+                    }
+                    //console.log(ids);
+                    //layer询问框
+                    layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
+                        //确定
+                        $.post("/PlanList/Del", { "ids": ids }, function (result) {
+                            if (result) {
+                                if (result.flag) {
+                                    layer.msg("删除成功!");
+                                    $("#modelInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
+                                    GetModelInfo(modelFilter);
+                                }
+                                else {
+                                    layer.msg("删除失败!");
+                                }
+                            }
+                        })
+                        //关闭询问框
+                        layer.close(index);
+                    });
+             }
+
+            
+
+        })
+        function GetAssign() {
+            var assignHtml = "";
+            var userfilter = {};
+            userfilter.page = 1;
+            userfilter.rows = 1000;
+            userfilter.EntID = $("#LockEnt").val();
+            console.log($("#LockEnt").val());
+            $.post("/UserInfo/GetAllUserInfo", { "filter": userfilter }, function (result) {
                 console.log(result);
                 if (result) {
-                    vList.modelInfoList = result;
-                    if (result.length > 0) {
-                        $("#pageDiv").show();
-                        layui.use('laypage', function () {
-                            var laypage = layui.laypage;
-                            laypage.render({
-                                elem: 'pager'
-                                , count: result.records
-                                ,curr:result.page
-                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-                                , groups: 1
-                                , first: false
-                                ,last:false
-                                , jump: function (obj, first) {
-                                    if (!first) {
-                                        //pageGlobalParam.currPage = obj.curr;
-                                        //pageGlobalParam.pageSize = obj.limit;
-                                        modelFilter.rows = obj.limit;
-                                        modelFilter.page = obj.curr;
-                                        GetModelInfo(modelFilter);
-                                    }
-                                }
-                            });
-                        });
-                        } else {
-                        $("#pageDiv").hide()
-                        }
+                    for (var i = 0; i < result.rows.length; i++) {
+                        assignHtml = assignHtml + "<div class=\"checkbox - inline\"><label ><input type=\"checkbox\" onclick=\"CheckAssignPerson(" + result.rows[i].UserID + ")\" value=\"" + result.rows[i].UserID + "\">result.rows[i].UserName</label></div>"
+                    }
                 }
-            },"json");
-
-         }
-
-     $(".Allcb").click(function () {
-                $(this).closest("table").find("td [type=checkbox]").prop('checked', $(this).prop('checked'));
+                console.log(assignHtml);
             })
-
-
-    //添加 新开页面
-    function GetAddModel() {
-        $("#btnAdd").button("loading");
-        window.location.href = "@Url.Action("Add")" + "?id=0";
-    }
-        //编辑 layer
-     function GetEditModel(index, ID) {
-         //layer.open({
-         //    type: 2, //表示Frame层
-         //    title: '编辑',
-         //    shadeClose: false,
-         //    shade: 0.8,
-         //    area: ['60%', '50%'],
-         //    content: '/MenuInfo/Add?menuID=' + MenuID,
-         //    end: function () {
-         //        GetMenuInfo(10, 1);
-         //    }
-         //});
-         window.location.href = "@Url.Action("Add")" + "?id=" + ID;
-      }
-
-     //查找
-     function GetSearch(searchKeyWords) {
-         modelFilter.keywords = searchKeyWords;
-         GetModelInfo(modelFilter);
-     }
-        //删除
-     function GetDelData(index, ID) {
-            var ids = [];
-            if (index != -1) {
-                ids.push(ID);
-            }
-            else {
-                $("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i,item) {
-                    if ($(item).is(':checked')) {
-                        ids.push(item.getAttribute("data-id"));
-                    }
-
-                })
-            }
-            //console.log(ids);
-            //layer询问框
-            layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
-                //确定
-                $.post("/PlanList/Del", { "ids": ids }, function (result) {
-                    if (result) {
-                        if (result.flag) {
-                            layer.msg("删除成功!");
-                            $("#modelInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
-                            GetModelInfo(modelFilter);
-                        }
-                        else {
-                            layer.msg("删除失败!");
-                        }
-                    }
-                })
-                //关闭询问框
-                layer.close(index);
+            layer.open({
+                type: 2, //表示Frame层
+                title: '编辑',
+                shadeClose: false,
+                shade: 0.8,
+                area: ['60%', '50%'],
+                content: assignHtml,
+                end: function () {
+                    //GetMenuInfo(10, 1);
+                }
             });
         }
- })
-
     </script>
 }

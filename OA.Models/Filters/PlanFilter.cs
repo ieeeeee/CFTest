@@ -18,5 +18,7 @@ namespace OA.Models.Filters
         /// 计划的类型
         /// </summary>
         public string PlanType { get; set; }
+
+        public string Operator { get; set; }
     }
 }

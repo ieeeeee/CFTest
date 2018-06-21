@@ -40,6 +40,11 @@ namespace OA.Web.Controllers.WorkerCenter
 
         public async Task<JsonResult> GetAllPlanInfo(PlanFilter filter)
         {
+            if(filter.CurrStatus!=-1)
+            {
+                var userID = User.Identity.GetLoginUserID();
+                filter.Operator = userID;
+            }
             var result = await _planService.SearchAsync(filter);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -58,7 +63,9 @@ namespace OA.Web.Controllers.WorkerCenter
         {
             var result = string.Empty;
             var success = false;
-            if(ModelState.IsValid)
+            var userID = User.Identity.GetLoginUserID();
+            dto.Operator = userID;
+            if (ModelState.IsValid)
             {
                 if(string.IsNullOrEmpty(dto.PlanID)||dto.PlanID=="")
                 {

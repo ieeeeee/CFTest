@@ -81,6 +81,8 @@ namespace OA.Services.TaskServices
                 var db = scope.DbContexts.Get<OAContext>();
                 var query = db.W_PlanLists.Where(x => x.IsDeleted != 1)
                     .WhereIf(filter.CurrStatus != -1, x => x.ProcStatus == filter.CurrStatus)
+                    .WhereIf(int.Parse(filter.PlanType)!=-1,x=>x.PlanType==filter.PlanType)
+                    .WhereIf(filter.Operator.IsNotBlank(),x=>x.Operator==filter.Operator)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.PlanID.Contains(filter.keywords) || x.PlanTitle.Contains(filter.keywords));
                 var dateQuery =await query.GroupBy(x => x.PlanDate).Select(p=> (new { PlanDate = p.Key })).ToListAsync();
                 List<PlanTabDto> tab = new List<PlanTabDto>();

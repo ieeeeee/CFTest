@@ -79,7 +79,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-th"></i>
                                     </span>
-                                    <input id="laydate" type="text" v-model="planDate" class="form-control1 icon" />
+                                    <input id="laydate" type="text"  class="form-control1 icon" />
                                 </div>
                             </div>
                             <label class="col-md-1 control-label">起止时间</label>
@@ -88,7 +88,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-th"></i>
                                     </span>
-                                    <input id="layStartTime" type="text" v-model="planStartTime" class="form-control1 icon" />
+                                    <input id="layStartTime" type="text"  class="form-control1 icon" />
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -96,7 +96,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-th"></i>
                                     </span>
-                                    <input id="layEndTime" type="text" v-model="planEndTime" class="form-control1 icon" />
+                                    <input id="layEndTime" type="text" class="form-control1 icon" />
                                 </div>
                             </div>
                         </div>
@@ -166,10 +166,10 @@
     <script src="~/Content/Plugin/wangEditor/wangEditor.js"></script>
     <script src="~/Content/Plugin/vue.js"></script>
     @*<script src="~/Content/Plugin/main.js"></script>*@
-    <script type="text/javascript" src="~/Content/Plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
+    @*<script type="text/javascript" src="~/Content/Plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="~/Content/Plugin/datepicker/js/locale/bootstrap-datepicker.zh-CN.min.js"></script>
     <script type="text/javascript" src="~/Content/Plugin/datetimepicker/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="~/Content/Plugin/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>*@
     <script type="text/javascript" src="~/Content/Plugin/layui/layui.all.js"></script>
     <script type="text/javascript" src="~/Content/Plugin/markdown/js/bootstrap-markdown.js"></script>
     <script type="text/javascript" src="~/Content/Plugin/markdown/js/locale/bootstrap-markdown.zh.js"></script>
@@ -180,15 +180,15 @@
             var vControl = new Vue({
                 el: "#AddControl",
                 data: {
-                    planDate: '@Model.PlanDate',
+                   // planDate: '@Model.PlanDate',
                     planType: '@Model.PlanType',
                     planPriority:'@Model.PlanPriority',
                     planTitle: '@Model.PlanTitle',
                     //planBody: "",
                     procStatus:'@Model.ProcStatus',
                     isPrivate: '@Model.IsPrivate',
-                    planStartTime:  '@Model.PlanStartTime',
-                    planEndTime:  '@Model.PlanEndTime',
+                   // planStartTime:  '@Model.PlanStartTime',
+                   // planEndTime:  '@Model.PlanEndTime',
                     planTypeOptions: [],
                     planPriorityOptions: [{ "text": "0", "value": 0, "title": "最低", "class": "priority_0" }
                         , { "text": "1", "value": 1, "title": "非常低", "class": "priority_1" }
@@ -216,6 +216,8 @@
                     }
                 }
             });
+
+            //日期时间选择
             //$('.datepicker').datepicker({
             //    format: 'yyyy-mm-dd',
             //    language: 'zh-CN'
@@ -242,6 +244,7 @@
                 });
             });
 
+            //富文本编辑器
             var E = window.wangEditor;
             var editor = new E('#add-editor');
            //editor.customConfig.uploadImgShowBase64 = true;
@@ -277,10 +280,13 @@
                 }
             }
             editor.create();
+
+            //编辑赋值
             SetVal();
 
             //$("#add-editor").markdown({ language: 'zh' });
-            vControl.planDate = CurentDate();
+            $("#laydate").val(CurentDate());
+           // vControl.planDate = CurentDate();
             var planTypeInfo = [], planStatusInfo = [];
             GetClassInfo(2, function () {
                 var options= [];
@@ -315,7 +321,7 @@
             }
             function GetVal() {
                 var requestDate = {
-                    PlanDate: vControl.planDate,
+                    //PlanDate: vControl.planDate,
                     PlanType: vControl.planType,
                     PlanPriority: vControl.planPriority,
                     PlanTitle: vControl.planTitle,
@@ -323,8 +329,13 @@
                     PlanBody:editor.txt.html(),
                     ProcStatus: vControl.procStatus,
                     IsPrivate: vControl.isPrivate,
-                    PlanStartTime: vControl.planStartTime,
-                    PlanEndTime: vControl.planEndTime
+                   // PlanStartTime: vControl.planStartTime,
+                    //PlanEndTime: vControl.planEndTime
+
+                    PlanDate: $("#laydate").val(),
+                    PlanStartTime: $("#layStartTime").val(),
+                    PlanEndTime: $("#layEndTime").val()
+
                 };
                 console.log(requestDate);
                 return requestDate;

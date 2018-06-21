@@ -56,5 +56,10 @@ namespace OA.Models
         ///  计划日期
         /// </summary>
         public string PlanDate { get; set; }
+
+        /// <summary>
+        /// 操作者
+        /// </summary>
+        public string Operator { get; set; }
     }
 }

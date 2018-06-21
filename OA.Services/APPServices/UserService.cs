@@ -82,6 +82,7 @@ namespace OA.Services.AppServices
             {
                 var db = scope.DbContexts.Get<OAContext>();
                 var query = db.B_Users.Where(x => x.IsDeleted != 1)
+                    .WhereIf(filter.EntID>0,x=>x.EntID==filter.EntID)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.UserNo.Contains(filter.keywords) || x.UserName.Contains(filter.keywords) || x.NickName.Contains(filter.keywords));
                 return await query.OrderByCustom(filter.sidx, filter.sord)
                     .Select(item => new UserDto

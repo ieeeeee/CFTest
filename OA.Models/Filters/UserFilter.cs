@@ -8,5 +8,9 @@ namespace OA.Models.Filters
 {
    public class UserFilter:BaseFilter
     {
+        /// <summary>
+        /// 企业ID
+        /// </summary>
+        public int EntID { get; set; }
     }
 }
