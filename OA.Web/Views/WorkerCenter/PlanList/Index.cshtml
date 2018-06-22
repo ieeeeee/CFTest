@@ -182,6 +182,9 @@
     </div>
 </div>
 
+<div id="AssignUser"></div>
+
+
 @*<div class="graph-visual tables-main" >
     <h3 class="inner-tittle two">计划单</h3>*@
 
@@ -427,22 +430,28 @@
                 console.log(result);
                 if (result) {
                     for (var i = 0; i < result.rows.length; i++) {
-                        assignHtml = assignHtml + "<div class=\"checkbox - inline\"><label ><input type=\"checkbox\" onclick=\"CheckAssignPerson(" + result.rows[i].UserID + ")\" value=\"" + result.rows[i].UserID + "\">result.rows[i].UserName</label></div>"
+                       // assignHtml = "<div>"
+                        assignHtml = assignHtml + "<div class=\"checkbox-inline\"><label ><input type=\"checkbox\" onclick=\"CheckAssignPerson(" + result.rows[i].UserID + ")\" value=\"" + result.rows[i].UserID + "\"/>" + result.rows[i].UserName + "</label></div>"
+                        //assignHtml = assignHtml + "</div>"
                     }
+                    
                 }
                 console.log(assignHtml);
-            })
-            layer.open({
-                type: 2, //表示Frame层
-                title: '编辑',
-                shadeClose: false,
-                shade: 0.8,
-                area: ['60%', '50%'],
-                content: assignHtml,
-                end: function () {
-                    //GetMenuInfo(10, 1);
-                }
             });
+            $('#AssignUser').html(assignHtml);
+            //parent.layer.open({
+            //    type: 1, 
+            //    title: '选择人员',
+            //    shadeClose: false,
+            //    shade: 0.8,
+            //    area: ['60%', '50%'],
+            //    content: $('#AssignUser'),
+            //    cancel: function () { }
+            //});
+        }
+        function CheckAssignPerson(UserID) {
+
+
         }
     </script>
 }
