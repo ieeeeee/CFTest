@@ -65,6 +65,7 @@ namespace OA.Web.Controllers.WorkerCenter
             var success = false;
             var userID = User.Identity.GetLoginUserID();
             dto.Operator = userID;
+            //dto.Remark= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             if (ModelState.IsValid)
             {
                 if(string.IsNullOrEmpty(dto.PlanID)||dto.PlanID=="")
