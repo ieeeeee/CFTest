@@ -80,6 +80,8 @@ namespace OA.Services.AppServices
         {
             using (var scope = _dbContextScopeFactory.CreateReadOnly())
             {
+                //string c = string.Empty;
+                //c=StringExtension.GetPlus("110010", "1011");
                 var db = scope.DbContexts.Get<OAContext>();
                 var query = db.B_Users.Where(x => x.IsDeleted != 1)
                     .WhereIf(filter.EntID>0,x=>x.EntID==filter.EntID)

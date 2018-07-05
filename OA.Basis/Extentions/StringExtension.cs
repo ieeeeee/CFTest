@@ -36,5 +36,79 @@ namespace OA.Basis.Extentions
         {
             return value.IsBlank() ? defaultValue : value;
         }
+
+        public static string GetPlus(string a,string b)
+        {
+            int aLen = a.Length;
+            int bLen = b.Length;
+            if(aLen-bLen>=0)
+            {
+                a=a.PadLeft(aLen+1, '0');
+                b=b.PadLeft(aLen+ 1, '0');
+            }
+            else
+            {
+                a=a.PadLeft(bLen+1, '0');
+                b=b.PadLeft(bLen+1, '0');
+            }
+            char[] Na = a.ToCharArray();
+            char[] Nb = b.ToCharArray();
+            char[] Nc = Carry(Na,Nb);
+
+            char[] result =new char[Na.Length]; 
+
+            result = Plus(Na, Nb);
+            result = Plus(result, Nc);
+            if(result[0]=='0')
+            {
+                return new String(result).Substring(1, result.Length - 1);
+            }
+            return new String(result);
+
+        }
+
+        public static char[] Plus(char[] a, char[] b)
+        {
+            char[] result = new char[a.Length];
+            for (int i = 0; i < a.Length; i++)
+            {
+                if ((a[i] == b[i]))
+                {
+                    result[i] = '0';
+                }
+                else
+                {
+                    result[i] = '1';
+                }
+            }
+            return result;
+        }
+        public static char[] Carry(char[] a, char[] b)
+        {
+            char[] result = new char[a.Length];
+            for (int i = 1; i < a.Length; i++)
+            {
+                if ((a[i] == '1' && b[i] == '1'))
+                {
+                    result[i-1] = '1';
+                }
+                else
+                {
+                    result[i-1] = '0';
+                }
+            }
+            result[a.Length - 1] = '0';
+            return result;
+        }
+        public static string[] StrToArray(string str)
+        {
+            string[] Array = new string[str.Length];
+            for (int i = 0; i < str.Length; i++)
+            {
+                Array[i] = str.Substring(i, 1);
+            }
+            return Array;
+        }
+
     }
 }

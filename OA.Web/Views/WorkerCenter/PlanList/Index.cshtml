@@ -182,7 +182,7 @@
     </div>
 </div>
 
-<div id="AssignUser"></div>
+<div style="display: none;" id="AssignUser"></div>
 
 
 @*<div class="graph-visual tables-main" >
@@ -437,17 +437,21 @@
                     
                 }
                 console.log(assignHtml);
+                $('#AssignUser').html(assignHtml);
+                //
             });
-            $('#AssignUser').html(assignHtml);
-            //parent.layer.open({
-            //    type: 1, 
-            //    title: '选择人员',
-            //    shadeClose: false,
-            //    shade: 0.8,
-            //    area: ['60%', '50%'],
-            //    content: $('#AssignUser'),
-            //    cancel: function () { }
-            //});
+            console.log(assignHtml);
+           layer.open({
+                type: 1, 
+                title: '选择人员',
+                shadeClose: false,
+                shade: 0.8,
+                area: ['60%', '50%'],
+                content: $('#AssignUser'),
+               cancel: function () {
+                   $('#AssignUser').hide();
+               }
+            });
         }
         function CheckAssignPerson(UserID) {
 
