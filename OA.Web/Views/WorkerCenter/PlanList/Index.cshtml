@@ -51,7 +51,7 @@
         .tabtype ul{
             float:left;
             padding:1em 1em;
-            margin-right:10em;
+            margin-right:2em;
             list-style:none;
             display:inline-block;
         }
@@ -97,7 +97,8 @@
                             <li><a href="#section-1" class="icon-shop" v-on:click="GetPlanStatusInfo($event,-1)"> <span>全部</span></a></li>
                             <li><a href="#section-2" class="icon-cup" v-on:click="GetPlanStatusInfo($event,0)"> <span>由我创建</span></a></li>
                             <li><a href="#section-3" class="icon-food" v-on:click="GetPlanStatusInfo($event,1)"> <span>待我审核</span></a></li>
-                            <li><a href="#section-4" class="icon-lab" v-on:click="GetPlanStatusInfo($event,2)"><span>由我发布</span></a></li>
+                            <li><a href="#section-3" class="icon-food" v-on:click="GetPlanStatusInfo($event,2)"> <span>待我修改</span></a></li>
+                            <li><a href="#section-4" class="icon-lab" v-on:click="GetPlanStatusInfo($event,3)"><span>由我发布</span></a></li>
                             <li><a href="#section-5" class="icon-truck" v-on:click="GetPlanStatusInfo($event,10)"><span>由我取消</span></a></li>
                         </ul>
                     </nav>
@@ -109,8 +110,6 @@
                                     <li>项目2</li>
                                 </ul>
                                 <div class="buttons-ui">
-                                    <a id="btnAdd" class="btn green" v-on:click="AddModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
-                                    <a id="btnDel" class="btn red" v-on:click="DelData(-1,0)"><i class="fa fa-close"></i>&nbsp;删除</a>
                                     <div class="input-group" style="width:30%;float:right;">
                                         <input type="text" class="input form-control" v-model="searchKeyWords" placehoder="Search" />
                                         <span class="input-group-btn">
@@ -126,7 +125,7 @@
                             <div class="graph">
                                 <div class="tables" id="modelInfoList">
                                     <table class="table table-hover" v-for="(itemDate,index) in modelInfoList">
-                                        <thead><tr><th>{{itemDate.PlanDate}}</th></tr> </thead>
+                                        <thead><tr><th><input class="Allcb"  v-on:click="Allck($event)" type="checkbox"/>  {{itemDate.PlanDate}}</th></tr> </thead>
                                         <tbody>
                                             <tr v-for="(item,index) in itemDate.PlanData">
                                                 <td><input class="Subcb" :data-id="item.PlanID" type="checkbox" /></td>
@@ -137,7 +136,9 @@
                                                 <td>{{item.IsDeleted}}</td>
                                                 <td>
                                                     <a id="btnAdd" style="color:#55acee;" v-on:click="EditModel(index,item.PlanID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
-                                                    <a id="btnDel" style="color:#e74c3c;" v-on:click="DelData(index,item.PlanID)"><i class="fa fa-close" title="删除"></i>&nbsp;&nbsp;</a>
+                                                    <a id="btnDel" style="color:#1d9d74;" v-on:click="CheckPlan(index,item.PlanID)"><i class="fa fa-check-square-o" title="审核通过"></i>&nbsp;&nbsp;</a>
+                                                    <a id="btnDel" style="color:#ffc717;" v-on:click="ReplyPlan(index,item.PlanID)"><i class="fa fa-reply" title="不通过"></i>&nbsp;&nbsp;</a>
+                                                    <a id="btnDel" style="color:#e74c3c;" v-on:click="DelData(index,item.PlanID)"><i class="fa fa-close" title="关闭"></i>&nbsp;&nbsp;</a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -149,7 +150,9 @@
                                 <div class="row" id="pageDiv">
                                     <div class="col-xs-12">
                                         <hr style="margin:10px auto;" />
-                                        <div id="pager" style="margin-top:4px;"></div>
+                                        <a id="btnAdd" class="btn green" v-on:click="AddModel()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+                                        <a id="btnDel" class="btn red" v-on:click="DelData(-1,0)"><i class="fa fa-close"></i>&nbsp;删除</a>
+                                        <div id="pager" style="margin-top:4px; float:right;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -269,6 +272,9 @@
                     DelData: function (index, ID) {
                         return GetDelData(index, ID);
                     },
+                    CheckPlan: function (index, ID) {
+                        return GetCheck(index, ID);
+                    },
                     Search: function (searchKeyWords) {
                         return GetSearch(searchKeyWords);
                     }
@@ -287,6 +293,9 @@
                         modelFilter.CurrStatus = planStatus;
                         modelFilter.keywords = vList.searchKeyWords;
                         return GetModelInfo(modelFilter);
+                    }
+                    , Allck(event) {
+                        $(event.target).closest("table").find("td [type=checkbox]").prop('checked', $(event.target).prop('checked'));
                     }
                 }
              })
@@ -310,10 +319,11 @@
                                         elem: 'pager'
                                         , count: result.records
                                         ,curr:result.page
-                                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                        , layout: ['count', 'prev', 'page', 'next', 'skip']
                                         , groups: 1
                                         , first: false
-                                        ,last:false
+                                        , last: false
+                                        ,limit:6
                                         , jump: function (obj, first) {
                                             if (!first) {
                                                 //pageGlobalParam.currPage = obj.curr;
@@ -334,6 +344,7 @@
                  }
 
             $(".Allcb").click(function () {
+                console.log("11");
                 $(this).closest("table").find("td [type=checkbox]").prop('checked', $(this).prop('checked'));
             });
 
@@ -376,6 +387,33 @@
                  window.location.href = "@Url.Action("Add")" + "?id=" + ID;
               }
 
+            //审核
+            function GetCheck(index, ID) {
+                var ids = [];
+                if (index != -1) {
+                    ids.push(ID);
+                }
+                else {
+                    $("#modelInfoList table tbody tr td").find("input[type=checkbox]").each(function (i, item) {
+                        if ($(item).is(':checked')) {
+                            ids.push(item.getAttribute("data-id"));
+                        }
+
+                    })
+                }
+                $.post("/PlanList/ChangePlanStatus", { "status":3,"ids": ids }, function (result) {
+                    if (result) {
+                        if (result.flag) {
+                            layer.msg("审核成功!");
+                            $("#modelInfoList table tbody tr td").find("input[type=checkbox]").prop("checked", false);
+                            GetModelInfo(modelFilter);
+                        }
+                        else {
+                            layer.msg("审核失败!");
+                        }
+                    }
+                });
+            }
              //查找
              function GetSearch(searchKeyWords) {
                  modelFilter.keywords = searchKeyWords;

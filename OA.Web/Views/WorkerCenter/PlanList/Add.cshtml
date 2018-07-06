@@ -368,11 +368,15 @@
                 //保存到数据库
                 $.post("/PlanList/Save", GetVal(), function (result) {
                     layer.msg(result.msg);
-
+                    window.location.href = "/PlanList/Index";
                 });
             }
             function GetClear() {
-
+                    vControl.planType=0,
+                    vControl.planPriority=0,
+                    vControl.planTitle= "",
+                    vControl.procStatus=0,
+                    vControl.isPrivate=false
             }
 
             function GetPlanPriority(event, Val) {

@@ -57,6 +57,27 @@ namespace OA.Services.TaskServices
             }
         }
 
+        /// <summary>
+        /// 更改计划表的状态
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public async Task<bool> ChangeStatus(int status, IEnumerable<string> ids)
+        {
+            using (var scope = _dbContextScopeFactory.Create())
+            {
+                var db = scope.DbContexts.Get<OAContext>();
+                var entities = await db.W_PlanLists.Where(x => ids.Contains(x.PlanID)).ToListAsync();
+                foreach(var  entity in entities)
+                {
+                    entity.ProcStatus = (byte)status;
+                }
+                await scope.SaveChangesAsync();
+                return true;
+            }
+        }
+
         //查
         public async Task<PlanDto> FindAsync(string planID)
         {

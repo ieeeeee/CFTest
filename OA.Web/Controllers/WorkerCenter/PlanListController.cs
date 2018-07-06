@@ -97,6 +97,16 @@ namespace OA.Web.Controllers.WorkerCenter
             return Json(success, JsonRequestBehavior.AllowGet);
         }
 
+
+        public async Task<JsonResult> ChangePlanStatus(int status,IList<string> ids)
+        {
+            var success = new JsonResultModel<bool>();
+            if(ids.AnyOne())
+            {
+                success.flag = await _planService.ChangeStatus(status, ids);
+            }
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
         //public  JsonResult Upload()
         //{
         //    var files = HttpContext.Request.Files;

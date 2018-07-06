@@ -25,5 +25,8 @@ namespace OA.Interfaces
 
         //改
         Task<bool> UpdateAsync(PlanDto dto);
+
+        //更改计划状态
+        Task<bool> ChangeStatus(int status, IEnumerable<string> ids);
     }
 }
