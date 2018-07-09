@@ -21,7 +21,7 @@ namespace OA.Interfaces
         Task<PlanDto> FindAsync(string planID);
 
         //查列表
-        Task<IList<PlanTabDto>> SearchAsync(PlanFilter filter);
+        Task<PagedResult<PlanTabDto>> SearchAsync(PlanFilter filter);
 
         //改
         Task<bool> UpdateAsync(PlanDto dto);

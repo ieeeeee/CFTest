@@ -27,6 +27,11 @@ namespace OA.Models
         [MaxLength(40, ErrorMessage = Message.MaxLength)]
         public string PlanType { get; set; }
 
+        //[Display(Name = "计划单类型名称")]
+        //[MaxLength(40, ErrorMessage = Message.MaxLength)]
+        //public string PlanTypeName { get; set; }
+
+
         [Display(Name = "更新时间")]
         public DateTime UpdateTime { get; set; }
 
@@ -35,6 +40,9 @@ namespace OA.Models
         public string Remark { get; set; }
 
         public ProcStatus ProcStatus { get; set; }
+
+        //public string ProcStatusName { get; set; }
+
 
         public int IsDeleted { get; set; }
 
@@ -58,8 +66,13 @@ namespace OA.Models
         public string PlanDate { get; set; }
 
         /// <summary>
-        /// 操作者
+        /// 操作者ID
         /// </summary>
         public string Operator { get; set; }
+
+        ///// <summary>
+        ///// 操作者名字
+        ///// </summary>
+        //public string OperatorName { get; set; }
     }
 }

@@ -95,28 +95,37 @@ namespace OA.Services.TaskServices
         }
 
         //查列表
-        public async Task<IList<PlanTabDto>> SearchAsync(PlanFilter filter)
+        public async Task<PagedResult<PlanTabDto>> SearchAsync(PlanFilter filter)
         {
             using (var scope = _dbContextScopeFactory.CreateReadOnly())
             {
                 var db = scope.DbContexts.Get<OAContext>();
                 var query = db.W_PlanLists.Where(x => x.IsDeleted != 1)
                     .WhereIf(filter.CurrStatus != -1, x => x.ProcStatus == filter.CurrStatus)
-                    .WhereIf(int.Parse(filter.PlanType)!=-1,x=>x.PlanType==filter.PlanType)
-                    .WhereIf(filter.Operator.IsNotBlank(),x=>x.Operator==filter.Operator)
+                    .WhereIf(int.Parse(filter.PlanType) != -1, x => x.PlanType == filter.PlanType)
+                    .WhereIf(filter.Operator.IsNotBlank(), x => x.Operator == filter.Operator)
                     .WhereIf(filter.keywords.IsNotBlank(), x => x.PlanID.Contains(filter.keywords) || x.PlanTitle.Contains(filter.keywords));
-                var dateQuery =await query.GroupBy(x => x.PlanDate).Select(p=> (new { PlanDate = p.Key })).ToListAsync();
+                 var pagedQuery=query.Skip((filter.page - 1) * filter.rows)
+                    .Take(filter.rows);
+                
+                var dateQuery =await pagedQuery.GroupBy(x => x.PlanDate).Select(p=> (new { PlanDate = p.Key })).ToListAsync();
                 List<PlanTabDto> tab = new List<PlanTabDto>();
                 foreach(var itemDate in dateQuery)
                 {
                     var itemPlan = new PlanTabDto()
                     {
                         PlanDate = itemDate.PlanDate,
-                        PlanData = _mapper.Map<List<W_PlanListEntity>,List<PlanDto>>(query.Where(x=>x.PlanDate==itemDate.PlanDate).ToList())
+                        PlanData = _mapper.Map<List<W_PlanListEntity>,List<PlanDto>>(pagedQuery.Where(x=>x.PlanDate==itemDate.PlanDate).ToList())
                     };
                     tab.Add(itemPlan);
                 }
-                return  tab;
+                var result = new PagedResult<PlanTabDto>();
+                result.rows = tab;
+                result.records = query.Count();
+                result.page = filter.page;
+                result.pagesize = filter.rows;
+                return  result;
+               
                 //return await dateQuery.OrderBy(x => x.Key).Select(p => new PlanTabDto
                 //{
                 //    PlanDate = p.Key,

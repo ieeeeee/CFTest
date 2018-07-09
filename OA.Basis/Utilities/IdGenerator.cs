@@ -24,11 +24,13 @@ namespace OA.Basis.Utilities
         public string GetId(DateTime time)
         {
             var prefix = time.ToString(TimeFormat);
-            var stamp = (time.Hour * 3600 + time.Minute * 60 + time.Second).ToString().PadLeft(5, '0');
+            //var stamp = (time.Hour * 3600 + time.Minute * 60 + time.Second).ToString().PadLeft(5, '0');
+            var hour = time.Hour.ToString().PadLeft(2, '0');
+            var min = time.Minute.ToString().PadLeft(2, '0');
             lock(_locker) //lock 确保当一个线程位于代码的临界区时，另一个线程不进入临界区。如果其他线程试图进入锁定的代码，则它将一直等待（即被阻止），直到该对象被释放。
             {
                 _seed++;
-                var id = string.Format("{0}{1}{2}", prefix, stamp, _seed.ToString().PadLeft(5, '0'));
+                var id = string.Format("{0}{1}{2}{3}", prefix, hour,min, _seed.ToString().PadLeft(4, '0'));
                 if(_seed>=_max)
                 {
                     _seed = 0;

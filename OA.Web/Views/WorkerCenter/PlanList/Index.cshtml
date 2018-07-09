@@ -84,6 +84,64 @@
        .panel-Grey{
            background-color:lightgrey;
        }
+        .priority_0 {
+            background-color: green;
+        }
+
+        .priority_1 {
+            background-color: forestgreen;
+        }
+
+        .priority_2 {
+            background-color: darkseagreen;
+        }
+
+        .priority_3 {
+            background-color: cornflowerblue;
+        }
+
+        .priority_4 {
+            background-color: dodgerblue;
+        }
+
+        .priority_5 {
+            background-color: darkblue;
+        }
+
+        .priority_6 {
+            background-color: darkslateblue;
+        }
+
+        .priority_7 {
+            background-color: mediumpurple;
+        }
+
+        .priority_8 {
+            background-color: rebeccapurple;
+        }
+
+        .priority_9 {
+            background-color: darkred;
+        }
+
+        .priority_10 {
+            background-color: red;
+        }
+        .priority_0, .priority_1, .priority_2, .priority_3, .priority_4, .priority_5, .priority_6,
+        .priority_7, .priority_8, .priority_9, .priority_10 {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 12px;
+            color: #fff;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            font-family: arial,helvetica,clean,sans-serif;
+        }
     </style>
 }
 <div class="col-lg-8">
@@ -127,13 +185,14 @@
                                     <table class="table table-hover" v-for="(itemDate,index) in modelInfoList">
                                         <thead><tr><th><input class="Allcb"  v-on:click="Allck($event)" type="checkbox"/>  {{itemDate.PlanDate}}</th></tr> </thead>
                                         <tbody>
-                                            <tr v-for="(item,index) in itemDate.PlanData">
+                                            <tr v-for="(item,index) in itemDate.PlanData" v-on:click="DetailShow(index,item.PlanID)" >
                                                 <td><input class="Subcb" :data-id="item.PlanID" type="checkbox" /></td>
+                                                <td><span :class='"priority_"+item.PlanPriority'>{{item.PlanPriority}}</span></td>
                                                 <td>{{item.PlanID}}</td>
                                                 <td>{{item.PlanTitle}}</td>
-                                                <td>{{item.PlanType}}</td>
+                                                <td>{{item.PlanType|plantype}}</td>
                                                 <td>{{item.Operator}}</td>
-                                                <td>{{item.IsDeleted}}</td>
+                                                <td>{{item.ProcStatus|procstatus}}</td>
                                                 <td>
                                                     <a id="btnAdd" style="color:#55acee;" v-on:click="EditModel(index,item.PlanID)"><i class="fa fa-edit" title="编辑"></i>&nbsp;</a>
                                                     <a id="btnDel" style="color:#1d9d74;" v-on:click="CheckPlan(index,item.PlanID)"><i class="fa fa-check-square-o" title="审核通过"></i>&nbsp;&nbsp;</a>
@@ -175,12 +234,13 @@
             <p><i class="fa fa-clock-o"><span>2018/06/13-2018/06/21</span></i></p>
         </div>
         <div class="panel-body">
-            <p>123</p>
           <div id="planBody"></div>
-          <div>
-              <p><span>分配任务</span><a onclick="GetAssign()"><i class="fa fa-plus-circle"></i></a></p>
-              
-          </div>
+        </div>
+        <div class="panel-footer">
+            <div>
+                <p><span>分配任务</span><a onclick="GetAssign()"><i class="fa fa-plus-circle"></i></a></p>
+
+            </div>
         </div>
     </div>
 </div>
@@ -260,7 +320,7 @@
                     searchKeyWords: "",
                     allInfoList: [],
                     planTypeInfo: [],
-                    planStatusInfo:[]
+                    planStatusInfo: []
                 },
                 methods: {
                     AddModel: function () {
@@ -277,6 +337,9 @@
                     },
                     Search: function (searchKeyWords) {
                         return GetSearch(searchKeyWords);
+                    }
+                    , DetailShow: function (index, ID) {
+                        return GetDetailShow(index, ID);
                     }
                     , GetPlanTypeInfo: function (event,planType) {
                         $("#listControl ul li").removeClass("li-current");
@@ -297,6 +360,17 @@
                     , Allck(event) {
                         $(event.target).closest("table").find("td [type=checkbox]").prop('checked', $(event.target).prop('checked'));
                     }
+                },
+                filters: {
+                    procstatus: function (value) {
+                        return GetProcStatusName(value);
+
+                    }
+                    , plantype: function (value) {
+                        return GetPlanTypeName(value);
+
+                    }
+                    
                 }
              })
             modelFilter.keywords = vList.searchKeyWords;
@@ -305,25 +379,27 @@
             GetPlanStatus();
             $("#listControl ul li:first").addClass("li-current");
             //获取分页菜单信息
-             function GetModelInfo(Filter) {
+            function GetModelInfo(Filter) {
+                console.log(Filter);
                     //console.log(menuFilter);
                  $.post("/PlanList/GetAllPlanInfo", Filter, function (result) {
-                        console.log(result);
+                     console.log(result);
+                     console.log(result.records);
                         if (result) {
-                            vList.modelInfoList = result;
-                            if (result.length > 0) {
+                            vList.modelInfoList = result.rows;
+                            if (result.rows.length > 0) {
                                 $("#pageDiv").show();
                                 layui.use('laypage', function () {
                                     var laypage = layui.laypage;
                                     laypage.render({
                                         elem: 'pager'
-                                        , count: result.records
+                                        ,count: result.records
                                         ,curr:result.page
-                                        , layout: ['count', 'prev', 'page', 'next', 'skip']
+                                        , layout: ['count', 'prev', 'page', 'next','limit', 'skip']
                                         , groups: 1
                                         , first: false
                                         , last: false
-                                        ,limit:6
+                                        ,limits:['6','12','24']
                                         , jump: function (obj, first) {
                                             if (!first) {
                                                 //pageGlobalParam.currPage = obj.curr;
@@ -365,7 +441,27 @@
                     }
                 });
             }
-
+            //获取计划单状态名称
+            function GetProcStatusName(val) {
+                var result;
+                $.each(vList.planStatusInfo, function (index, item) {
+                    if (val == item.BaseValue) {
+                        result= item.BaseName;
+                    }
+                })
+                return result;
+            }
+            //获取计划单类型名称
+            function GetPlanTypeName(val) {
+                var result;
+                $.each(vList.planTypeInfo, function (index, item) {
+                    if (val == item.BaseValue) {
+                        result = item.BaseName;
+                    }
+                })
+                return result;
+            }
+            
             //添加 新开页面
             function GetAddModel() {
                 $("#btnAdd").button("loading");
@@ -454,6 +550,15 @@
                     });
              }
 
+            function GetDetailShow(index, ID) {
+                console.log("333");
+                $.post("/PlanList/GetDetailInfo", { "id": ID }, function (result) {
+                    if (result) {
+                        console.log(result.PlanBody)
+                        $('#planBody').html(result.PlanBody);
+                    }
+                })
+            }
             
 
         })

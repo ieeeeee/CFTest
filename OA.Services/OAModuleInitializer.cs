@@ -47,7 +47,8 @@ namespace OA.Services
                 .ForMember(m => m.id, e => e.MapFrom(item => item.MenuID))
                 .ForMember(m => m.pId, e => e.MapFrom(item => item.ParentID))
                 .ForMember(m => m.name, e => e.MapFrom(item => item.MenuName));
-            mapperConfig.CreateMap<W_PlanListEntity, PlanDto>().ReverseMap();
+            mapperConfig.CreateMap<W_PlanListEntity, PlanDto>()
+                .ReverseMap();
 
 
         }
