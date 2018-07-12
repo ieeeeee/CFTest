@@ -37,7 +37,8 @@ namespace OA.Basis.Extentions
             return value.IsBlank() ? defaultValue : value;
         }
 
-        public static string GetPlus(string a,string b)
+        //将两个只有0和1的字符串加起来
+        public static string GetLogicPlus(string a,string b)
         {
             int aLen = a.Length;
             int bLen = b.Length;
@@ -53,12 +54,12 @@ namespace OA.Basis.Extentions
             }
             char[] Na = a.ToCharArray();
             char[] Nb = b.ToCharArray();
-            char[] Nc = Carry(Na,Nb);
+            char[] Nc = LogicCarry(Na,Nb);
 
             char[] result =new char[Na.Length]; 
 
-            result = Plus(Na, Nb);
-            result = Plus(result, Nc);
+            result = LogicPlus(Na, Nb);
+            result = LogicPlus(result, Nc);
             if(result[0]=='0')
             {
                 return new String(result).Substring(1, result.Length - 1);
@@ -67,7 +68,7 @@ namespace OA.Basis.Extentions
 
         }
 
-        public static char[] Plus(char[] a, char[] b)
+        public static char[] LogicPlus(char[] a, char[] b)
         {
             char[] result = new char[a.Length];
             for (int i = 0; i < a.Length; i++)
@@ -83,7 +84,7 @@ namespace OA.Basis.Extentions
             }
             return result;
         }
-        public static char[] Carry(char[] a, char[] b)
+        public static char[] LogicCarry(char[] a, char[] b)
         {
             char[] result = new char[a.Length];
             for (int i = 1; i < a.Length; i++)
