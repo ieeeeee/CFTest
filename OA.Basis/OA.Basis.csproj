@@ -73,7 +73,10 @@
     <Compile Include="Extentions\IQueryableExtension.cs" />
     <Compile Include="Extentions\StringExtension.cs" />
     <Compile Include="Helper\CacherHelper.cs" />
+    <Compile Include="Helper\ConfigHelper.cs" />
     <Compile Include="Helper\CookieHelper.cs" />
+    <Compile Include="Helper\HttpHelper.cs" />
+    <Compile Include="Helper\JsHelper.cs" />
     <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="PagedResult.cs" />
